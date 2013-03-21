@@ -16,3 +16,6 @@
 [submodule "oF/MOTIONER/src/addons/ofxEvent"]
 	path = oF/MOTIONER/src/addons/ofxEvent
 	url = https://YoshitoONISHI@github.com/YoshitoONISHI/ofxEvent.git
+[submodule "oF/MOTIONER/src/addons/ofxUI"]
+	path = oF/MOTIONER/src/addons/ofxUI
+	url = https://YoshitoONISHI@github.com/rezaali/ofxUI.git

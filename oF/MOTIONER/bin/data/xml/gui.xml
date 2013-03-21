@@ -1,0 +1,40 @@
+<Widget>
+    <Kind>12</Kind>
+    <Name>OSC_OUT_HOST</Name>
+    <Value>localhost</Value>
+</Widget>
+<Widget>
+    <Kind>12</Kind>
+    <Name>OSC_OUT_PORT</Name>
+    <Value>10000</Value>
+</Widget>
+<Widget>
+    <Kind>20</Kind>
+    <Name>ENABLE OSC OUT</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>12</Kind>
+    <Name>DEVICE_INCOMING_UDP_PORT</Name>
+    <Value>9750</Value>
+</Widget>
+<Widget>
+    <Kind>20</Kind>
+    <Name>TOGGLE LOOP ALL</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>20</Kind>
+    <Name>TOGGLE DETAILED RENDERING</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>FPS</Name>
+    <Value>59.854385376</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>LOW-PASS</Name>
+    <Value>0.200000003</Value>
+</Widget>

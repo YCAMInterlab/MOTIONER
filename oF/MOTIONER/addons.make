@@ -1,0 +1,4 @@
+ofxAssimpModelLoader
+ofxNetwork
+ofxOsc
+ofxVectorGraphics

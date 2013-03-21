@@ -1,0 +1,18 @@
+[submodule "oF/MOTIONER/src/addons/ofxSimpleKalmanFilter"]
+	path = oF/MOTIONER/src/addons/ofxSimpleKalmanFilter
+	url = https://YoshitoONISHI@github.com/YoshitoONISHI/ofxSimpleKalmanFilter.git
+[submodule "oF/MOTIONER/src/addons/ofxNonCopyable"]
+	path = oF/MOTIONER/src/addons/ofxNonCopyable
+	url = https://YoshitoONISHI@github.com/YoshitoONISHI/ofxNonCopyable.git
+[submodule "oF/MOTIONER/src/addons/ofxException"]
+	path = oF/MOTIONER/src/addons/ofxException
+	url = https://YoshitoONISHI@github.com/YoshitoONISHI/ofxException.git
+[submodule "oF/MOTIONER/src/addons/ofxUITabbedCanvas"]
+	path = oF/MOTIONER/src/addons/ofxUITabbedCanvas
+	url = https://YoshitoONISHI@github.com/YoshitoONISHI/ofxUITabbedCanvas.git
+[submodule "oF/MOTIONER/src/addons/ofxGLUtils"]
+	path = oF/MOTIONER/src/addons/ofxGLUtils
+	url = https://YoshitoONISHI@github.com/YoshitoONISHI/ofxGLUtils.git
+[submodule "oF/MOTIONER/src/addons/ofxEvent"]
+	path = oF/MOTIONER/src/addons/ofxEvent
+	url = https://YoshitoONISHI@github.com/YoshitoONISHI/ofxEvent.git

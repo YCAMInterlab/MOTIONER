@@ -39,7 +39,7 @@ static void billboard()
 //----------------------------------------------------------------------------------------
 Renderer::Renderer() :
 mIsDrawJointName(false),
-mIsEnableShading(false),
+mIsEnableShading(true),
 mState(0),
 mActiveJoint(JOINT_HIPS)
 {
@@ -123,17 +123,20 @@ void Renderer::draw(Skeleton *skeleton) const
         //ofSetColor(color);
         //ofBox(n.getGlobalPosition(), n.velocity * 10);
         
-        (mState==Skeleton::STATE_SELECTED) ? ofSetLineWidth(2.0f) : ofSetLineWidth(1.5f);
+        (mState==Skeleton::STATE_SELECTED) ? ofSetLineWidth(4.0f) : ofSetLineWidth(2.0f);
         ofSetColor(color);
         if (!n.getParent()) continue;
         
          if (mIsEnableShading) {
+             ofPushStyle();
+             ofDisableLighting();
              glPushAttrib(GL_ALL_ATTRIB_BITS);
              glEnable(GL_DEPTH_TEST);
          }
         ofLine(n.getGlobalPosition(), n.getParent()->getGlobalPosition());
          if (mIsEnableShading) {
              glPopAttrib();
+             ofPopStyle();
          }
     }
     

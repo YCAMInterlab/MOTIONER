@@ -181,9 +181,9 @@ void MotionerApp::draw()
         
         ram::Mesh::drawRuler();
         
-        //mLight.enable();
+        mLight.enable();
         ram::skeleton::SkeletonManager::getInstance().drawSkeletons();
-        //mLight.disable();
+        mLight.disable();
         
                 
         cam->end();

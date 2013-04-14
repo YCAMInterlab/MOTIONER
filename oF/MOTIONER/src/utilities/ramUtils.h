@@ -32,6 +32,8 @@ namespace ram {
     string getJointName(int index);
     int getJointIndex(const string &name);
     
+    bool isEndSite(int nodeId);
+    
     //--------------------
     CoderPtr createCurrentCoder();
     void setCoderType(int type);
@@ -57,10 +59,6 @@ namespace ram {
     
     //--------------------
     string getDefaultRecordingDataFileName();
-    
-    /// Skeleton utils
-    //--------------------
-    bool isEndSite(int nodeId);
     
     /// Shadow matrix
     /// ax + by + cz + d = 0;

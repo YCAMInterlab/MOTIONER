@@ -1159,7 +1159,7 @@
 					"$(OF_CORE_LIBS)",
 					../../../addons/ofxAssimpModelLoader/libs/assimp/lib/osx/assimp.a,
 				);
-				SDKROOT = "";
+				SDKROOT = macosx10.6;
 			};
 			name = Debug;
 		};
@@ -1237,7 +1237,7 @@
 					"$(OF_CORE_LIBS)",
 					../../../addons/ofxAssimpModelLoader/libs/assimp/lib/osx/assimp.a,
 				);
-				SDKROOT = "";
+				SDKROOT = macosx10.6;
 			};
 			name = Release;
 		};

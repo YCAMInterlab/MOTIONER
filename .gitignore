@@ -30,7 +30,6 @@ obj
 *.b#*
 *.s#*
 *.l#*
-*.pro
 gerber
 
 *.zip

@@ -8,6 +8,8 @@ MOTIONER is a low cost inertial motion capture system developed for the RAM proj
 
 For more details, please see [MOTIONER wiki](https://github.com/YCAMInterlab/MOTIONER/wiki/)
 
+詳しい情報は[MOTIONER wiki](https://github.com/YCAMInterlab/MOTIONER/wiki/)を参照してください。
+
 ##Licenses
 
 ###Application

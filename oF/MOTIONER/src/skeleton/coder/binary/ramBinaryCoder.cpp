@@ -213,7 +213,7 @@ void BinaryCoder::readHeader(Skeleton *skeleton)
     memcpy(&size, &buf[0], sizeof(int32_t));
     mHeaderLength += sizeof(int32_t);
     
-    char version[size+1];
+    char *version = new char[size+1];
     memcpy(version, &buf[mHeaderLength], size);
     version[size] = NULL; /// c style str
     mVersion = string(version);
@@ -223,7 +223,7 @@ void BinaryCoder::readHeader(Skeleton *skeleton)
     /// name
     memcpy(&size, &buf[mHeaderLength], sizeof(int32_t));
     mHeaderLength += sizeof(int32_t);
-    char name[size+1];
+    char *name = new char[size+1];
     memcpy(name, &buf[mHeaderLength], size);
     name[size] = NULL; /// c style str
     mName = string(name);
@@ -233,7 +233,7 @@ void BinaryCoder::readHeader(Skeleton *skeleton)
     memcpy(&size, &buf[mHeaderLength], sizeof(int32_t));
     mHeaderLength += sizeof(int32_t);
     
-    char date[size+1];
+    char* date = new char[size+1];
     memcpy(date, &buf[mHeaderLength], size);
     mDate[size] = NULL; /// c style str
     mDate = string(date);
@@ -264,6 +264,10 @@ void BinaryCoder::readHeader(Skeleton *skeleton)
     "Duration: " << hou << ":" << min << ":" << sec << "\"" << msec;
 
     ofLogNotice("BinaryCoder") << oss.str();
+    
+    delete [] version;
+    delete [] name;
+    delete [] date;
 }
 
 //----------------------------------------------------------------------------------------
@@ -274,7 +278,7 @@ void BinaryCoder::readHierarchy(Skeleton *skeleton)
     char *buf = mBuffer.getBinaryBuffer();
     mHierarchyLength = N_JOINT_FLOATS * NUM_JOINTS * sizeof(float);
     
-    char data[mHierarchyLength];
+    char *data = new char[mHierarchyLength];
     
     memcpy(data, buf+mHeaderLength, mHierarchyLength);
     
@@ -295,6 +299,8 @@ void BinaryCoder::readHierarchy(Skeleton *skeleton)
                                                                 f[loc+5],
                                                                 f[loc+6]));
     }
+    
+    delete [] data;
 }
 
 //----------------------------------------------------------------------------------------
@@ -308,7 +314,7 @@ void BinaryCoder::readFrame(Skeleton *skeleton, frame_t frame)
     
     const frame_t head = static_cast<frame_t>(headerLen) + static_cast<frame_t>(mFrameLength)*frame;
     
-    char data[mFrameLength];
+    char *data = new char[mFrameLength];
     
     memcpy(data, buf+head, mFrameLength);
     
@@ -321,6 +327,8 @@ void BinaryCoder::readFrame(Skeleton *skeleton, frame_t frame)
                                                                 f[loc+2],
                                                                 f[loc+3]));
     }
+    
+    delete [] data;
     
     /// ease motion with time between frames
 }

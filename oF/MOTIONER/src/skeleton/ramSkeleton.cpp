@@ -597,7 +597,7 @@ SkeletonFinder::SkeletonFinder(const string &name) : name(name)
 }
 
 //----------------------------------------------------------------------------------------
-bool SkeletonFinder::operator()(const pair<string, SkeletonPtr> &itr)
+bool SkeletonFinder::operator()(const pair<string, ram::skeleton::SkeletonPtr> &itr)
 {
     return (name == itr.second->mModules->settings.mDeviceHostName);
 }

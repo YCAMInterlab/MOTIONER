@@ -83,7 +83,7 @@ void SkeletonManager::drawSkeletonsHUD()
 }
 
 //------------------------------------------------------------------------------------
-SkeletonPtr SkeletonManager::getSkeleton(int index)
+ram::skeleton::SkeletonPtr SkeletonManager::getSkeleton(int index)
 {
     SkeletonMap::iterator it = mSkeletonMap.begin();
     
@@ -96,7 +96,7 @@ SkeletonPtr SkeletonManager::getSkeleton(int index)
 }
 
 //------------------------------------------------------------------------------------
-SkeletonPtr SkeletonManager::getSkeleton(const string &name)
+ram::skeleton::SkeletonPtr SkeletonManager::getSkeleton(const string &name)
 {
     SkeletonMap::iterator it = mSkeletonMap.find(name);
     if (it==mSkeletonMap.end())

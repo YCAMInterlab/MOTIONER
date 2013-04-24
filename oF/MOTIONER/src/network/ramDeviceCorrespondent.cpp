@@ -37,7 +37,7 @@ int	DeviceCorrespondent::ofxUDPManagerExtend::ReceiveBytes(uint8_t* pBuff, const
     int	ret=0;
     
     memset(pBuff, 0, iSize);
-    ret= recvfrom(m_hSocket, pBuff,	iSize, 0, (sockaddr *)&saClient, &nLen);
+    ret= recvfrom(m_hSocket, reinterpret_cast<char *>(pBuff), iSize, 0, (sockaddr *)&saClient, &nLen);
     
     if (ret	> 0) {
         canGetRemoteAddress= true;
@@ -81,7 +81,7 @@ void DeviceCorrespondent::threadedFunction()
         
         //const unsigned long long frameBegin = ofGetElapsedTimeMillis();
         
-        uint8_t udpMessage[UDP_PACKET_BUFFER];
+        uint8_t *udpMessage = new uint8_t[UDP_PACKET_BUFFER];
         
         const ssize_t size =  mUdpReceiver.ReceiveBytes(udpMessage, UDP_PACKET_BUFFER);
         
@@ -89,6 +89,7 @@ void DeviceCorrespondent::threadedFunction()
             /// no host found
             //ostringstream oss;
             //oss << __FUNCTION__ << " Couldn't receive message";
+            delete [] udpMessage;
             continue;
         }
         
@@ -110,6 +111,8 @@ void DeviceCorrespondent::threadedFunction()
         //const unsigned long long sleepTime = 1000/UDP_REFRESH_RATE-frameTime;
         //if (sleepTime>0)
         //    sleep(static_cast<int>(sleepTime));
+        
+        delete [] udpMessage;
     }
 }
 

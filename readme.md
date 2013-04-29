@@ -4,7 +4,7 @@
 
 ![](https://github.com/YCAMInterlab/MOTIONER/wiki/res/Home/MOTIONER.jpg)
 
-MOTIONER is a low cost inertial motion capture system developed for the RAM project(Reactor for Awareness in Motion) at Yamaguchi Center for Arts in Media (YCAM). Using MOTIONER, you can capture, record and playback body movements, and send the data via OSC messages over a network. MOTIONER is designed to work with RAM Dance Toolkit using openFrameworks, and will work with creative coding environments that provide OSC. MOTIONER is developed in collaboration with Yoko Ando (The Forsythe Company) and other dancers. MOTIONER is a light weight, low-stress, and low latency system. Because it's an inertial system, the sensors can be attached either inside or on the outside of clothing.
+MOTIONER is a low cost inertial motion capture system developed for Reactor for Awareness in Motion(RAM) project at Yamaguchi Center for Arts in Media (YCAM). Using MOTIONER, you can capture, record and playback body movements, and send the data via OSC messages over a network. MOTIONER is designed to work with RAM Dance Toolkit using openFrameworks, and will work with creative coding environments that provide OSC. MOTIONER is developed in collaboration with Yoko Ando (The Forsythe Company) and other dancers. MOTIONER is a light weight, low-stress, and low latency system. Because it's an inertial system, the sensors can be attached either inside or on the outside of clothing.
 
 For more details, please see [MOTIONER wiki](https://github.com/YCAMInterlab/MOTIONER/wiki/)
 

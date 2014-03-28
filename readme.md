@@ -31,6 +31,9 @@ MOTIONER software by YCAM InterLab and Yoshito Onishi is licensed under the
     limitations under the License.
 
 ###Arduino, Processing sketch and mbed code
+
+Copyright 2012-2013 YCAMInterLab and Yoshito Onishi
+
 MOTIONER Arduino, Processing sketch and mbed code by YCAM InterLab and Yoshito Onishi are licensed under the 
 [GNU GPL(General Public License) v3.0](http://www.gnu.org/licenses/gpl.html)
 

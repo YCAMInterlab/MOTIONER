@@ -294,7 +294,7 @@
 		E45BE9770E8CC7DD009D7055 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		E45BE9790E8CC7DD009D7055 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		E45BE97A0E8CC7DD009D7055 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
-		E4B69B5B0A3A1756003C02F2 /* MotionerDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = MotionerDebug.app; path = MOTIONERDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4B69B5B0A3A1756003C02F2 /* MOTIONERDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MOTIONERDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4C2424410CC5A17004149E2 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		E4C2424510CC5A17004149E2 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		E4C2424610CC5A17004149E2 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
@@ -837,7 +837,7 @@
 				E4EEC9E9138DF44700A80321 /* openFrameworks */,
 				BB4B014C10F69532006C3DED /* addons */,
 				E45BE5980E8CC70C009D7055 /* frameworks */,
-				E4B69B5B0A3A1756003C02F2 /* MotionerDebug.app */,
+				E4B69B5B0A3A1756003C02F2 /* MOTIONERDebug.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -946,7 +946,7 @@
 			);
 			name = MOTIONER;
 			productName = myOFApp;
-			productReference = E4B69B5B0A3A1756003C02F2 /* MotionerDebug.app */;
+			productReference = E4B69B5B0A3A1756003C02F2 /* MOTIONERDebug.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1159,7 +1159,7 @@
 					"$(OF_CORE_LIBS)",
 					../../../addons/ofxAssimpModelLoader/libs/assimp/lib/osx/assimp.a,
 				);
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx10.8;
 			};
 			name = Debug;
 		};
@@ -1237,7 +1237,7 @@
 					"$(OF_CORE_LIBS)",
 					../../../addons/ofxAssimpModelLoader/libs/assimp/lib/osx/assimp.a,
 				);
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx10.8;
 			};
 			name = Release;
 		};

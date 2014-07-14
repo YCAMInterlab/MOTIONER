@@ -95,7 +95,7 @@ void Skeleton::update()
             updateLowpass(DeviceCorrespondent::getInstance().getFrame(hostName));
             
             /// update position (currently zero)
-            mJoints.at(JOINT_HIPS).setGlobalPosition(mCurrentFrame.position);
+            // mJoints.at(JOINT_HIPS).setGlobalPosition(mCurrentFrame.position);
             
             updateRotation();
         }
@@ -201,10 +201,18 @@ void Skeleton::loadSettings(const string &fileName)
     OFX_BEGIN_EXCEPTION_HANDLING
     /// general settings for this skeleton
     mModules->settings.load(fileName);
+    
+    if (mModules->settings.hasTree()) {
+        mModules->settings.loadTree(this);
+    }
+    
     /// hierarchy settings for this skeleton
     mModules->settings.loadHierarchy(this);
     /// default caribrated values
     mModules->settings.loadCalibration(this);
+    
+    mModules->settings.loadProperties(this);
+    
     OFX_END_EXCEPTION_HANDLING
 }
 
@@ -520,8 +528,15 @@ void Skeleton::setDisableJoint(int joint, bool bDisable)
         ofxThrowException(ofxException, "joint out of index");
     mDisableJoints.at(joint) = bDisable;
     if (bDisable) {
-        createTree();
+        if (mModules->settings.hasTree()) {
+            mModules->settings.loadTree(this);
+        }
+        else {
+            createTree();
+        }
         mModules->settings.loadHierarchy(this);
+        
+        mModules->settings.loadProperties(this);
     }
 }
 

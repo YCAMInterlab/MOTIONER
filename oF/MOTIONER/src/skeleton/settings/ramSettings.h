@@ -45,6 +45,16 @@ namespace ram { namespace skeleton {
         void loadCalibration(Skeleton *skeleton);
         void saveCalibration(Skeleton *skeleton);
         
+        // tree structure
+        //--------------------
+        void loadTree(Skeleton *skeleton);
+        
+        void loadTreeJointTag(Skeleton *skeleton, int parent);
+        
+        // properties
+        //--------------------
+        void loadProperties(Skeleton *skeleton);
+        
         /// setters (also write into the xml file)
         //--------------------
         void setName(const string &name);
@@ -53,6 +63,7 @@ namespace ram { namespace skeleton {
         //--------------------
         inline const string &getFileName() const { return mFileName; }
         inline bool getIsLoaded() const { return mIsLoaded; }
+        inline bool hasTree() const { return mHasTree; }
         
     private:
         /// xml utils
@@ -70,6 +81,8 @@ namespace ram { namespace skeleton {
         string  mFileName;
         string  mName;
         string  mDeviceHostName;
+        
+        bool    mHasTree;
         
         bool    mIsLoaded;
         

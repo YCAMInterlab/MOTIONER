@@ -69,6 +69,8 @@ void MotionerApp::setup()
     
     mLight.setGlobalPosition(-1000.0, 3000.0, 1000.0);
     
+    windowResized(ofGetWidth(), ofGetHeight());
+    
     ofLogNotice() << "Setup finished!";
     
     OFX_END_EXCEPTION_HANDLING

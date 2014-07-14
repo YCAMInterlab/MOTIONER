@@ -53,6 +53,10 @@ void Settings::load(const string &filePath)
     
     mName = mXml.getValue("ACTOR_NAME", kErrors);
     _checkError("ACTOR_NAME", mName);
+    
+    mHasTree = mXml.tagExists("TREE");
+    if (mHasTree)
+        ofLogNotice("Settings") << "Tree data found";
 
     /// notify loaded data
     ofxEventMessage m;
@@ -98,10 +102,11 @@ void Settings::loadHierarchy(Skeleton *skeleton)
     string error;
     const string jointTag = "JOINT";
     const int nJoints = mXml.getNumTags(jointTag);
-    if (nJoints != NUM_JOINTS)
+    
+    if (!mHasTree && nJoints != NUM_JOINTS)
         ofxThrowExceptionf(ofxException, "Number of joints is %d", nJoints);
     
-    for (int i=0; i<NUM_JOINTS; i++) {
+    for (int i=0; i<nJoints; i++) {
         /// set joint's name
         skeleton->mJoints.at(i).name = getJointName(i);
         skeleton->mJoints.at(i).id = i;
@@ -114,8 +119,8 @@ void Settings::loadHierarchy(Skeleton *skeleton)
         
         /// set joints local position
         skeleton->mJoints.at(i).setPosition(ofVec3f(x, y, z));
-        //ofLogNotice() << skeleton->mJoints.at(i).name << ": "
-        //<< skeleton->mJoints.at(i).getPosition();
+        ofLogNotice() << skeleton->mJoints.at(i).name << ": "
+        << skeleton->mJoints.at(i).getPosition();
     }
     
     mXml.popTag();
@@ -156,10 +161,11 @@ void Settings::loadCalibration(Skeleton *skeleton)
         string error;
         const string jointTag = "JOINT";
         const int nJoints = mXml.getNumTags(jointTag);
-        if (nJoints != NUM_JOINTS)
+        
+        if (!mHasTree && nJoints != NUM_JOINTS)
             ofxThrowExceptionf(ofxException, "Number of joints is %d", nJoints);
         
-        for (int i=0; i<NUM_JOINTS; i++) {
+        for (int i=0; i<nJoints; i++) {
             const float x = mXml.getAttribute(jointTag, "RX", kErrorf, i);
             _checkError("RX", x);
             const float y = mXml.getAttribute(jointTag, "RY", kErrorf, i);
@@ -205,6 +211,68 @@ void Settings::saveCalibration(Skeleton *skeleton)
     }
     
     mXml.popTag();
+}
+
+//----------------------------------------------------------------------------------------
+void Settings::loadTree(Skeleton *skeleton)
+{
+    OFX_BEGIN_EXCEPTION_HANDLING
+    
+    skeleton->mJoints.clear();
+    skeleton->mJoints.assign(NUM_JOINTS, Node());
+
+    if (mXml.tagExists("TREE")) {
+    
+        mXml.pushTag("TREE");
+        
+        for (int i=0; i<mXml.getNumTags("JOINT"); i++) {
+        
+            const int parent = mXml.getAttribute("JOINT", "ID", 0, i);
+            
+            mXml.pushTag("JOINT", i);
+            
+            loadTreeJointTag(skeleton, parent);
+            
+            mXml.popTag();
+            
+        }
+        
+        mXml.popTag();
+        
+    }
+    else {
+        ofxThrowException(ofxException, "Tree tag didn't find");
+    }
+    
+    
+    OFX_END_EXCEPTION_HANDLING
+}
+
+//----------------------------------------------------------------------------------------
+void Settings::loadTreeJointTag(Skeleton *skeleton, int parent)
+{
+    for (int i=0; i<mXml.getNumTags("JOINT"); i++) {
+
+        int id = mXml.getAttribute("JOINT", "ID", 0, i);
+        
+        ofLogNotice("Settings") << "child: " << id << " >>> " << "parent: " << parent;
+        skeleton->mJoints.at(id).setParent(skeleton->mJoints.at(parent));
+        
+        mXml.pushTag("JOINT", i);
+        
+        loadTreeJointTag(skeleton, id);
+        
+        mXml.popTag();
+    }
+}
+
+//----------------------------------------------------------------------------------------
+void Settings::loadProperties(Skeleton *skeleton)
+{
+    if (mXml.tagExists("USE_IK")) {
+        bool useIK = (bool)mXml.getValue("USE_IK", 1);
+        useIK ? skeleton->enable(Skeleton::EASY_IK) : skeleton->disable(Skeleton::EASY_IK);
+    }
 }
 
 //----------------------------------------------------------------------------------------

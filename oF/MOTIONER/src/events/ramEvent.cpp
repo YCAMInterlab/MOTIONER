@@ -7,6 +7,7 @@
 //
 
 #include "ramEvent.h"
+#include "ofxEvent.h"
 
 namespace ram { namespace event {
     
@@ -38,5 +39,14 @@ namespace ram { namespace event {
     const std::string ADDRESS_PLAY_MOTION                   = "ADDRESS_PLAY_MOTION";
     
     const std::string ADDRESS_SET_LOWPASS                   = "ADDRESS_SET_LOWPASS";
+    const std::string ADDRESS_SET_ORIENTATION               = "ADDRESS_SET_ORIENTATION";
+    const std::string ADDRESS_REQUEST_GENERAL_SETTINGS      = "ADDRESS_REQUEST_GENERAL_SETTINGS";
+    
+    void requestGeneralSettings()
+    {
+        ofxEventMessage m;
+        m.setAddress(event::ADDRESS_REQUEST_GENERAL_SETTINGS);
+        ofxNotifyEvent(m);
+    }
     
 } }

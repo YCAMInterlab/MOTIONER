@@ -70,11 +70,13 @@ void CameraManager::setTranslation(bool bTranslate)
     if (cam) {
         if (bTranslate) {
             cam->enableMouseInput();
-            ofNotifyKeyPressed('m');
+            ofNotifyMousePressed(0, 0, OF_MOUSE_BUTTON_MIDDLE);
+            //ofNotifyKeyPressed('m');
         }
         else {
             cam->disableMouseInput();
-            ofNotifyKeyReleased('m');
+            ofNotifyMouseReleased(0, 0, OF_MOUSE_BUTTON_MIDDLE);
+            //ofNotifyKeyReleased('m');
         }
     }
 }

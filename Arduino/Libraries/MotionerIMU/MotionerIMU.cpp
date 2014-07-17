@@ -29,7 +29,8 @@ MotionerIMU::MotionerIMU() :
 totalSpeed(0),
 lerpRate(0.01),
 invLerpRate(1. - lerpRate), /// velocity
-mNodeId(0)
+mNodeId(0),
+mOutPutSerial(false)
 {
 }
 
@@ -96,6 +97,9 @@ void MotionerIMU::setup()
             blink(LED, mNodeId/10, 500);
         blink(LED, mNodeId%10, 100);
     }
+    
+    resetVelocityPosition();
+    
     Serial.println("setup finished!");
 }
 
@@ -103,6 +107,8 @@ void MotionerIMU::setup()
 void MotionerIMU::update()
 {
     updateSerial();
+    
+    if (mOutPutSerial) outPutSerial();
     
     updateValues();
     
@@ -331,8 +337,42 @@ void MotionerIMU::updateSerial()
                 Serial.print(mRazorIMU.getQuaternion().w);
                 Serial.println("");
             }
+            else if (command == 'o') {
+                if (Serial.available() >= 1) {
+                    int command2 = Serial.read();
+                    if (command2 == '1') {
+                        mOutPutSerial = true;
+                        Serial.println("Begin output serial data.");
+                    }
+                    else if (command2 == '0') {
+                        mOutPutSerial = false;
+                        Serial.println("End output serial data.");
+                    }
+                    
+                }
+            }
         }
     }
+}
+
+void MotionerIMU::outPutSerial()
+{
+//    Serial.print(mRazorIMU.getQuaternion().x);
+//    Serial.print(",");
+//    Serial.print(mRazorIMU.getQuaternion().y);
+//    Serial.print(",");
+//    Serial.print(mRazorIMU.getQuaternion().z);
+//    Serial.print(",");
+//    Serial.print(mRazorIMU.getQuaternion().w);
+//    Serial.print(",");
+    Serial.print(vel.x);
+    Serial.print(",");
+    Serial.print(vel.y);
+    Serial.print(",");
+    Serial.print(vel.z);
+    Serial.print(",");
+    Serial.print(acc.length());
+    Serial.println("");
 }
 
 char MotionerIMU::serialBusyWait()

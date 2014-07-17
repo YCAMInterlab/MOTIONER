@@ -37,6 +37,11 @@ namespace ram { namespace event {
     extern const std::string ADDRESS_PLAY_MOTION;
     extern const std::string ADDRESS_SAVE_SKELETON;
     extern const std::string ADDRESS_SET_LOWPASS;
+    extern const std::string ADDRESS_SET_ORIENTATION;
+    
+    extern const std::string ADDRESS_REQUEST_GENERAL_SETTINGS;
+    
+    extern void requestGeneralSettings();
     
 } }
 

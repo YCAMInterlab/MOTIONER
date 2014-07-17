@@ -45,7 +45,7 @@ struct Skeleton::Modules {
 Skeleton::Skeleton() :
 mFlags(CAPTURE | RENDER | EASY_IK | OSC_OUT),
 mDrawDebug(true),
-mLowpass(0.2f)
+mLowpass(0.0f)
 {
     mJoints.clear();
     mJoints.assign(NUM_JOINTS, Node());
@@ -75,6 +75,8 @@ void Skeleton::setup(const string &hostName, const string &settingFilePath)
     setHostName(hostName);
     
     ofAddListener(ofxEvent(), this, &Skeleton::onMessageReceived);
+    
+    event::requestGeneralSettings();
     
     OFX_END_EXCEPTION_HANDLING
 }
@@ -133,10 +135,7 @@ void Skeleton::updateLowpass(coder::Frame frame)
     mPreviousFrame = mCurrentFrame;
     mCurrentFrame = frame;
     for (int i=0; i<mCurrentFrame.rotation.size(); i++) {
-        const ofVec4f curr = mCurrentFrame.rotation.at(i).asVec4();
-        const ofVec4f prev = mPreviousFrame.rotation.at(i).asVec4();
-        const ofVec4f result = curr*(1.0f-mLowpass) + prev*mLowpass;
-        mCurrentFrame.rotation.at(i).set(result);
+        mCurrentFrame.rotation.at(i).slerp(mLowpass, mCurrentFrame.rotation.at(i), mPreviousFrame.rotation.at(i));
     }
 }
 
@@ -155,6 +154,10 @@ void Skeleton::updateRotation()
             mJoints.at(i).setGlobalOrientation(calibratedQuat);
             mJoints.at(i).velocity = mCurrentFrame.velocity.at(i);
         }
+    }
+    
+    if (mJoints.empty() == false) {
+        mJoints.at(0).rotate(ofQuaternion(mOrientationY, ofVec3f(0.0, 1.0, 0.0)));
     }
 }
 
@@ -205,11 +208,16 @@ void Skeleton::loadSettings(const string &fileName)
     if (mModules->settings.hasTree()) {
         mModules->settings.loadTree(this);
     }
+    else {
+        createTree();
+    }
     
     /// hierarchy settings for this skeleton
     mModules->settings.loadHierarchy(this);
     /// default caribrated values
     mModules->settings.loadCalibration(this);
+    
+    mModules->settings.loadUnuseJoints(this);
     
     mModules->settings.loadProperties(this);
     
@@ -362,6 +370,9 @@ void Skeleton::onMessageReceived(ofxEventMessage &m)
         const string name = m.getArgAsString(0);
         if (name==getName())
             saveSettings();
+    }
+    else if (addr==event::ADDRESS_SET_ORIENTATION) {
+        mOrientationY = m.getArgAsFloat(0);
     }
     else if (addr==event::ADDRESS_SET_LOWPASS) {
         mLowpass = m.getArgAsFloat(0);

@@ -90,6 +90,7 @@ namespace ram {
         //--------------------
         void guiEvent(ofxUIEventArgs &e);
         
+        void notifySkeletonOrientation();
 
 #ifdef DEBUG
         /// experiment
@@ -163,6 +164,10 @@ namespace ram {
         ofxUIImageToggle    *mRotationToggle;
         ofxUIImageToggle    *mTranslationToggle;
         ofxUIImageToggle    *mPlayToggle;
+        
+        /// orientation
+        //--------------------
+        ofxUISlider         *mOrientation;
         
         /// UI params
         //--------------------

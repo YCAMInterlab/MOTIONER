@@ -212,6 +212,7 @@ namespace ram { namespace skeleton {
         bool            mDrawDebug;
         
         float           mLowpass;
+        float           mOrientationY;
     };
     
     

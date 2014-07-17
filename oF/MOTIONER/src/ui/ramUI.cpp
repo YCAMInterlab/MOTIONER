@@ -341,6 +341,29 @@ void UI::setup(const ofRectangle &rect)
     //    general->addToggle("ENABLE", false, buttonSize, buttonSize);
     //}
     //-------------------------------------------r-------
+    
+    /// GENERAL - ORIENTATION
+    {
+        general->addSpacer(genHw, 1.0f);
+        
+        general->addLabel("", OFX_UI_FONT_SMALL);
+        
+        general->addLabel("SKELETON ORIENTATION", OFX_UI_FONT_MEDIUM);
+        //general->addLabel("ELAPSED: 00:00:12", OFX_UI_FONT_SMALL);
+        //general->addLabel("NUM FRAMES: 12345", OFX_UI_FONT_SMALL);
+        //widget = addImageButton(general, buttonSize, "images/open.png", "OPEN REC FILES", true);
+        
+        general->addLabel("", OFX_UI_FONT_SMALL);
+        
+        mOrientation = general->addSlider("ORIENTATION-Y", 0.0f, 360.0f, 0.0f, genHw, hh);
+        mOrientation->setColorOutline(outlineColor);
+        mOrientation->setDrawOutline(true);
+        
+        general->addLabel("", OFX_UI_FONT_SMALL);
+    }
+    //--------------------------------------------------
+    
+    
     /// GENERAL - RECORDER
     {
         general->addSpacer(genHw, 1.0f);
@@ -470,10 +493,10 @@ void UI::setup(const ofRectangle &rect)
     
     if (mEnableOscToggle->getValue())
         enableOsc();
-    
-#ifdef DEBUG
-    notifyLowpassValue();
-#endif
+        
+//#ifdef DEBUG
+//    notifyLowpassValue();
+//#endif
     
     //setupDeviceCorrespondent();
     
@@ -827,6 +850,9 @@ void UI::guiEvent(ofxUIEventArgs &e)
         m.addIntArg(static_cast<ofxUIImageToggle *>(e.widget)->getValue());
         ofxNotifyEvent(m);
     }
+    else if (name == "ORIENTATION-Y") {
+        notifySkeletonOrientation();
+    }
     else if (name == "ROTATE") {
         ofxEventMessage m ;
         m.setAddress(event::ADDRESS_SET_CAMERA_ROTATION);
@@ -999,6 +1025,12 @@ void UI::onNotifyEvent(ofxEventMessage &m)
         mPlayToggle->setValue(p);
         //ofLogNotice() << mPlayToggle->getValue();
     }
+    else if (addr==event::ADDRESS_REQUEST_GENERAL_SETTINGS) {
+        notifySkeletonOrientation();
+#ifdef DEBUG
+        notifyLowpassValue();
+#endif
+    }
 }
 
 //----------------------------------------------------------------------------------------
@@ -1039,6 +1071,15 @@ void UI::setupDeviceCorrespondent()
 int UI::getDeviceIncomingUdpPort() const
 {
     return ofToInt(mDeviceIncomingPortInput->getTextString());
+}
+
+//----------------------------------------------------------------------------------------
+void UI::notifySkeletonOrientation()
+{
+    ofxEventMessage m;
+    m.setAddress(event::ADDRESS_SET_ORIENTATION);
+    m.addFloatArg(mOrientation->getScaledValue());
+    ofxNotifyEvent(m);
 }
 
 //----------------------------------------------------------------------------------------

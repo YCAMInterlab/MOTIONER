@@ -72,6 +72,7 @@ public:
     void updateSerial();
     void writeNodeId();
     char serialBusyWait();
+    void outPutSerial();
     
     /// MotionerIMU
     void updateValues();
@@ -120,6 +121,8 @@ private:
     
     float mRawAcce[3];
     /// velocity
+    
+    bool mOutPutSerial;
 };
 
 #endif /* defined(__MotionerIMU__MotionerIMU__) */

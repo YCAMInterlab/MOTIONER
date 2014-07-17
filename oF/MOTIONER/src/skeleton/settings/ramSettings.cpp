@@ -108,7 +108,8 @@ void Settings::loadHierarchy(Skeleton *skeleton)
     
     for (int i=0; i<nJoints; i++) {
         /// set joint's name
-        skeleton->mJoints.at(i).name = getJointName(i);
+        //skeleton->mJoints.at(i).name = getJointName(i);
+        skeleton->mJoints.at(i).name = mXml.getValue(jointTag, kErrors, i);
         skeleton->mJoints.at(i).id = i;
         const float x = mXml.getAttribute(jointTag, "PX", kErrorf, i);
         _checkError("PX", x);
@@ -119,8 +120,8 @@ void Settings::loadHierarchy(Skeleton *skeleton)
         
         /// set joints local position
         skeleton->mJoints.at(i).setPosition(ofVec3f(x, y, z));
-        ofLogNotice() << skeleton->mJoints.at(i).name << ": "
-        << skeleton->mJoints.at(i).getPosition();
+        //ofLogNotice() << skeleton->mJoints.at(i).name << ": "
+        //<< skeleton->mJoints.at(i).getPosition();
     }
     
     mXml.popTag();
@@ -192,12 +193,17 @@ void Settings::saveCalibration(Skeleton *skeleton)
     if (!ret)
         ofxThrowException(ofxException, "CALIBRATION tag didn't found!");
     
+    const string jointTag = "JOINT";
+    const int nJoints = mXml.getNumTags(jointTag);
+    
+    if (!mHasTree && nJoints != NUM_JOINTS)
+        ofxThrowExceptionf(ofxException, "Number of joints is %d", nJoints);
+    
     {
-        for (int i=0; i<NUM_JOINTS; i++) {
+        for (int i=0; i<nJoints; i++) {
             const ofQuaternion q = skeleton->mBaseFrame.rotation.at(i);
             
             int ret = 0;
-            const string jointTag = "JOINT";
             ret = mXml.setAttribute(jointTag, "RX", q.x(), i);
             _checkOffertAtrribExist(ret);
             ret = mXml.setAttribute(jointTag, "RY", q.y(), i);
@@ -261,6 +267,38 @@ void Settings::loadTreeJointTag(Skeleton *skeleton, int parent)
         mXml.pushTag("JOINT", i);
         
         loadTreeJointTag(skeleton, id);
+        
+        mXml.popTag();
+    }
+}
+
+//----------------------------------------------------------------------------------------
+void Settings::loadUnuseJoints(Skeleton *skeleton)
+{
+    if (mXml.tagExists("UNUSE")) {
+        mXml.pushTag("UNUSE");
+        
+        const int nTags = mXml.getNumTags("JOINT");
+        vector<int> unuseJoints(nTags);
+        
+        for (int i=0; i<nTags; i++) {
+            const int id = mXml.getAttribute("JOINT", "ID", kErrori, i);
+            unuseJoints.at(i) = id;
+        }
+        
+        
+        for (int i=0; i<skeleton->mDisableJoints.size(); i++) {
+            skeleton->mDisableJoints.at(i) = false;
+        }
+        
+        for (int i=0; i<skeleton->mDisableJoints.size(); i++) {
+            for (int j=0; j<unuseJoints.size(); j++) {
+                if (i == unuseJoints.at(j)) {
+                    ofLogNotice("Settings") << "unuse joint at:" << i;
+                    skeleton->mDisableJoints.at(i) = true;
+                }
+            }
+        }
         
         mXml.popTag();
     }

@@ -51,6 +51,10 @@ namespace ram { namespace skeleton {
         
         void loadTreeJointTag(Skeleton *skeleton, int parent);
         
+        // unuse
+        //--------------------
+        void loadUnuseJoints(Skeleton *skeleton);
+        
         // properties
         //--------------------
         void loadProperties(Skeleton *skeleton);

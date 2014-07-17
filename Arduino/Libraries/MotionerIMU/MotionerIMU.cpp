@@ -27,7 +27,8 @@ static void blink(uint8_t pin, uint8_t times, uint16_t ms);
 /// ------------------------------------------------ ///
 MotionerIMU::MotionerIMU() :
 totalSpeed(0),
-lerpRate(0.01),
+//lerpRate(0.01),
+lerpRate(0.2),
 invLerpRate(1. - lerpRate), /// velocity
 mNodeId(0),
 mOutPutSerial(false)

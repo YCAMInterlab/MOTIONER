@@ -34,7 +34,7 @@ mSkeletonNameInput(NULL),
 mShowJointNameToggle(NULL),
 
 mJointNameLabel(NULL),
-mJointName(getJointName(JOINT_HIPS)),
+mJointName("not selected"),
 mDialerX(NULL),
 mDialerY(NULL),
 mDialerZ(NULL),
@@ -470,7 +470,7 @@ void InspectorUI::guiEvent(ofxUIEventArgs &e)
             const skeleton::Node &n = skl->getJoint(mJointName);
             if (!n.name.empty()) {
                 ofxUILabelToggle *lt = static_cast<ofxUILabelToggle *>(e.widget);
-                skl->setDisableJoint(getJointIndex(mJointName), lt->getValue());
+                skl->setDisableJoint(skl->getJointIndexFromName(mJointName), lt->getValue());
             }
             else {
                 ofxThrowException(ofxException, "Node not found!");
@@ -556,8 +556,8 @@ void InspectorUI::setDevice(const string &hostName)
         
         mEnableOscOutToggle->setValue(skl->getEnableOscOut());
         
-        skl->setActilveJoint(getJointIndex(mJointName));
-        mDisableJointToggle->setValue(skl->getDisableJoint(getJointIndex(mJointName)));
+        skl->setActilveJoint(0);
+        mDisableJointToggle->setValue(skl->getDisableJoint(0));
         
         /// mark as selected
         skl->setState(skeleton::Skeleton::STATE_SELECTED);
@@ -584,7 +584,15 @@ void InspectorUI::setSettingsFilePath(const string &path)
 //----------------------------------------------------------------------------------------
 void InspectorUI::setJoint(int index)
 {
-    setJoint(getJointName(index));
+    shared_ptr<skeleton::Skeleton> skl = mSkeleton.lock();
+    
+    string name;
+    
+    if (skl) {
+        name = skl->getJoint(index).name;
+    }
+    
+    setJoint(name);
 }
 
 //----------------------------------------------------------------------------------------
@@ -598,11 +606,11 @@ void InspectorUI::setJoint(const string &name)
     
     if (skl) {
         const skeleton::Node &n = skl->getJoint(name);
-        skl->setActilveJoint(getJointIndex(name));
-        mDisableJointToggle->setValue(skl->getDisableJoint(getJointIndex(name)));
+        skl->setActilveJoint(skl->getJointIndexFromName(name));
+        mDisableJointToggle->setValue(skl->getDisableJoint(skl->getJointIndexFromName(name)));
         
         if (!n.name.empty()) {
-            //ofLogNotice() << n.name << ": " << n.getPosition();//debug
+            ofLogNotice() << n.name << ": " << n.getPosition();//debug
             mDialerX->setValue(n.getPosition().x);
             mDialerY->setValue(n.getPosition().y);
             mDialerZ->setValue(n.getPosition().z);

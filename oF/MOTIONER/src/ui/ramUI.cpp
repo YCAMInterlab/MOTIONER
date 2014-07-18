@@ -349,15 +349,30 @@ void UI::setup(const ofRectangle &rect)
         general->addLabel("", OFX_UI_FONT_SMALL);
         
         general->addLabel("SKELETON ORIENTATION", OFX_UI_FONT_MEDIUM);
-        //general->addLabel("ELAPSED: 00:00:12", OFX_UI_FONT_SMALL);
-        //general->addLabel("NUM FRAMES: 12345", OFX_UI_FONT_SMALL);
-        //widget = addImageButton(general, buttonSize, "images/open.png", "OPEN REC FILES", true);
         
         general->addLabel("", OFX_UI_FONT_SMALL);
         
         mOrientation = general->addSlider("ORIENTATION-Y", 0.0f, 360.0f, 0.0f, genHw, hh);
         mOrientation->setColorOutline(outlineColor);
         mOrientation->setDrawOutline(true);
+        
+        general->addLabel("", OFX_UI_FONT_SMALL);
+    }
+    //--------------------------------------------------
+    
+    /// GENERAL - AUTO RESET POSITION
+    {
+        general->addSpacer(genHw, 1.0f);
+        
+        general->addLabel("", OFX_UI_FONT_SMALL);
+        
+        general->addLabel("AUTO RESET POSITION", OFX_UI_FONT_MEDIUM);
+        
+        general->addLabel("", OFX_UI_FONT_SMALL);
+        
+        mAutoResetDimenstion = general->addSlider("DIMENSTION", 0.0f, 10000.0f, 0.0f, genHw, hh);
+        mAutoResetDimenstion->setColorOutline(outlineColor);
+        mAutoResetDimenstion->setDrawOutline(true);
         
         general->addLabel("", OFX_UI_FONT_SMALL);
     }
@@ -853,6 +868,9 @@ void UI::guiEvent(ofxUIEventArgs &e)
     else if (name == "ORIENTATION-Y") {
         notifySkeletonOrientation();
     }
+    else if (name == "DIMENSTION") {
+        notifyAutoResetDimension();
+    }
     else if (name == "ROTATE") {
         ofxEventMessage m ;
         m.setAddress(event::ADDRESS_SET_CAMERA_ROTATION);
@@ -1027,6 +1045,7 @@ void UI::onNotifyEvent(ofxEventMessage &m)
     }
     else if (addr==event::ADDRESS_REQUEST_GENERAL_SETTINGS) {
         notifySkeletonOrientation();
+        notifyAutoResetDimension();
 #ifdef DEBUG
         notifyLowpassValue();
 #endif
@@ -1079,6 +1098,15 @@ void UI::notifySkeletonOrientation()
     ofxEventMessage m;
     m.setAddress(event::ADDRESS_SET_ORIENTATION);
     m.addFloatArg(mOrientation->getScaledValue());
+    ofxNotifyEvent(m);
+}
+
+//----------------------------------------------------------------------------------------
+void UI::notifyAutoResetDimension()
+{
+    ofxEventMessage m;
+    m.setAddress(event::ADDRESS_SET_AUTO_RESET_DIMENSION);
+    m.addFloatArg(mAutoResetDimenstion->getScaledValue());
     ofxNotifyEvent(m);
 }
 

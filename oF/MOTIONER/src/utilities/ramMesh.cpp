@@ -18,7 +18,7 @@ namespace ram {
         {
             const float step = 1000.0f;
             ofPoint offset(30.0f, 2.0f);
-            const int n = 10;
+            const int n = 6;
             
             /// draw ruler
             ofxPushAll();

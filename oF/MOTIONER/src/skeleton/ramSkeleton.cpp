@@ -45,7 +45,10 @@ struct Skeleton::Modules {
 Skeleton::Skeleton() :
 mFlags(CAPTURE | RENDER | EASY_IK | OSC_OUT),
 mDrawDebug(true),
-mLowpass(0.0f)
+mLowpass(0.0f),
+mOrientationY(0.0f),
+mAutoResetDimension(0.0f),
+mResetPosition(ofVec2f(0.0f, 0.0f))
 {
     mJoints.clear();
     mJoints.assign(NUM_JOINTS, Node());
@@ -121,10 +124,15 @@ void Skeleton::update()
         mModules->renderer.update(this);
     
     /// estimate global position
-    if (isEnable(EASY_IK))
+    if (isEnable(EASY_IK)) {
         mModules->easyIK.update(this);
-    else if (isEnable(CIRCLE_TRACKER_IK))
+        if (mAutoResetDimension > 0.0f && mJoints.at(JOINT_HIPS).getGlobalPosition().length() >= mAutoResetDimension) {
+            resetPosition(mResetPosition);
+        }
+    }
+    else if (isEnable(CIRCLE_TRACKER_IK)) {
         mModules->circleTrackerIK.update(this);
+    }
     
     OFX_END_EXCEPTION_HANDLING
 }
@@ -355,6 +363,8 @@ void Skeleton::reportFlags()
 //----------------------------------------------------------------------------------------
 void Skeleton::onMessageReceived(ofxEventMessage &m)
 {
+    OFX_BEGIN_EXCEPTION_HANDLING
+    
     const string addr = m.getAddress();
     if (addr==event::ADDRESS_RESET_POSITION) {
         const string name = m.getArgAsString(0);
@@ -374,9 +384,14 @@ void Skeleton::onMessageReceived(ofxEventMessage &m)
     else if (addr==event::ADDRESS_SET_ORIENTATION) {
         mOrientationY = m.getArgAsFloat(0);
     }
+    else if (addr==event::ADDRESS_SET_AUTO_RESET_DIMENSION) {
+        mAutoResetDimension = m.getArgAsFloat(0);
+    }
     else if (addr==event::ADDRESS_SET_LOWPASS) {
         mLowpass = m.getArgAsFloat(0);
     }
+    
+    OFX_END_EXCEPTION_HANDLING
 }
 
 //----------------------------------------------------------------------------------------
@@ -589,13 +604,7 @@ bool Skeleton::getDrawJointName() const
 //----------------------------------------------------------------------------------------
 void Skeleton::resetPosition(const ofVec3f &pos)
 {
-    mModules->easyIK.setPosition(pos);
-}
-
-/// inline functions
-//----------------------------------------------------------------------------------------
-void Skeleton::setResetPosition(const ofVec3f &pos)
-{
+    mResetPosition = pos;
     mModules->easyIK.setPosition(pos);
 }
 
@@ -603,6 +612,15 @@ void Skeleton::setResetPosition(const ofVec3f &pos)
 ofVec3f Skeleton::getResetPosition() const
 {
     return mModules->easyIK.getOffset();
+}
+
+//----------------------------------------------------------------------------------------
+int Skeleton::getJointIndexFromName(const string& name) const
+{
+    for (int i=0; i<mJoints.size(); i++) {
+        if (mJoints.at(i).name == name) return i;
+    }
+    ofxThrowException(ofxException, "joint id not found!");
 }
 
 //----------------------------------------------------------------------------------------

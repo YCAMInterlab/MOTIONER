@@ -126,7 +126,6 @@ namespace ram { namespace skeleton {
         void setHostName(const string &host);
         void setName(const string &name);
         void setDrawJointName(bool bDraw);
-        void setResetPosition(const ofVec3f &pos);
         void resetPosition(const ofVec3f &pos = ofVec3f::zero());
         
         void setState(int state);
@@ -156,6 +155,8 @@ namespace ram { namespace skeleton {
         int getCircleTrackerId() const;
         bool getDrawJointName() const;
         ofVec3f getResetPosition() const;
+        
+        int getJointIndexFromName(const string& name) const;
         
         inline const coder::Frame &getInitialPose() const;
         
@@ -213,6 +214,8 @@ namespace ram { namespace skeleton {
         
         float           mLowpass;
         float           mOrientationY;
+        float           mAutoResetDimension;
+        ofVec2f         mResetPosition;
     };
     
     
@@ -253,10 +256,12 @@ namespace ram { namespace skeleton {
         NodeVec::const_iterator it = find_if(mJoints.begin(),
                                             mJoints.end(),
                                             NodeFinder(name));        
-        if (it!=mJoints.end())
+        if (it!=mJoints.end()) {
             return (*it);
-        else
-            return mJoints.at(0);
+        }
+        else {
+            ofxThrowException(ofxException, "joint not found!");
+        }
     }
     
     //------------------------------------------------------------------------------------

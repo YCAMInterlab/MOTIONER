@@ -38,6 +38,7 @@ namespace ram { namespace event {
     extern const std::string ADDRESS_SAVE_SKELETON;
     extern const std::string ADDRESS_SET_LOWPASS;
     extern const std::string ADDRESS_SET_ORIENTATION;
+    extern const std::string ADDRESS_SET_AUTO_RESET_DIMENSION;
     
     extern const std::string ADDRESS_REQUEST_GENERAL_SETTINGS;
     

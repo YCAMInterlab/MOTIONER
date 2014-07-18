@@ -29,8 +29,8 @@ namespace ram {
     void determinate();
     
     //--------------------
-    string getJointName(int index);
-    int getJointIndex(const string &name);
+//    string getJointName(int index);
+//    int getJointIndex(const string &name);
     
     bool isEndSite(int nodeId);
     

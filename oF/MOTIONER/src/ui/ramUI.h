@@ -91,6 +91,7 @@ namespace ram {
         void guiEvent(ofxUIEventArgs &e);
         
         void notifySkeletonOrientation();
+        void notifyAutoResetDimension();
 
 #ifdef DEBUG
         /// experiment
@@ -168,6 +169,7 @@ namespace ram {
         /// orientation
         //--------------------
         ofxUISlider         *mOrientation;
+        ofxUISlider         *mAutoResetDimenstion;
         
         /// UI params
         //--------------------

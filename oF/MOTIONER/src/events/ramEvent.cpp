@@ -40,6 +40,7 @@ namespace ram { namespace event {
     
     const std::string ADDRESS_SET_LOWPASS                   = "ADDRESS_SET_LOWPASS";
     const std::string ADDRESS_SET_ORIENTATION               = "ADDRESS_SET_ORIENTATION";
+    const std::string ADDRESS_SET_AUTO_RESET_DIMENSION      = "ADDRESS_SET_AUTO_RESET_DIMENSION";
     const std::string ADDRESS_REQUEST_GENERAL_SETTINGS      = "ADDRESS_REQUEST_GENERAL_SETTINGS";
     
     void requestGeneralSettings()

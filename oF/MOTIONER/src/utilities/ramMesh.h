@@ -18,7 +18,7 @@ namespace ram {
         //--------------------------------------------------------------------------------
         void drawRuler();
         
-        ofVboMesh createGrid(float size = 10000.0f, int numSlices = 5000.0f/100.0f);
+        ofVboMesh createGrid(float size = 6000.0f, int numSlices = 3000.0f/100.0f);
         
         
     }

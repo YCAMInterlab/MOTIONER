@@ -48,7 +48,7 @@ mDrawDebug(true),
 mLowpass(0.0f),
 mOrientationY(0.0f),
 mAutoResetDimension(0.0f),
-mResetPosition(ofVec2f(0.0f, 0.0f))
+mFixPosition(false)
 {
     mJoints.clear();
     mJoints.assign(NUM_JOINTS, Node());
@@ -127,7 +127,7 @@ void Skeleton::update()
     if (isEnable(EASY_IK)) {
         mModules->easyIK.update(this);
         if (mAutoResetDimension > 0.0f && mJoints.at(JOINT_HIPS).getGlobalPosition().length() >= mAutoResetDimension) {
-            resetPosition(mResetPosition);
+            resetPosition(mModules->easyIK.getOffset());
         }
     }
     else if (isEnable(CIRCLE_TRACKER_IK)) {
@@ -153,16 +153,28 @@ void Skeleton::updateRotation()
     /// apply current orientaion from MOTIONER device
     for (size_t i=0; i<mJoints.size(); i++) {
         /// calibration
-        const ofQuaternion &baseQuat = mBaseFrame.rotation.at(i);
-        const ofQuaternion &currQuat = mCurrentFrame.rotation.at(i);
+        const ofVec3f euler = mCurrentFrame.rotation.at(i).getEuler();
+        const ofQuaternion &baseQuat = mBaseFrame.rotation.at(i) * ofQuaternion(90.0f, ofVec3f(0.0f, 0.0f, 1.0f));
+        //if (i ==0 ) cout << euler << endl;
+
+        const ofQuaternion &currQuat = mCurrentFrame.rotation.at(i) * ofQuaternion(90.0f, ofVec3f(0.0f, 0.0f, 1.0f));
         const ofQuaternion calibratedQuat = baseQuat.inverse() * currQuat;
-        //if (i!=JOINT_LEFT_COLLAR && i!=JOINT_RIGHT_COLLAR) {
-        //}
+        
         if (!mDisableJoints.at(i)) {
             mJoints.at(i).setGlobalOrientation(calibratedQuat);
             mJoints.at(i).velocity = mCurrentFrame.velocity.at(i);
         }
     }
+    
+//    ofQuaternion base = ofQuaternion(45.0, ofVec3f(0.0, 1.0, 0.0));
+//    
+//    mJoints.at(JOINT_HIPS).setGlobalOrientation(base);
+//    
+//    mJoints.at(JOINT_LEFT_HIP).setGlobalOrientation(ofQuaternion(-70, ofVec3f(1.0, 0.0, 0.0)) * base);
+//    mJoints.at(JOINT_LEFT_KNEE).setGlobalOrientation(ofQuaternion(70, ofVec3f(1.0, 0.0, 0.0)) * base);
+//    
+//    mJoints.at(JOINT_RIGHT_HIP).setGlobalOrientation(ofQuaternion(-70, ofVec3f(1.0, 0.0, 0.0)) * base);
+//    mJoints.at(JOINT_RIGHT_KNEE).setGlobalOrientation(ofQuaternion(70, ofVec3f(1.0, 0.0, 0.0)) * base);
     
     if (mJoints.empty() == false) {
         mJoints.at(0).rotate(ofQuaternion(mOrientationY, ofVec3f(0.0, 1.0, 0.0)));
@@ -196,9 +208,10 @@ void Skeleton::calibrate()
 {
     mBaseFrame = mCurrentFrame;
         
-    for (int i=0; i<mBaseFrame.rotation.size(); i++)
-        mBaseFrame.rotation.at(i) = mBaseFrame.rotation.at(i);
-         
+    for (int i=0; i<mBaseFrame.rotation.size(); i++) {
+        ofLogNotice("Skeleton") << "Caribrated node at " << i << ": " << mBaseFrame.rotation.at(i).getEuler();
+    }
+    
     mModules->settings.saveCalibration(this);
     
     updateRotation();
@@ -387,8 +400,43 @@ void Skeleton::onMessageReceived(ofxEventMessage &m)
     else if (addr==event::ADDRESS_SET_AUTO_RESET_DIMENSION) {
         mAutoResetDimension = m.getArgAsFloat(0);
     }
+    else if (addr==event::ADDRESS_FIX_POSITION) {
+        mFixPosition = m.getArgAsInt32(0);
+        if (mFixPosition) {
+            mModules->easyIK.setFixedAxis(true, false, true);
+        }
+        else {
+            mModules->easyIK.setFixedAxis(false, false, false);
+        }
+    }
     else if (addr==event::ADDRESS_SET_LOWPASS) {
         mLowpass = m.getArgAsFloat(0);
+    }
+    else if (addr==event::ADDRESS_EXTERNAL_POSITION) {
+        const string name = m.getArgAsString(0);
+        if (name == mModules->settings.mName) {
+            ofVec3f pos;
+            pos.z = m.getArgAsFloat(1);
+            pos.y = m.getArgAsFloat(2);
+            pos.x = -m.getArgAsFloat(3);
+            
+            ofVec3f head = mJoints.at(JOINT_HEAD).getGlobalPosition();
+            ofVec3f hips = mJoints.at(JOINT_HIPS).getGlobalPosition();
+            head.y = hips.y = 0.0;
+            ofVec3f sub = head - hips;
+            sub.y = 0.0;
+            float scale = 0.65;
+//            const float camH = 10000.0f;
+//            const float h = mJoints.at(JOINT_HEAD).getGlobalPosition().y;
+//            if (h != 0.0f) {
+//                scale = (camH - h) / camH;
+//            }
+           // cout << pos << " / " << scale << " / " << sub << endl;
+            //pos *= scale;
+            
+            //mModules->easyIK.setExternalPosition(pos-sub);
+            mModules->easyIK.setExternalPosition(pos*scale+sub);
+        }
     }
     
     OFX_END_EXCEPTION_HANDLING
@@ -604,7 +652,6 @@ bool Skeleton::getDrawJointName() const
 //----------------------------------------------------------------------------------------
 void Skeleton::resetPosition(const ofVec3f &pos)
 {
-    mResetPosition = pos;
     mModules->easyIK.setPosition(pos);
 }
 

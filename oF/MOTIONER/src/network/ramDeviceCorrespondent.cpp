@@ -208,8 +208,9 @@ void DeviceCorrespondent::parseUdpPacket(uint8_t udpMessage[])
                 //ofQuaternion(90.0f, ofVec3f(0.0f, 0.0f, 1.0f));
                 
                 ofQuaternion q(mData[i][2].f, mData[i][1].f, mData[i][0].f, mData[i][3].f);
-                frame.rotation.at(i) = q *
-                ofQuaternion(90.0f, ofVec3f(0.0f, 0.0f, 1.0f));
+                frame.rotation.at(i) = q;
+//                frame.rotation.at(i) = q *
+//                ofQuaternion(90.0f, ofVec3f(0.0f, 0.0f, 1.0f));
             }
         }
         frame.time = ofGetElapsedTimef();

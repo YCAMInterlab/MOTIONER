@@ -22,31 +22,31 @@ namespace ram {
     //--------------------
     enum JointType {
 		JOINT_HIPS              = 0,
-		JOINT_ABDOMEN           = 1,
+		JOINT_ABDOMEN           = 1,//o
 		JOINT_CHEST             = 2,
 		JOINT_NECK              = 3,
 		JOINT_HEAD              = 4, /// end site
         
 		JOINT_LEFT_HIP          = 5,
 		JOINT_LEFT_KNEE         = 6,
-		JOINT_LEFT_ANKLE        = 7,
+		JOINT_LEFT_ANKLE        = 7,//o
 		JOINT_LEFT_TOE          = 8, /// end site
         
 		JOINT_RIGHT_HIP         = 9,
 		JOINT_RIGHT_KNEE        = 10,
-		JOINT_RIGHT_ANKLE       = 11,
+		JOINT_RIGHT_ANKLE       = 11,//o
 		JOINT_RIGHT_TOE         = 12, /// end site
         
 		JOINT_LEFT_COLLAR       = 13,
 		JOINT_LEFT_SHOULDER     = 14,
 		JOINT_LEFT_ELBOW        = 15,
-		JOINT_LEFT_WRIST        = 16,
+		JOINT_LEFT_WRIST        = 16,//o
 		JOINT_LEFT_HAND         = 17, /// end site
         
 		JOINT_RIGHT_COLLAR      = 18,
 		JOINT_RIGHT_SHOULDER    = 19,
 		JOINT_RIGHT_ELBOW       = 20,
-		JOINT_RIGHT_WRIST       = 21,
+		JOINT_RIGHT_WRIST       = 21,//o
 		JOINT_RIGHT_HAND        = 22, /// end site
         
 		NUM_JOINTS              = 23,
@@ -133,6 +133,7 @@ namespace ram {
     extern const string OSC_ADDR_SAVE_SKELETON;
     extern const string OSC_ADDR_REC_START;
     extern const string OSC_ADDR_REC_STOP;
+    extern const string OSC_ADDR_EXTERNAL_POSITION;
     extern const string OSC_ADDR_CIRCLE_TRACKING_COMBINED;
     extern const string OSC_ADDR_CIRCLE_TRACKING_FILTERD;
     

@@ -54,16 +54,16 @@ void MotionerApp::setup()
     //--------------------
     mGrid = ram::Mesh::createGrid();
     
-#ifdef DEBUG
     /// osc
     //--------------------
     mOscReceiver.setup(ram::DEBUG_OSC_INCOMING_PORT);
     
+#ifdef DEBUG
+    
     /// add test skeleton (DEBUG
     //--------------------
-    //ram::addSkeleton("192.168.2.5");
-    //ram::getSkeleton(0)->setName("Bob");
-    //ram::addSkeleton("192.168.2.4");
+//    ram::skeleton::SkeletonManager::getInstance().addSkeleton("192.168.2.5");
+//    ram::skeleton::SkeletonManager::getInstance().addSkeleton("192.168.2.6");
     
 #endif
     
@@ -104,10 +104,8 @@ void MotionerApp::update()
     if (mOscSender.getEnabled())
         mOscSender.update();
     
-#ifdef DEBUG
     if (mOscReceiver.getEnabled())
         mOscReceiver.update();
-#endif
     
     /// UI
     //--------------------

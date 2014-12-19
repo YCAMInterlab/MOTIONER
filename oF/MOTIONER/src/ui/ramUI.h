@@ -92,6 +92,7 @@ namespace ram {
         
         void notifySkeletonOrientation();
         void notifyAutoResetDimension();
+        void notifyFixPosition();
 
 #ifdef DEBUG
         /// experiment
@@ -170,6 +171,7 @@ namespace ram {
         //--------------------
         ofxUISlider         *mOrientation;
         ofxUISlider         *mAutoResetDimenstion;
+        ofxUIToggle         *mFixPosition;
         
         /// UI params
         //--------------------

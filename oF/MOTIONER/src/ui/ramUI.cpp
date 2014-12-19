@@ -190,9 +190,9 @@ void UI::setup(const ofRectangle &rect)
     
     /// setup guis
     const float hw = mWidth*0.6-OFX_UI_GLOBAL_WIDGET_SPACING;
-#ifdef DEBUG
+
     const float hh = 12.0f;
-#endif
+
     
     const float buttonSize = 20.0f;
     
@@ -366,13 +366,19 @@ void UI::setup(const ofRectangle &rect)
         
         general->addLabel("", OFX_UI_FONT_SMALL);
         
-        general->addLabel("AUTO RESET POSITION", OFX_UI_FONT_MEDIUM);
+        general->addLabel("POSITION", OFX_UI_FONT_MEDIUM);
         
         general->addLabel("", OFX_UI_FONT_SMALL);
         
-        mAutoResetDimenstion = general->addSlider("DIMENSTION", 0.0f, 10000.0f, 0.0f, genHw, hh);
+        mAutoResetDimenstion = general->addSlider("AUTO RESET", 0.0f, 10000.0f, 0.0f, genHw, hh);
         mAutoResetDimenstion->setColorOutline(outlineColor);
         mAutoResetDimenstion->setDrawOutline(true);
+        
+        general->addLabel("", OFX_UI_FONT_SMALL);
+        
+        mFixPosition = general->addToggle("FIX POSITION", false);
+        mFixPosition->setColorOutline(outlineColor);
+        mFixPosition->setDrawOutline(true);
         
         general->addLabel("", OFX_UI_FONT_SMALL);
     }
@@ -868,8 +874,11 @@ void UI::guiEvent(ofxUIEventArgs &e)
     else if (name == "ORIENTATION-Y") {
         notifySkeletonOrientation();
     }
-    else if (name == "DIMENSTION") {
+    else if (name == "AUTO RESET") {
         notifyAutoResetDimension();
+    }
+    else if (name == "FIX POSITION") {
+        notifyFixPosition();
     }
     else if (name == "ROTATE") {
         ofxEventMessage m ;
@@ -1046,6 +1055,7 @@ void UI::onNotifyEvent(ofxEventMessage &m)
     else if (addr==event::ADDRESS_REQUEST_GENERAL_SETTINGS) {
         notifySkeletonOrientation();
         notifyAutoResetDimension();
+        notifyFixPosition();
 #ifdef DEBUG
         notifyLowpassValue();
 #endif
@@ -1107,6 +1117,15 @@ void UI::notifyAutoResetDimension()
     ofxEventMessage m;
     m.setAddress(event::ADDRESS_SET_AUTO_RESET_DIMENSION);
     m.addFloatArg(mAutoResetDimenstion->getScaledValue());
+    ofxNotifyEvent(m);
+}
+
+//----------------------------------------------------------------------------------------
+void UI::notifyFixPosition()
+{
+    ofxEventMessage m;
+    m.setAddress(event::ADDRESS_FIX_POSITION);
+    m.addIntArg(mFixPosition->getValue());
     ofxNotifyEvent(m);
 }
 

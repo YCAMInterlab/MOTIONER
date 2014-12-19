@@ -14,7 +14,11 @@ using namespace ram;
 using namespace ram::skeleton;
 
 EasyIK::EasyIK() :
-mLowpass(0.0f)
+mLowpass(0.0f),
+mFixX(false),
+mFixY(false),
+mFixZ(false),
+mExternalPosition(0.0f, 0.0f, 0.0f)
 {
 }
 
@@ -43,6 +47,14 @@ ofQuaternion EasyIK::getLimiedAngle(Skeleton *skeleton,
     const ofQuaternion result = skeleton->getJoint(target).getOrientationQuat() * invert * correct;
     
     return result;
+}
+
+//----------------------------------------------------------------------------------------
+void EasyIK::setFixedAxis(bool fixX, bool fixY, bool fixZ)
+{
+    mFixX = fixX;
+    mFixY = fixY;
+    mFixZ = fixZ;
 }
 
 //----------------------------------------------------------------------------------------
@@ -117,7 +129,18 @@ void EasyIK::update(Skeleton *skeleton)
     /// normal
     //ofVec3f pos = -mPosition;
     
-    joints.at(JOINT_HIPS).setGlobalPosition(pos+mOffset);
+    ofVec3f result = pos+mOffset;
+    
+    if (mFixX) result.x = 0.0;
+    if (mFixY) result.y = 0.0;
+    if (mFixZ) result.z = 0.0;
+    
+    //cout << result << endl;
+    
+    result.x += mExternalPosition.x;
+    result.z += mExternalPosition.z;
+    
+    joints.at(JOINT_HIPS).setGlobalPosition(result);
 }
 
 

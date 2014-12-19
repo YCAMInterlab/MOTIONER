@@ -82,6 +82,7 @@ namespace ram {
     const string OSC_ADDR_SAVE_SKELETON = "/ram/save_skeleton";
     const string OSC_ADDR_REC_START = "/ram/rec/start";
     const string OSC_ADDR_REC_STOP = "/ram/rec/end";
+    const string OSC_ADDR_EXTERNAL_POSITION = "/ram/external_position";
     const string OSC_ADDR_CIRCLE_TRACKING_COMBINED = "/CircleTracking/combined";
     const string OSC_ADDR_CIRCLE_TRACKING_FILTERD = "/CircleTracking/filterd";
     

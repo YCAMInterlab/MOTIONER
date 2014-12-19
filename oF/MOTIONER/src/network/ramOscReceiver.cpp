@@ -72,7 +72,15 @@ void OscReceiver::update()
             //out.addStringArg(m.getArgAsString(0));
             ofxNotifyEvent(out);
         }
-
+        else if (address==OSC_ADDR_EXTERNAL_POSITION) {
+            ofxEventMessage out;
+            out.setAddress(event::ADDRESS_EXTERNAL_POSITION);
+            out.addStringArg(m.getArgAsString(0));
+            out.addFloatArg(m.getArgAsFloat(1));
+            out.addFloatArg(m.getArgAsFloat(2));
+            out.addFloatArg(m.getArgAsFloat(3));
+            ofxNotifyEvent(out);
+        }
         else if (address==OSC_ADDR_CIRCLE_TRACKING_FILTERD) {
             ofxEventMessage out;
             out.setAddress(event::ADDRESS_CIRCLE_TRACKER);

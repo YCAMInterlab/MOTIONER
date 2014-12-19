@@ -28,6 +28,9 @@ namespace ram { namespace skeleton {
         inline const ofVec3f &getPosition() const;
         inline const ofVec3f &getOffset() const;
         inline void setPosition(const ofVec3f &pos);
+        inline void setExternalPosition(const ofVec3f& pos);
+        
+        void setFixedAxis(bool fixX, bool fixY, bool fixZ);
         
     private:
         enum Axis {
@@ -58,6 +61,9 @@ namespace ram { namespace skeleton {
         
         float   mLowpass;
         ofVec3f mOffset;
+        ofVec3f mExternalPosition;
+        
+        bool mFixX, mFixY, mFixZ;
     };
     
     //------------------------------------------------------------------------------------
@@ -81,6 +87,12 @@ namespace ram { namespace skeleton {
         mPrevBottomPos = pos;
         mPrevNode = NULL;
         mOffset = pos;
+    }
+    
+    //------------------------------------------------------------------------------------
+    inline void EasyIK::setExternalPosition(const ofVec3f& pos)
+    {
+        mExternalPosition = pos;
     }
     
 } }

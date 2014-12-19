@@ -3,9 +3,7 @@
 #include "ofMain.h"
 
 #include "ramOscSender.h"
-#ifdef DEBUG
 #include "ramOscReceiver.h"
-#endif
 
 #include "ofxEvent.h"
 
@@ -46,8 +44,5 @@ private:
     
     ofLight mLight;
     
-#ifdef DEBUG
-    /// input playback data (currntly only debug usage)
     ram::OscReceiver mOscReceiver;
-#endif
 };

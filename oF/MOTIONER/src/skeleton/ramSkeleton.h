@@ -213,9 +213,11 @@ namespace ram { namespace skeleton {
         bool            mDrawDebug;
         
         float           mLowpass;
+        
+        // adjust position
         float           mOrientationY;
         float           mAutoResetDimension;
-        ofVec2f         mResetPosition;
+        bool            mFixPosition;
     };
     
     

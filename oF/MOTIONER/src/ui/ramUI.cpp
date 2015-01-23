@@ -599,6 +599,12 @@ void UI::exit()
     
     general->saveSettings(GUI_XML);
     
+    ofRemoveListener(general->newGUIEvent, this, &UI::guiEvent);
+#ifdef DEBUG
+    ofRemoveListener(mLogger->newGUIEvent, this, &UI::guiEvent);
+#endif
+    ofRemoveListener(mTools->newGUIEvent, this, &UI::guiEvent);
+    
     if (general) {
         general->disable();
         delete general;

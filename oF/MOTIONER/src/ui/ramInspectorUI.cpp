@@ -350,6 +350,10 @@ void InspectorUI::exit()
 {
     ofRemoveListener(ofxEvent(), this, &InspectorUI::onMessageReceived);
     
+    for (int i=0; i<N_TABS; i++) {
+        ofRemoveListener(mTabs.at(i)->newGUIEvent, this, &InspectorUI::guiEvent);
+    }
+    
     if (mTabbedCanvas) {
         //mTabbedCanvas->saveSettings(INSPECTOR_XML);
         delete mTabbedCanvas;

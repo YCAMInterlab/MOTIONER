@@ -38,7 +38,6 @@ static void billboard()
 
 //----------------------------------------------------------------------------------------
 Renderer::Renderer() :
-mIsDrawJointName(false),
 mIsEnableShading(true),
 mState(0),
 mActiveJoint(JOINT_HIPS)
@@ -61,9 +60,7 @@ void Renderer::update(Skeleton *skleton)
 void Renderer::draw(Skeleton *skeleton) const
 {
     ofxPushAll();
-    
-    ofSetDrawBitmapMode(OF_BITMAPMODE_MODEL_BILLBOARD);
-    
+        
     vector<Node> &joints = skeleton->mJoints;
     
     ofNoFill();
@@ -76,7 +73,7 @@ void Renderer::draw(Skeleton *skeleton) const
         
         ofSetColor(color);
         
-        ofSetLineWidth(1.5f);
+        ofSetLineWidth(1.f);
         Node &n = joints.at(i);
         n.size = 60.0f;
         
@@ -105,25 +102,11 @@ void Renderer::draw(Skeleton *skeleton) const
             ofxPopAll();
         }
         
-        ofPushMatrix();
-        ofMultMatrix(n.getGlobalTransformMatrix());
-        string name = n.name;
-        ofStringReplace(name, "JOINT_", "");
-        ofStringReplace(name, "RIGHT_", "R ");
-        ofStringReplace(name, "LEFT_", "L ");
-        
-        ofSetColor(color*0.7f);
-        if (mIsDrawJointName)
-            ofDrawBitmapString(name, ofPoint(10.0f, 10.0f));
-        //ofSetColor(ofColor::white);
-        //ofDrawBitmapString(ofToString(n.velocity), ofPoint(10.0f, 20.0f));
-        ofPopMatrix();
-        
         /// velocity debug
         //ofSetColor(color);
         //ofBox(n.getGlobalPosition(), n.velocity * 10);
         
-        (mState==Skeleton::STATE_SELECTED) ? ofSetLineWidth(4.0f) : ofSetLineWidth(2.0f);
+        (mState==Skeleton::STATE_SELECTED) ? ofSetLineWidth(2.0f) : ofSetLineWidth(1.0f);
         ofSetColor(color);
         if (!n.getParent()) continue;
         
@@ -148,12 +131,6 @@ void Renderer::draw(Skeleton *skeleton) const
     ofPopMatrix();
     
     ofxPopAll();
-}
-
-//----------------------------------------------------------------------------------------
-void Renderer::setDrawJointName(bool bDraw)
-{
-    mIsDrawJointName = bDraw;
 }
 
 //----------------------------------------------------------------------------------------

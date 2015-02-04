@@ -158,7 +158,7 @@ void MotionerApp::draw()
         v*=0.2;
         ofColor c2(v.x, v.y, v.z);
         
-        ofBackgroundGradient(c3, c2);
+        ofBackgroundGradient(c2, c3);
     }
     ofxPopAll();
     
@@ -178,10 +178,8 @@ void MotionerApp::draw()
         
         ofTranslate(mOffset);
         
-        ofDrawAxis(200.0f);
+        ram::Mesh::drawAxis(200.f);
         mGrid.draw();
-        
-        ram::Mesh::drawRuler();
         
         mLight.enable();
         ram::skeleton::SkeletonManager::getInstance().drawSkeletons();

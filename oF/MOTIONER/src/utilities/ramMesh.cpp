@@ -14,37 +14,24 @@ namespace ram {
     
     namespace Mesh {
         
-        void drawRuler()
+        void drawAxis(float size)
         {
-            const float step = 1000.0f;
-            ofPoint offset(30.0f, 2.0f);
-            const int n = 6;
+            ofPushStyle();
+            // draw x axis
+            ofSetColor(ofColor::red);
+            ofLine(0, 0, 0, size, 0, 0);
             
-            /// draw ruler
-            ofxPushAll();
-            ofSetHexColor(ram::COLOR_M);
-            ofSetDrawBitmapMode(OF_BITMAPMODE_MODEL_BILLBOARD);
+            // draw y axis
+            ofSetColor(ofColor::green);
+            ofLine(0, 0, 0, 0, size, 0);
             
-            for (int i=1; i<=n; i++) {
-                ofDrawBitmapString(ofToString( i*step, 0),
-                                   ofPoint(offset.x, i*step+offset.y));
-                ofDrawBitmapString(ofToString( i*step, 0),
-                                   ofPoint(i*step+offset.y, offset.x));
-                ofDrawBitmapString(ofToString( i*step, 0),
-                                   ofPoint(offset.x, offset.x, i*step+offset.y));
-                ofDrawBitmapString(ofToString(-i*step, 0),
-                                   ofPoint(-i*step+offset.y, offset.x));
-                ofDrawBitmapString(ofToString(-i*step, 0),
-                                   ofPoint(offset.x, offset.x, -i*step+offset.y));
-                if (i==n) {
-                    ofDrawBitmapString("Y", ofPoint(0.0f, i*step+1000.0f));
-                    ofDrawBitmapString("X", ofPoint(i*step+1000.0f, 0.0f));
-                    ofDrawBitmapString("Z", ofPoint(0.0f, 0.0f, i*step+1000.0f));
-                }
-            }
-            ofxPopAll();
+            // draw z axis
+            ofSetColor(ofColor::blue);
+            ofLine(0, 0, 0, 0, 0, size);
+            ofPopStyle();
+
         }
-        
+                
         //--------------------------------------------------------------------------------
         ofVboMesh createGrid(float size, int numSlices)
         {
@@ -53,87 +40,8 @@ namespace ram {
             mesh    .clear();
             mesh    .setMode(OF_PRIMITIVE_LINES);
             
-            for (int i=0; i<size/numSlices; i++)
-            {
-                float h;
-                ofFloatColor color;
-                
-                if (i%100==0) {
-                    h = 48 - i%2*2;
-                    color.set(0.9f);
-                }
-                else if (i%10==0) {
-                    h = 18 - i%2*2;
-                    color.set(0.6f);
-                }
-                else {
-                    h = 12 - i%2*2;
-                    color.set(0.4f);
-                }
-                mesh.addColor   ( color );
-                mesh.addVertex  ( ofVec3f(-h+0.5, i*10+0.5, 0.5)        );
-                mesh.addColor   ( color );
-                mesh.addVertex  ( ofVec3f( h+0.5, i*10+0.5, 0.5)        );
-            }
-            
-            for (int i=0; i<size/numSlices/2; i++)
-            {
-                float h;
-                ofFloatColor color;
-                
-                if (i%10==0) {
-                    continue;
-                }
-                else {
-                    h = 24 - i%2*2;
-                    color.set(0.4f);
-                }
-                
-                mesh.addColor   ( color );
-                mesh.addVertex  ( ofVec3f( i*100+0.5, 0.5, -h+0.5)       );
-                mesh.addColor   ( color );
-                mesh.addVertex  ( ofVec3f( i*100+0.5, 0.5, h+0.5)        );
-                mesh.addColor   ( color );
-                mesh.addVertex  ( ofVec3f(-i*100+0.5, 0.5, -h+0.5)       );
-                mesh.addColor   ( color );
-                mesh.addVertex  ( ofVec3f(-i*100+0.5, 0.5, h+0.5)        );
-                
-                mesh.addColor   ( color );
-                mesh.addVertex  ( ofVec3f(-h+0.5, 0.5,  i*100+0.5)       );
-                mesh.addColor   ( color );
-                mesh.addVertex  ( ofVec3f( h+0.5, 0.5,  i*100+0.5)       );
-                mesh.addColor   ( color );
-                mesh.addVertex  ( ofVec3f(-h+0.5, 0.5, -i*100+0.5)       );
-                mesh.addColor   ( color );
-                mesh.addVertex  ( ofVec3f( h+0.5, 0.5, -i*100+0.5)       );
-            }
-            
-            
             ofFloatColor color;
             color.set(0.2f);
-            for (int i=0; i<10; i++) {
-                if (i%2==0) continue;
-                mesh.addColor   ( color );
-                mesh.addVertex  ( ofVec3f(-size*i+0.5, 0.5, -size*i+0.5)       );
-                mesh.addColor   ( color );
-                mesh.addVertex  ( ofVec3f(-size*i+0.5, 0.5,  size*i+0.5)       );
-                
-                mesh.addColor   ( color );
-                mesh.addVertex  ( ofVec3f(-size*i+0.5, 0.5,  size*i+0.5)       );
-                mesh.addColor   ( color );
-                mesh.addVertex  ( ofVec3f( size*i+0.5, 0.5,  size*i+0.5)       );
-                
-                mesh.addColor   ( color );
-                mesh.addVertex  ( ofVec3f( size*i+0.5, 0.5,  size*i+0.5)       );
-                mesh.addColor   ( color );
-                mesh.addVertex  ( ofVec3f( size*i+0.5, 0.5, -size*i+0.5)       );
-                
-                mesh.addColor   ( color );
-                mesh.addVertex  ( ofVec3f( size*i+0.5, 0.5, -size*i+0.5)       );
-                mesh.addColor   ( color );
-                mesh.addVertex  ( ofVec3f(-size*i+0.5, 0.5, -size*i+0.5)       );
-            }
-            
             mesh.addColor   ( color );
             mesh.addVertex  ( ofVec3f(-size*10+0.5, 0.5, 0.5)       );
             mesh.addColor   ( color );

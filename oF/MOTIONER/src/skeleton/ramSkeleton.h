@@ -125,7 +125,6 @@ namespace ram { namespace skeleton {
         //--------------------
         void setHostName(const string &host);
         void setName(const string &name);
-        void setDrawJointName(bool bDraw);
         void resetPosition(const ofVec3f &pos = ofVec3f::zero());
         
         void setState(int state);
@@ -153,7 +152,6 @@ namespace ram { namespace skeleton {
         inline NodeVec &getJoints();
         inline const NodeVec &getJoints() const;
         int getCircleTrackerId() const;
-        bool getDrawJointName() const;
         ofVec3f getResetPosition() const;
         
         int getJointIndexFromName(const string& name) const;

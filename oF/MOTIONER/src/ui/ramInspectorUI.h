@@ -115,9 +115,7 @@ namespace ram {
         ofxUIDropDownList   *mSkeletonList;
         ofxUILabel          *mDeviceHostNameLabel;
         ofxUILabel          *mSettingFileNameLabel;
-        
-        ofxUIImageToggle    *mShowJointNameToggle;
-        
+                
         //--------------------
         ofxUITextInput      *mSkeletonNameInput;
         

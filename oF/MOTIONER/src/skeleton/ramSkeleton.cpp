@@ -539,12 +539,6 @@ void Skeleton::setName(const string &name)
 }
 
 //----------------------------------------------------------------------------------------
-void Skeleton::setDrawJointName(bool bDraw)
-{
-    mModules->renderer.mIsDrawJointName = bDraw;
-}
-
-//----------------------------------------------------------------------------------------
 void Skeleton::setState(int state)
 {
     mModules->renderer.setState(state);
@@ -641,12 +635,6 @@ const string &Skeleton::getSettingsFileName() const
 int Skeleton::getCircleTrackerId() const
 {
     return mModules->circleTrackerIK.getCircleId();
-}
-
-//----------------------------------------------------------------------------------------
-bool Skeleton::getDrawJointName() const
-{
-    return mModules->renderer.mIsDrawJointName;
 }
 
 //----------------------------------------------------------------------------------------

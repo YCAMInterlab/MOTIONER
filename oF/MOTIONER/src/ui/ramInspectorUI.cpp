@@ -31,7 +31,6 @@ mSkeletonList(NULL),
 mDeviceHostNameLabel(NULL),
 mSettingFileNameLabel(NULL),
 mSkeletonNameInput(NULL),
-mShowJointNameToggle(NULL),
 
 mJointNameLabel(NULL),
 mJointName("not selected"),
@@ -219,17 +218,6 @@ void InspectorUI::setup()
         mDisableJointToggle = canvas->addLabelToggle("DISABLE JOINT", false);
         mDisableJointToggle->setDrawOutline(true);
         mDisableJointToggle->setColorOutline(outlineColor);
-    }
-    
-    //--------------------------------------------------
-    {
-        mShowJointNameToggle = addImageToggle(canvas,
-                                              buttonSize,
-                                              "images/show.png",
-                                              "SHOW JOINT NAME",
-                                              true);
-        mShowJointNameToggle->setValue(false);
-        //canvas->addWidgetRight(new ofxUILabel("SHOW NAMES", OFX_UI_FONT_SMALL));
     }
     
     canvas->autoSizeToFitWidgets();
@@ -458,14 +446,6 @@ void InspectorUI::guiEvent(ofxUIEventArgs &e)
             }
         }
     }
-    else if (name == "SHOW JOINT NAME") {
-        ofxUIToggle *toggle = static_cast<ofxUIToggle *>(e.widget);
-        shared_ptr<skeleton::Skeleton> skl = mSkeleton.lock();
-        if (skl)
-            skl->setDrawJointName(toggle->getValue());
-        else
-            ofxThrowException(ofxException, "Skeleton not found!");
-    }
     else if (name == "OFFSET X") {
         editOffset(static_cast<ofxUINumberDialer *>(e.widget), 0);
     }
@@ -560,9 +540,7 @@ void InspectorUI::setDevice(const string &hostName)
         mSkeletonNameInput->setTextString(skl->getName());
         
         mSettingFileNameLabel->setLabel(getFileName(skl->getSettingsFileName()));
-        
-        mShowJointNameToggle->setValue(skl->getDrawJointName());
-        
+                
         mResetPositionXSlider->setValue(skl->getResetPosition().x);
         mResetPositionZSlider->setValue(skl->getResetPosition().z);
         

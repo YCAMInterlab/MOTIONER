@@ -7,6 +7,7 @@
 //
 
 #include "ramNode.h"
+#include "ramMesh.h"
 
 using namespace ram;
 using namespace ram::skeleton;
@@ -21,7 +22,7 @@ size(20.0f)
 void Node::customDraw()
 {
     ofBox(size);
-    ofDrawAxis(size);
+    Mesh::drawAxis(size);
 }
 
 //----------------------------------------------------------------------------------------

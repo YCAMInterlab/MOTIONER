@@ -28,9 +28,7 @@ namespace ram { namespace skeleton {
         virtual void update(Skeleton *skleton);
         virtual void draw(Skeleton *skeleton) const;
         virtual void drawHUD(Skeleton *skeleton) const {}
-        
-        void setDrawJointName(bool bDraw);
-        
+                
         void setState(int state);
         int getState() const;
         
@@ -38,7 +36,6 @@ namespace ram { namespace skeleton {
         int getActiveJoint() const;
         
     private:
-        bool mIsDrawJointName;
         bool mIsEnableShading;
         int mState;
         int mActiveJoint;

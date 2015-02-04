@@ -742,7 +742,7 @@ void UI::guiEvent(ofxUIEventArgs &e)
         if (static_cast<ofxUITextInput *>(e.widget)->getTriggerType()==OFX_UI_TEXTINPUT_ON_ENTER)
             setupDeviceCorrespondent();
     }
-    else if (name == "SELECT AN AVILABLE DEVICE") {
+    else if (name == "CHOOSE A SKELETON") {
         performSelectListItems(static_cast<ofxUIDropDownList *>(e.widget), &UI::selectDevice);
     }
     else if(name == "OSC_OUT_HOST") {
@@ -835,7 +835,7 @@ void UI::performSelectListItems(ofxUIDropDownList *ddList, void (UI::*func)(cons
     
     vector<ofxUIWidget *> &selected = ddList->getSelected();
     for(size_t i = 0; i < selected.size(); i++) {
-        //cout << "SELECTED: " << selected[i]->getName() << endl;
+        ofLogNotice("UI") << "Slelected: " << selected[i]->getName();
         const string &name = selected.at(i)->getName();
         (this->*func)(name);
     }

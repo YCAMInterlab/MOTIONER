@@ -157,8 +157,6 @@ namespace ram {
         ofxUITextInput      *mOscOutPortInput;
         ofxUIImageToggle    *mEnableOscToggle;
         
-        ofxUILabel          *mPlayerTimeLabel;
-        
         ofxUITextInput      *mOscInHostInput;
 
         
@@ -204,10 +202,6 @@ namespace ram {
         //--------------------
         ofxUISlider         *mLowpass;
 #endif
-        
-        float               mPlayerStartTime;
-        bool                mPlaying;
-        bool                mWillreset;
     };
 
 }

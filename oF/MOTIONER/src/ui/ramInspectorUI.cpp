@@ -66,19 +66,14 @@ void InspectorUI::setup()
     /// create gui objects
     const float space = OFX_UI_GLOBAL_WIDGET_SPACING;
     const float w = mSize.width+space;
-    const float h[] = {
-        170.0f,
-        130.0f,
-        85.0f,
-        60.0f,
-    };
     
     mTabs.clear();
     
     for (int i=0; i<N_TABS; i++) {
         
         ofSetLogLevel(OF_LOG_FATAL_ERROR); /// shout ofxUI out
-        ofxUICanvas *canvas = new ofxUICanvas(0.0f, 0.0f, w, h[i]);
+        ofxUICanvas *canvas = new ofxUICanvas();
+        canvas->setWidth(w);
         
         ofSetLogLevel(DEFAULT_LOG_LEVEL);
         canvas->setFont(GUI_FONT, false); /// aliased
@@ -159,6 +154,9 @@ void InspectorUI::setup()
         addImageButton(canvas, buttonSize, "images/saveas.png", "SAVE AS...", false);
         //canvas->addSpacer(hw, 1.0f);
     }
+    
+    canvas->autoSizeToFitWidgets();
+    canvas->setWidth(w);
 
     //--------------------------------------------------//
     //---------------- JOINT EDITOR --------------------//
@@ -234,6 +232,9 @@ void InspectorUI::setup()
         //canvas->addWidgetRight(new ofxUILabel("SHOW NAMES", OFX_UI_FONT_SMALL));
     }
     
+    canvas->autoSizeToFitWidgets();
+    canvas->setWidth(w);
+    
     //--------------------------------------------------//
     //-------------- POSITION EDITOR -------------------//
     //--------------------------------------------------//
@@ -279,13 +280,15 @@ void InspectorUI::setup()
         widget = canvas->addLabelButton("RESET", false, hw);
         widget->setDrawOutline(true);
         widget->setColorOutline(outlineColor);
-        
     }
     
     for (int i=0; i<N_TABS; i++) {
         mTabs.at(i)->setDrawWidgetPadding(false);
         ofAddListener(mTabs.at(i)->newGUIEvent, this, &InspectorUI::guiEvent);
     }
+    
+    canvas->autoSizeToFitWidgets();
+    canvas->setWidth(w);
     
     //--------------------------------------------------//
     //----------------- TAB_OPTIONS --------------------//
@@ -312,6 +315,9 @@ void InspectorUI::setup()
             widget->setColorOutline(outlineColor);
         }
     }
+    
+    canvas->autoSizeToFitWidgets();
+    canvas->setWidth(w);
     
     //--------------------------------------------------//
     //--------------------------------------------------//

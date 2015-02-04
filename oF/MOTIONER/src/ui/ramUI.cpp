@@ -162,7 +162,7 @@ void UI::setup(const ofRectangle &rect)
     /// setup guis
     const float hw = mWidth*0.6-OFX_UI_GLOBAL_WIDGET_SPACING;
     
-    const float hh = 12.0f;
+    const float hh = 10.0f;
     
     
     const float buttonSize = 20.0f;
@@ -275,6 +275,7 @@ void UI::setup(const ofRectangle &rect)
         general->addLabel("AVILABLE SKELETONS:", OFX_UI_FONT_SMALL);
         mAvilableDeviceList = general->addDropDownList("CHOOSE A SKELETON", vector<string>());
         mAvilableDeviceList->setDrawOutline(true);
+        mAvilableDeviceList->setDrawBack(true);
         mAvilableDeviceList->setColorOutline(outlineColor);
         mAvilableDeviceList->setAllowMultiple(false);
         mAvilableDeviceList->setColorBack(COLOR_L);
@@ -352,8 +353,6 @@ void UI::setup(const ofRectangle &rect)
                                               "TOGGLE LOOP ALL",
                                               false);
         it->setValue(true);
-        
-        mPlayerTimeLabel = general->addLabel("", OFX_UI_FONT_LARGE);
     }
     //--------------------------------------------------
     /// GENERAL - APP SETTINGS
@@ -371,9 +370,8 @@ void UI::setup(const ofRectangle &rect)
         
         addImageButton(general, buttonSize, "images/save.png", "SAVE SETTINGS", false);
         
-        widget = general->addFPSSlider("FPS", genHw, 8.0f, 120.0f);
-        widget->setColorOutline(outlineColor);
-        widget->setDrawOutline(true);
+        widget = general->addFPS(OFX_UI_FONT_SMALL);
+        widget->setDrawOutline(false);
     }
     
 #ifdef DEBUG
@@ -424,9 +422,6 @@ void UI::setup(const ofRectangle &rect)
     mFont.loadFont(GUI_FONT, 32);
     
     //ofLogNotice("UI") << "Ready";
-    
-    mPlaying = false;
-    mWillreset = true;
 }
 
 //----------------------------------------------------------------------------------------
@@ -545,22 +540,6 @@ void UI::update()
         else if (y < -h+ofGetHeight())
             general->getRect()->setY(-h+ofGetHeight());
     }
-    
-    if (mPlaying) {
-        float elapsed = ofGetElapsedTimef()-mPlayerStartTime;
-        
-        float sec = fmodf(elapsed, 60.0f);
-        int min = elapsed/60;
-        int hour = elapsed/360;
-        
-        mPlayerTimeLabel->setLabel(ofToString(hour)
-                                   + ":"
-                                   + ofToString(min)
-                                   + ":"+ofToString(sec, 2));
-    }
-    else {
-        
-    }
 }
 
 //----------------------------------------------------------------------------------------
@@ -672,7 +651,7 @@ void UI::resize()
     ofxUITabbedCanvas* inspector = mInspector.getTabbedCanvas();
     if (inspector) {
         float y;
-        mDetailedRendering ? y = 10.f : y = 520.f;
+        mDetailedRendering ? y = 10.f : y = 490.f;
         inspector->setPosition(ofGetWidth()-inspector->getRect()->width-10.0f, y);
     }
     
@@ -793,25 +772,16 @@ void UI::guiEvent(ofxUIEventArgs &e)
     else if (name == "PLAY ALL") {
         if (static_cast<ofxUIButton *>(e.widget)->getValue()) {
             startPlayback();
-            mPlaying= true;
-            if (mWillreset) {
-                mPlayerStartTime = ofGetElapsedTimef();
-                mWillreset = false;
-            }
         }
     }
     else if (name == "PAUSE ALL") {
         if (static_cast<ofxUIButton *>(e.widget)->getValue()) {
             pausePlayback();
-            mPlaying = false;
         }
     }
     else if (name == "STOP ALL") {
         if (static_cast<ofxUIButton *>(e.widget)->getValue()) {
             stopPlayback();
-            mPlaying = false;
-            mWillreset = true;
-            mPlayerTimeLabel->setLabel("");
         }
     }
     else if (name == "TOGGLE LOOP ALL") {

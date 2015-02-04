@@ -44,7 +44,7 @@ namespace ram {
     void finishRecording();
     
     //--------------------
-    void openPlaybackDialog();
+    ofFileDialogResult openPlaybackDialog();
     void openPlaybackFile(const string&path, const string &name);
     void startPlayback();
     void pausePlayback();

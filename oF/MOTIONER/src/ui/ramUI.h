@@ -165,6 +165,9 @@ namespace ram {
         //ofxUIImageToggle    *mTranslationToggle;
         ofxUIImageToggle    *mPlayToggle;
         
+        bool                mWillOpenMotionFile;
+        ofFileDialogResult  mFileDialogResult;
+        
         /// orientation
         //--------------------
         ofxUISlider         *mOrientation;

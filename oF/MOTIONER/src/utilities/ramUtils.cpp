@@ -220,14 +220,13 @@ namespace ram {
     }
     
     //------------------------------------------------------------------------------------
-    void openPlaybackDialog()
+    ofFileDialogResult openPlaybackDialog()
     {
         ///add directory select
         const string defPath = ram::MOTION_DATA_DIR;
         const string info = "Open motions for a skeleton.";
-        ofFileDialogResult ret = ofSystemLoadDialog(info, false, defPath);
-        if (ret.bSuccess)
-            openPlaybackFile(ret.getPath(), ret.getName());
+        return ofSystemLoadDialog(info, false, defPath);
+        
     }
     
     //------------------------------------------------------------------------------------

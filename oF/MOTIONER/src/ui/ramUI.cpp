@@ -36,7 +36,8 @@ mOscOutPortInput(NULL),
 mEnableOscToggle(NULL),
 mPlayToggle(NULL),
 mRecording(false),
-mDetailedRendering(true)
+mDetailedRendering(true),
+mWillOpenMotionFile(false)
 //mSkeletonMap(NULL),
 {
     //mGui.clear();
@@ -528,6 +529,13 @@ float UI::getLogHeight() const
 //----------------------------------------------------------------------------------------
 void UI::update()
 {
+    if (mWillOpenMotionFile) {
+        if (mFileDialogResult.bSuccess)
+            openPlaybackFile(mFileDialogResult.getPath(),
+                             mFileDialogResult.getName());
+        mWillOpenMotionFile = false;
+    }
+    
     const float y = general->getRect()->getY();
     const float h = general->getRect()->getHeight();
     
@@ -766,8 +774,10 @@ void UI::guiEvent(ofxUIEventArgs &e)
         notifyFixPosition();
     }
     else if (name == "OPEN A MOTION FILE") {
-        if (static_cast<ofxUIButton *>(e.widget)->getValue())
-            openPlaybackDialog();
+        if (static_cast<ofxUIButton *>(e.widget)->getValue()) {
+            mFileDialogResult = openPlaybackDialog();
+            mWillOpenMotionFile = true;
+        }
     }
     else if (name == "PLAY ALL") {
         if (static_cast<ofxUIButton *>(e.widget)->getValue()) {

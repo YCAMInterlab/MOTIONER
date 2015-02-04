@@ -209,33 +209,6 @@ void MotionerApp::keyPressed(int key)
     ram::UI::getInstance().keyPressed(key);
     
     switch (key) {
-        case '1':
-        {
-            ofxEventMessage m;
-            m.setAddress(ram::event::ADDRESS_SET_CAMERA_ROTATION);
-            m.addIntArg(static_cast<int>(true));
-            ofxNotifyEvent(m);
-        }
-            break;
-        case '2':
-        {
-            ofxEventMessage m;
-            m.setAddress(ram::event::ADDRESS_SET_CAMERA_TRANSLATION);
-            m.addIntArg(static_cast<int>(true));
-            ofxNotifyEvent(m);
-        }
-            break;
-        case '3':
-        {
-            ofxEventMessage m;
-            m.setAddress(ram::event::ADDRESS_SET_CAMERA_TRANSLATION);
-            m.addIntArg(static_cast<int>(false));
-            ofxNotifyEvent(m);
-            m.setAddress(ram::event::ADDRESS_SET_CAMERA_ROTATION);
-            m.addIntArg(static_cast<int>(false));
-            ofxNotifyEvent(m);
-        }
-            break;
         case ' ':
         {
             mEnableUpdateSkeletons ^= true;

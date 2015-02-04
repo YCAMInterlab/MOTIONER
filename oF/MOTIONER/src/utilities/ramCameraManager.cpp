@@ -20,7 +20,6 @@ mCurrCameraId(CAMERA_EASY_CAM)
     {
         ofEasyCam *easyCam = new ofEasyCam();
         easyCam->setDistance(2300.0f);
-        easyCam->disableMouseInput();
         easyCam->setFarClip(1000000.0f);
         CameraPtr ptr = CameraPtr(easyCam);
         mCameras.push_back(ptr);
@@ -56,44 +55,7 @@ vector<CameraPtr> &CameraManager::getCameras()
 }
 
 //----------------------------------------------------------------------------------------
-void CameraManager::setRotation(bool bRotate)
-{
-    ofPtr<ofEasyCam> cam = dynamic_pointer_cast<ofEasyCam>(mCameras.at(CAMERA_EASY_CAM));
-    if (cam)
-        bRotate ? cam->enableMouseInput() : cam->disableMouseInput();
-}
-
-//----------------------------------------------------------------------------------------
-void CameraManager::setTranslation(bool bTranslate)
-{
-    ofPtr<ofEasyCam> cam = dynamic_pointer_cast<ofEasyCam>(mCameras.at(CAMERA_EASY_CAM));
-    if (cam) {
-        if (bTranslate) {
-            cam->enableMouseInput();
-            ofNotifyMousePressed(0, 0, OF_MOUSE_BUTTON_MIDDLE);
-            //ofNotifyKeyPressed('m');
-        }
-        else {
-            cam->disableMouseInput();
-            ofNotifyMouseReleased(0, 0, OF_MOUSE_BUTTON_MIDDLE);
-            //ofNotifyKeyReleased('m');
-        }
-    }
-}
-
-//----------------------------------------------------------------------------------------
 void CameraManager::onMessageReceived(ofxEventMessage &m)
 {
-    const string addr = m.getAddress();
-    if (addr==event::ADDRESS_SET_CAMERA_ROTATION) {
-        const bool enable = static_cast<bool>(m.getArgAsInt32(0));
-        setTranslation(false);
-        setRotation(enable);
-    }
-    else if (addr==event::ADDRESS_SET_CAMERA_TRANSLATION) {
-        const bool enable = static_cast<bool>(m.getArgAsInt32(0));
-        setRotation(false);
-        setTranslation(enable);
-    }
 }
 

@@ -20,8 +20,6 @@ namespace ram { namespace event {
     const std::string ADDRESS_PICKED_JOINT                  = "ADDRESS_PICKED_JOINT";
     const std::string ADDRESS_LOG                           = "ADDRESS_LOG";
     const std::string ADDRESS_CHANGE_SKELETON_NAME          = "ADDRESS_CHANGE_SKELETON_NAME";
-    const std::string ADDRESS_SET_CAMERA_ROTATION           = "ADDRESS_SET_CAMERA_ROTATION";
-    const std::string ADDRESS_SET_CAMERA_TRANSLATION        = "ADDRESS_SET_CAMERA_TRANSLATION";
     
     const std::string ADDRESS_CIRCLE_TRACKER                = "ADDRESS_CIRCLE_TRACKER";
     const std::string ADDRESS_CIRCLE_TRACKER_ZERO           = "ADDRESS_CIRCLE_TRACKER_ZERO";

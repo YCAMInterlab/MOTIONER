@@ -34,8 +34,6 @@ mDeviceIncomingPortInput(NULL),
 mOscOutHostInput(NULL),
 mOscOutPortInput(NULL),
 mEnableOscToggle(NULL),
-mRotationToggle(NULL),
-mTranslationToggle(NULL),
 mPlayToggle(NULL),
 mRecording(false),
 mDetailedRendering(true)
@@ -156,34 +154,6 @@ void UI::setup(const ofRectangle &rect)
         widget->setColorBack(oh);
         mPlayToggle = static_cast<ofxUIImageToggle *>(widget);
         mPlayToggle->setValue(true);
-        
-        widget = mTools->addWidgetRight(new ofxUILabel("__SPACE__", "  ", OFX_UI_FONT_LARGE));
-        
-        widget = mTools->addWidgetRight(new ofxUIImageToggle(btnDim,
-                                                             btnDim,
-                                                             false,
-                                                             "images/rotate.png",
-                                                             "ROTATE"));
-        widget->setColorBack(oh);
-        mRotationToggle = static_cast<ofxUIImageToggle *>(widget);
-        
-        widget = mTools->addWidgetRight(new ofxUIImageToggle(btnDim,
-                                                             btnDim,
-                                                             false,
-                                                             "images/translate.png",
-                                                             "TRANSLATE"));
-        
-        widget->setColorBack(oh);
-        mTranslationToggle = static_cast<ofxUIImageToggle *>(widget);
-        
-        widget = mTools->addWidgetRight(new ofxUIImageButton(btnDim,
-                                                             btnDim,
-                                                             false,
-                                                             "images/cancel.png",
-                                                             "CANCEL"));
-        
-        widget->setColorBack(oh);
-        
     }
     //--------------------------------------------------//
     //--------------------------------------------------//
@@ -816,55 +786,6 @@ void UI::guiEvent(ofxUIEventArgs &e)
     else if (name == "FIX POSITION") {
         notifyFixPosition();
     }
-    else if (name == "ROTATE") {
-        ofxEventMessage m ;
-        m.setAddress(event::ADDRESS_SET_CAMERA_ROTATION);
-        m.addIntArg(static_cast<ofxUIImageToggle *>(e.widget)->getValue());
-        ofxNotifyEvent(m);
-        mTranslationToggle->setValue(false);
-    }
-    else if (name == "TRANSLATE") {
-        ofxEventMessage m ;
-        m.setAddress(event::ADDRESS_SET_CAMERA_TRANSLATION);
-        m.addIntArg(static_cast<ofxUIImageToggle *>(e.widget)->getValue());
-        ofxNotifyEvent(m);
-        mRotationToggle->setValue(false);
-    }
-    else if (name == "CANCEL") {
-        ofxEventMessage m;
-        m.setAddress(ram::event::ADDRESS_SET_CAMERA_TRANSLATION);
-        m.addIntArg(static_cast<int>(false));
-        ofxNotifyEvent(m);
-        m.setAddress(ram::event::ADDRESS_SET_CAMERA_ROTATION);
-        m.addIntArg(static_cast<int>(false));
-        ofxNotifyEvent(m);
-        mTranslationToggle->setValue(false);
-        mRotationToggle->setValue(false);
-    }
-    /*
-     general->addSpacer(genHw, 1.0f);
-     general->addLabel("PLAYER", OFX_UI_FONT_LARGE);
-     widget = general->addSlider("CURR TIME", 0.0f, 100.0f, 30.0f, genHw, hh);
-     widget->setDrawOutline(true);
-     widget->setColorOutline(outlineColor);
-     general->addLabel("CURR FRAMES: 12345", OFX_UI_FONT_SMALL);
-     widget = general->addButton("OPEN MOTION FILES", false, buttonSize, buttonSize);
-     widget->setDrawOutline(true);
-     widget->setColorOutline(outlineColor);
-     widget = general->addButton("START PLAYING", false, buttonSize, buttonSize);
-     widget->setDrawOutline(true);
-     widget->setColorOutline(outlineColor);
-     widget = general->addButton("PAUSE PLAYING", false, buttonSize, buttonSize);
-     widget->setDrawOutline(true);
-     widget->setColorOutline(outlineColor);
-     widget = general->addButton("STOP PLAYING", false, buttonSize, buttonSize);
-     widget->setDrawOutline(true);
-     widget->setColorOutline(outlineColor);
-     widget = general->addToggle("LOOP", false, buttonSize, buttonSize);
-     widget->setDrawOutline(true);
-     widget->setColorOutline(outlineColor);
-     
-     */
     else if (name == "OPEN A MOTION FILE") {
         if (static_cast<ofxUIButton *>(e.widget)->getValue())
             openPlaybackDialog();
@@ -954,16 +875,6 @@ void UI::onNotifyEvent(ofxEventMessage &m)
 #ifdef DEBUG
         addLog(m.getArgAsString(0));
 #endif
-    }
-    else if (addr==event::ADDRESS_SET_CAMERA_ROTATION) {
-        mTranslationToggle->setValue(false);
-        const bool enable = static_cast<bool>(m.getArgAsInt32(0));
-        mRotationToggle->setValue(enable);
-    }
-    else if (addr==event::ADDRESS_SET_CAMERA_TRANSLATION) {
-        mRotationToggle->setValue(false);
-        const bool enable = static_cast<bool>(m.getArgAsInt32(0));
-        mTranslationToggle->setValue(enable);
     }
     else if (addr==event::ADDRESS_START_RECORDING) {
         if (skeleton::SkeletonManager::getInstance().getSkeletons().empty()==false) {

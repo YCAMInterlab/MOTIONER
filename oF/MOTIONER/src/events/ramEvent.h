@@ -23,8 +23,6 @@ namespace ram { namespace event {
     extern const std::string ADDRESS_PICKED_JOINT;
     extern const std::string ADDRESS_LOG;
     extern const std::string ADDRESS_CHANGE_SKELETON_NAME;
-    extern const std::string ADDRESS_SET_CAMERA_ROTATION;
-    extern const std::string ADDRESS_SET_CAMERA_TRANSLATION;
     extern const std::string ADDRESS_CIRCLE_TRACKER;
     extern const std::string ADDRESS_CIRCLE_TRACKER_ZERO;
     extern const std::string ADDRESS_CIRCLE_TRACKER_SCALE;

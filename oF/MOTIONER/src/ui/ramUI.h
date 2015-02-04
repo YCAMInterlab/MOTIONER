@@ -163,8 +163,8 @@ namespace ram {
 
         
         /// tools
-        ofxUIImageToggle    *mRotationToggle;
-        ofxUIImageToggle    *mTranslationToggle;
+        //ofxUIImageToggle    *mRotationToggle;
+        //ofxUIImageToggle    *mTranslationToggle;
         ofxUIImageToggle    *mPlayToggle;
         
         /// orientation

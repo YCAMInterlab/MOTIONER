@@ -34,10 +34,7 @@ namespace ram {
         void setCurrentCamera(int index);
         
         vector<CameraPtr> &getCameras();
-        
-        void setRotation(bool bRotate);
-        void setTranslation(bool bTranslate);
-        
+                
         void keyPressed(int key);
         void keyReleased(int key);
         

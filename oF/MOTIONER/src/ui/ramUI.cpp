@@ -123,7 +123,7 @@ void UI::setup(const ofRectangle &rect)
     
     const float btnDim = 26.0f;
     const float btnMgn = OFX_UI_GLOBAL_WIDGET_SPACING;
-    const int nButtons = 5;
+    const int nButtons = 1;
     
     ofSetLogLevel(OF_LOG_FATAL_ERROR); /// shout ofxUI out
     mTools =new ofxUICanvas(mWidth*1.1f,
@@ -155,6 +155,8 @@ void UI::setup(const ofRectangle &rect)
         widget->setColorBack(oh);
         mPlayToggle = static_cast<ofxUIImageToggle *>(widget);
         mPlayToggle->setValue(true);
+        
+        mTools->autoSizeToFitWidgets();
     }
     //--------------------------------------------------//
     //--------------------------------------------------//

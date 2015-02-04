@@ -36,11 +36,9 @@ namespace ram { namespace skeleton {
         int getActiveJoint() const;
         
     private:
-        bool mIsEnableShading;
         int mState;
         int mActiveJoint;
-        
-        //mutable ofLight mLight;
+    
     };
     
 } }

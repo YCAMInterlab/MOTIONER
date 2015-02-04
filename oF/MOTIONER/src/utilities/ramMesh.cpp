@@ -37,52 +37,40 @@ namespace ram {
         {
             ofVboMesh  mesh;
             
-            mesh    .clear();
-            mesh    .setMode(OF_PRIMITIVE_LINES);
+            mesh.clear();
+            mesh.setMode(OF_PRIMITIVE_TRIANGLES);
             
-            ofFloatColor color;
-            color.set(0.2f);
-            mesh.addColor   ( color );
-            mesh.addVertex  ( ofVec3f(-size*10+0.5, 0.5, 0.5)       );
-            mesh.addColor   ( color );
-            mesh.addVertex  ( ofVec3f( size*10+0.5, 0.5, 0.5)       );
-            mesh.addColor   ( color );
-            mesh.addVertex  ( ofVec3f( 0.5, 0.5,  size*10.0f+0.5)       );
-            mesh.addColor   ( color );
-            mesh.addVertex  ( ofVec3f( 0.5, 0.5, -size*10.0f+0.5)       );
+            ofFloatColor c0(0.6f);
+            ofFloatColor c1(0.3f);
             
-            for (int i=0; i<numSlices; i++)
-            {
-                const float h     = size;
-                const float step  = size/numSlices;
-                ofFloatColor color(0.6, 0.3);
-                
-                if (i%5==0) color.set(0.6);
-                
-                mesh.addColor   ( color                             );
-                mesh.addVertex  ( ofVec3f(i*step+0.5, 0.5, -h+0.5)  );
-                mesh.addColor   ( color                             );
-                mesh.addVertex  ( ofVec3f(i*step+0.5, 0.5, h+0.5)   );
-                mesh.addColor   ( color                             );
-                mesh.addVertex  ( ofVec3f(-i*step, 0.5, -h+0.5)     );
-                mesh.addColor   ( color                             );
-                mesh.addVertex  ( ofVec3f(-i*step+0.5, 0.5, h+0.5)  );
-                mesh.addColor   ( color                             );
-                mesh.addVertex  ( ofVec3f(-h+0.5, 0.5, i*step+0.5)  );
-                mesh.addColor   ( color                             );
-                mesh.addVertex  ( ofVec3f(h+0.5, 0.5, i*step+0.5)   );
-                mesh.addColor   ( color                             );
-                mesh.addVertex  ( ofVec3f(-h+0.5, 0.5, -i*step+0.5) );
-                mesh.addColor   ( color                             );
-                mesh.addVertex  ( ofVec3f(h+0.5, 0.5, -i*step+0.5)  );
+            const float begin = - numSlices / 2 * size;
+            
+            for (int i=0; i<numSlices; i++) {
+                for (int j=0; j<numSlices; j++) {
+                    const float x0 = begin + size * i;
+                    const float x1 = begin + size * i + size;
+                    const float y0 = begin + size * j;
+                    const float y1 = begin + size * j + size;
+                    mesh.addVertex(ofVec3f(x0, 0, y0));
+                    mesh.addVertex(ofVec3f(x1, 0, y0));
+                    mesh.addVertex(ofVec3f(x1, 0, y1));
+                    
+                    mesh.addVertex(ofVec3f(x1, 0, y1));
+                    mesh.addVertex(ofVec3f(x0, 0, y1));
+                    mesh.addVertex(ofVec3f(x0, 0, y0));
+                    
+                    for (int k=0; k<6; k++) {
+                        mesh.addNormal(ofVec3f(0.f, 1.f, 0.f));
+                        if (j%2 == 0) {
+                            i%2 == 0 ? mesh.addColor(c0) : mesh.addColor(c1);
+                        }
+                        else {
+                            i%2 == 1 ? mesh.addColor(c0) : mesh.addColor(c1);
+                        }
+                    }
+
+                }
             }
-            
-            float length    = size;
-            
-            mesh.addColor       ( ofFloatColor(0.6)         );
-            mesh.addVertex      ( ofVec3f(0, 0, 0)          );
-            mesh.addColor       ( ofFloatColor(0.6)         );
-            mesh.addVertex      ( ofVec3f(0, length, 0)     );
             
             return mesh;
         }

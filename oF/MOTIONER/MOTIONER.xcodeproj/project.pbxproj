@@ -63,6 +63,7 @@
 		D2BD883B16BE45C7002C54B5 /* ramInspectorUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D2BD883916BE45C7002C54B5 /* ramInspectorUI.cpp */; };
 		D2BD883C16BE5615002C54B5 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9740E8CC7DD009D7055 /* Carbon.framework */; };
 		D2BD883F16BEC769002C54B5 /* ramSkeletonManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D2BD883D16BEC768002C54B5 /* ramSkeletonManager.cpp */; };
+		D2CFE25D1A82329000045E7B /* ramSimpleShadow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D2CFE25B1A82329000045E7B /* ramSimpleShadow.cpp */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
 		E45BE97C0E8CC7DD009D7055 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9720E8CC7DD009D7055 /* ApplicationServices.framework */; };
@@ -284,6 +285,8 @@
 		D2BD883D16BEC768002C54B5 /* ramSkeletonManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ramSkeletonManager.cpp; sourceTree = "<group>"; };
 		D2BD883E16BEC768002C54B5 /* ramSkeletonManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ramSkeletonManager.h; sourceTree = "<group>"; };
 		D2CBE65E16D23B9A00AF80EF /* MOTIONER-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MOTIONER-Info.plist"; sourceTree = "<group>"; };
+		D2CFE25B1A82329000045E7B /* ramSimpleShadow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ramSimpleShadow.cpp; sourceTree = "<group>"; };
+		D2CFE25C1A82329000045E7B /* ramSimpleShadow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ramSimpleShadow.h; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
 		E45BE9720E8CC7DD009D7055 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
@@ -731,6 +734,8 @@
 			children = (
 				D299696116B67DDE00E8E3B0 /* ramRenderer.cpp */,
 				D299696216B67DDE00E8E3B0 /* ramRenderer.h */,
+				D2CFE25B1A82329000045E7B /* ramSimpleShadow.cpp */,
+				D2CFE25C1A82329000045E7B /* ramSimpleShadow.h */,
 			);
 			path = render;
 			sourceTree = "<group>";
@@ -1036,6 +1041,7 @@
 				D2A5E7DC16722C88009BD03B /* tinyxmlparser.cpp in Sources */,
 				D2A5E7DD16722C88009BD03B /* ofxXmlSettings.cpp in Sources */,
 				D299697116B67DDE00E8E3B0 /* ramConstants.cpp in Sources */,
+				D2CFE25D1A82329000045E7B /* ramSimpleShadow.cpp in Sources */,
 				D299697216B67DDE00E8E3B0 /* ramTypes.cpp in Sources */,
 				D299697316B67DDE00E8E3B0 /* main.cpp in Sources */,
 				D299697416B67DDE00E8E3B0 /* MotionerApp.cpp in Sources */,

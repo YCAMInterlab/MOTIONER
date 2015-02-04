@@ -42,7 +42,12 @@ private:
     /// output motion data
     ram::OscSender   mOscSender;
     
-    ofLight mLight;
-    
     ram::OscReceiver mOscReceiver;
+
+    ofLight mLightW;
+    ofLight mLightR;
+    ofLight mLightG;
+    ofLight mLightB;
+    
+    ofPtr<class ramSimpleShadow> mShadow;
 };

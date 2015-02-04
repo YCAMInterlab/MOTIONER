@@ -12,13 +12,14 @@
 #include "ramEvent.h"
 #include "ramDeviceCorrespondent.h"
 #include "ofxSimpleKalmanFilter.h"
+#include "ramSimpleShadow.h"
 
 //----------------------------------------------------------------------------------------
 MotionerApp::MotionerApp() :
 mEnableDraw(true),
 mEnableUpdateSkeletons(true)
 {
-    mOffset.set(0.0f, -600.0f, 0.0f);
+    mOffset.set(0.0f, -800.0f, 0.0f);
 }
 
 //----------------------------------------------------------------------------------------
@@ -67,7 +68,8 @@ void MotionerApp::setup()
     
 #endif
     
-    mLight.setGlobalPosition(-1000.0, 3000.0, 1000.0);
+    mShadow = ofPtr<ramSimpleShadow>(new ramSimpleShadow());
+    mShadow->setup();
     
     windowResized(ofGetWidth(), ofGetHeight());
     
@@ -152,13 +154,10 @@ void MotionerApp::draw()
     {
         ofViewport(viewRect);
         
-        ofVec3f v(c1.r, c1.g, c1.b);
-        v *= 1.3;
-        ofColor c3(v.x, v.y, v.z);
-        v*=0.2;
-        ofColor c2(v.x, v.y, v.z);
+        ofColor c2(255);
+        ofColor c3(50);
         
-        ofBackgroundGradient(c2, c3);
+        ofBackgroundGradient(c3, c2);
     }
     ofxPopAll();
     
@@ -170,22 +169,67 @@ void MotionerApp::draw()
         ram::CameraPtr cam = ram::CameraManager::getInstance().getCurrentCamera();
         cam->begin(viewRect);
         
-        glDisable(GL_DEPTH_TEST);
-        glShadeModel(GL_SMOOTH);
-        
-        ofEnableSmoothing();
-        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
-        
         ofTranslate(mOffset);
         
-        ram::Mesh::drawAxis(200.f);
+        const float time = ofGetElapsedTimef();
+        
+        mLightW.setPosition(-2500.f, 4000.f, 6000.f);
+        mLightW.setDiffuseColor(ofFloatColor(0.3f, 0.3f, 0.3f));
+        mLightW.setAmbientColor(ofFloatColor(0.1f, 0.1f, 0.1f));
+        
+        mLightG.setPosition(-5000.f * ::cosf(time * 3.11f),
+                            3000.f * ::fabsf(::sinf(time * 0.85f)),
+                            7000.f * ::cosf(time * 1.2f));
+        mLightG.setAttenuation();
+        mLightG.setDiffuseColor(ofFloatColor(0.15f, 0.3f, 0.15f));
+        mLightG.setAmbientColor(ofFloatColor(0.05f, 0.2f, 0.05f));
+        
+        mLightR.setPosition(-4000.f * ::cosf(time * 2.31f),
+                            1500.f * ::sinf(time * 0.48f) + 1500.f,
+                            6000.f * ::cosf(time));
+        mLightR.setAttenuation();
+        mLightR.setDiffuseColor(ofFloatColor(0.3f, 0.15f, 0.15f));
+        mLightR.setAmbientColor(ofFloatColor(0.2f, 0.05f, 0.05f));
+        
+        mLightB.setPosition(3500.f * ::cosf(time * 1.75f),
+                            2000.f * ::sinf(time * 0.32f) + 2000.f,
+                            -5000.f * ::cosf(time));
+        mLightB.setDiffuseColor(ofFloatColor(0.15f, 0.15f, 0.3f));
+        mLightB.setAmbientColor(ofFloatColor(0.05f, 0.05f, 0.2f));
+        
+        ofEnableLighting();
+        mLightW.enable();
+        mLightG.enable();
+        mLightR.enable();
+        mLightB.enable();
+        
+        glEnable(GL_DEPTH_TEST);
+        ofPushMatrix();
+        ofTranslate(0.f, -2.f); // bias
         mGrid.draw();
+        ofPopMatrix();
         
-        mLight.enable();
         ram::skeleton::SkeletonManager::getInstance().drawSkeletons();
-        mLight.disable();
+        ofPopStyle();
         
-                
+        mLightB.disable();
+        mLightR.disable();
+        mLightG.disable();
+        mLightW.disable();
+        ofDisableLighting();
+        
+        ofPushMatrix();
+        ofEnableAlphaBlending();
+        glEnable(GL_DEPTH_TEST);
+        ofMatrix4x4 modelview;
+        glGetFloatv(GL_MODELVIEW, modelview.getPtr());
+        
+        mShadow->setLightPosition(mLightW.getGlobalPosition());
+        mShadow->begin(modelview);
+        ram::skeleton::SkeletonManager::getInstance().drawSkeletons();
+        mShadow->end();
+        ofPopMatrix();
+        
         cam->end();
     }
     ofxPopAll();

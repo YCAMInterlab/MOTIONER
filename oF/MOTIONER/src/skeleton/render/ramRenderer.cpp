@@ -38,7 +38,6 @@ static void billboard()
 
 //----------------------------------------------------------------------------------------
 Renderer::Renderer() :
-mIsEnableShading(true),
 mState(0),
 mActiveJoint(JOINT_HIPS)
 {
@@ -69,58 +68,58 @@ void Renderer::draw(Skeleton *skeleton) const
     
     (mState==Skeleton::STATE_SELECTED) ? color.setHex(COLOR_H) : color.setHex(COLOR_M);    
     
+    
     for (size_t i=0; i<joints.size(); i++) {
+        ofPushStyle();
+        ofFill();
         
         ofSetColor(color);
         
         ofSetLineWidth(1.f);
         Node &n = joints.at(i);
-        n.size = 60.0f;
+        isEndSite(i) || i == 0 ? n.size = 110.f : n.size = 80.f;
         
-        if (mIsEnableShading) {
-            glPushAttrib(GL_ALL_ATTRIB_BITS);
-            ofPushStyle();
-            ofDisableAlphaBlending();
-            glEnable(GL_DEPTH_TEST);
-            ofEnableLighting();
-            ofFill();
-        }
         n.draw();
-        if (mIsEnableShading) {
-            ofDisableLighting();
-            ofEnableAlphaBlending();
-            ofPopStyle();
-            glPopAttrib();
-        }
-        if (i==mActiveJoint && mState==Skeleton::STATE_SELECTED) {
-            ofxPushAll();
-            ofMultMatrix(n.getGlobalTransformMatrix());
-            ofSetColor(255, 50, 50, 90);
-            ofFill();
-            billboard();
-            ofCircle(ofVec3f::zero(), 50.0f);
-            ofxPopAll();
-        }
+
+        //if (i==mActiveJoint && mState==Skeleton::STATE_SELECTED) {
+        //ofxPushAll();
+        //ofMultMatrix(n.getGlobalTransformMatrix());
+        //float t = ::fmodf(ofGetElapsedTimef() * 1.f, 1.f);
+        //
+        //ofSetColor(255, 50, 50, 90 + t * 50.f);
+        //ofFill();
+        //billboard();
+        //ofCircle(ofVec3f::zero(), 50.0f + t * 80.f);
+        //ofxPopAll();
+        //}
         
-        /// velocity debug
-        //ofSetColor(color);
-        //ofBox(n.getGlobalPosition(), n.velocity * 10);
-        
-        (mState==Skeleton::STATE_SELECTED) ? ofSetLineWidth(2.0f) : ofSetLineWidth(1.0f);
         ofSetColor(color);
         if (!n.getParent()) continue;
         
-         if (mIsEnableShading) {
-             ofPushStyle();
-             ofDisableLighting();
-             glPushAttrib(GL_ALL_ATTRIB_BITS);
-             glEnable(GL_DEPTH_TEST);
-         }
-        ofLine(n.getGlobalPosition(), n.getParent()->getGlobalPosition());
-         if (mIsEnableShading) {
-             glPopAttrib();
-             ofPopStyle();
-         }
+        const ofVec3f v0 = n.getGlobalPosition();
+        const ofVec3f v1 = n.getParent()->getGlobalPosition();
+        
+        ofPushStyle();
+        ofSetLineWidth(2.f);
+        ofSetColor(255, 255, 255, 255);
+        ofLine(v0, v1);
+        ofPopStyle();
+        
+        int d = v0.distance(v1);
+        const int s = 60;
+        if (d%s < s /10 || d%s > s - s / 10)
+            d += s / 5;
+        const int repeat = d/s;
+        for (int j=0; j<repeat; j++) {
+            const float t = j/(float)repeat;
+            ofSetColor(140, 140, 140);
+            ofPushMatrix();
+            ofTranslate(v0.interpolated(v1, t));
+            ofDrawBox(ofVec3f::zero(), s*0.8f);
+            ofPopMatrix();
+        }
+        
+         ofPopStyle();
     }
     
     ofPushMatrix();

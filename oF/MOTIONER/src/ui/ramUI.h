@@ -64,7 +64,7 @@ namespace ram {
         
         inline InspectorUI &getInspector() { return mInspector; }
         
-        void updateDeviceList();
+        void updateDeviceList(SkeletonMap *skeletonMap);
         
         int getDeviceIncomingUdpPort() const;
         
@@ -176,6 +176,8 @@ namespace ram {
         /// UI params
         //--------------------
         bool                mIsInited;
+        
+        bool                mDetailedRendering;
         
         ofRectangle         mView;
         

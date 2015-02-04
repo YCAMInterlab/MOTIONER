@@ -56,7 +56,7 @@ namespace ram {
         void setJoint(int index);
         void setSettingsFilePath(const string &path);
         
-        ofxUITabbedCanvas &getTabbedCanvas() { return *mTabbedCanvas; }
+        ofxUITabbedCanvas* getTabbedCanvas() { return mTabbedCanvas; }
 
         
     private:

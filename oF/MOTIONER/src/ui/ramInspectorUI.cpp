@@ -110,14 +110,14 @@ void InspectorUI::setup()
         canvas->setColorOutline(o);
     }
     
-    canvas->addLabel("SKELETON:", OFX_UI_FONT_SMALL);
+    canvas->addLabel("SKELETON ID:", OFX_UI_FONT_SMALL);
     
     /// TAB_GENERAL_SETTINGS - NAME label
     //--------------------------------------------------
     {
         //canvas->addSpacer(hw, 1.0f);
         //mDeviceHostNameLabel = canvas->addLabel("DEVICE IP:", OFX_UI_FONT_SMALL);
-        mDeviceHostNameLabel = canvas->addLabel("NO IP FOUND", OFX_UI_FONT_SMALL);
+        mDeviceHostNameLabel = canvas->addLabel("NO DEVICEC FOUND", OFX_UI_FONT_SMALL);
         canvas->addSpacer(hw, 1.0f);
     }
     
@@ -140,13 +140,19 @@ void InspectorUI::setup()
         widget->setDrawOutline(true);
         widget->setColorOutline(outlineColor);
         canvas->addSpacer(hw, 1.0f);
+        
+        mEnableOscOutToggle = canvas->addLabelToggle("OSC OUT", true, hw);
+        mEnableOscOutToggle->setDrawOutline(true);
+        mEnableOscOutToggle->setColorOutline(outlineColor);
+        
+        canvas->addSpacer(hw, 1.0f);
     }
     
     /// TAB_GENERAL_SETTINGS - Skeleton managment
     //--------------------------------------------------
     {
-        canvas->addLabel("FILE:", OFX_UI_FONT_SMALL);
-        mSettingFileNameLabel = canvas->addLabel("", OFX_UI_FONT_MEDIUM);
+        canvas->addLabel("LOADED SETTINGS:", OFX_UI_FONT_SMALL);
+        mSettingFileNameLabel = canvas->addLabel("", OFX_UI_FONT_SMALL);
         //canvas->addLabel(" ");
         addImageButton(canvas, buttonSize, "images/open.png", "LOAD", true);
         addImageButton(canvas, buttonSize, "images/save.png", "SAVE", false);
@@ -250,6 +256,8 @@ void InspectorUI::setup()
     /// POSITION EDITOR - SLIDES
     //--------------------------------------------------
     {
+        canvas->addLabel("POSITION OFFSET:", OFX_UI_FONT_SMALL);
+        
         mResetPositionXSlider = canvas->addSlider("CENTTER X",
                                                   -1500.0f,
                                                   1500.0f,
@@ -299,12 +307,6 @@ void InspectorUI::setup()
         /// TAB_OPTIONS - options
         //--------------------------------------------------
         {
-            mEnableOscOutToggle = canvas->addLabelToggle("OSC OUT", true, hw);
-            mEnableOscOutToggle->setDrawOutline(true);
-            mEnableOscOutToggle->setColorOutline(outlineColor);
-            
-            canvas->addSpacer(hw, 1.0f);
-            
             widget = canvas->addLabelButton("DELETE", false, hw);
             widget->setDrawOutline(true);
             widget->setColorOutline(outlineColor);

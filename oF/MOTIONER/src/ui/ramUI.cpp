@@ -37,7 +37,8 @@ mEnableOscToggle(NULL),
 mRotationToggle(NULL),
 mTranslationToggle(NULL),
 mPlayToggle(NULL),
-mRecording(false)
+mRecording(false),
+mDetailedRendering(true)
 //mSkeletonMap(NULL),
 {
     //mGui.clear();
@@ -190,9 +191,9 @@ void UI::setup(const ofRectangle &rect)
     
     /// setup guis
     const float hw = mWidth*0.6-OFX_UI_GLOBAL_WIDGET_SPACING;
-
+    
     const float hh = 12.0f;
-
+    
     
     const float buttonSize = 20.0f;
     
@@ -227,11 +228,7 @@ void UI::setup(const ofRectangle &rect)
     //--------------------------------------------------
     /// GENERAL - OSC OUT
     {
-        general->addLabel("", OFX_UI_FONT_SMALL);
-        
         general->addLabel("OSC OUT", OFX_UI_FONT_MEDIUM);
-        
-        general->addLabel("", OFX_UI_FONT_SMALL);
         
         general->addLabel("HOST    :", OFX_UI_FONT_SMALL);
         widget = general->addWidgetRight(new ofxUITextInput("OSC_OUT_HOST",
@@ -245,8 +242,6 @@ void UI::setup(const ofRectangle &rect)
         mOscOutHostInput->setDrawOutline(true);
         mOscOutHostInput->setAutoClear(false);
         mOscOutHostInput->setColorOutline(outlineColor);
-
-        //general->addLabel("", OFX_UI_FONT_SMALL);
         
         general->addLabel("PORT    :", OFX_UI_FONT_SMALL);
         widget = general->addWidgetRight(new ofxUITextInput("OSC_OUT_PORT",
@@ -256,8 +251,6 @@ void UI::setup(const ofRectangle &rect)
                                                             0,
                                                             0,
                                                             OFX_UI_FONT_SMALL));
-
-        //general->addLabel("", OFX_UI_FONT_SMALL);
         
         general->addLabel("ENABLED :", OFX_UI_FONT_SMALL);
         
@@ -271,8 +264,6 @@ void UI::setup(const ofRectangle &rect)
                                           "images/enable.png",
                                           "ENABLE OSC OUT",
                                           false);
-        
-        general->addLabel("", OFX_UI_FONT_SMALL);
     }
     
 #ifdef DEBUG
@@ -280,17 +271,14 @@ void UI::setup(const ofRectangle &rect)
     /// GENERAL - OSC IN
     //{
     //    general->addSpacer(genHw, 1.0f);
-    //    
-    //    general->addLabel("OSC IN", OFX_UI_FONT_LARGE);
-    //    //general->addLabel("OSC INCOMING SETTINGS", OFX_UI_FONT_SMALL);
+    //
+    //    general->addLabel("APP CONTROL OSC IN", OFX_UI_FONT_MEDIUM);
     //    general->addLabel("PORT:", OFX_UI_FONT_SMALL);
     //    widget = general->addWidgetDown(new ofxUITextInput("OSC_IN_PORT", "INPUT PORT", hw));
     //    mOscInHostInput = static_cast<ofxUITextInput *>(widget);
     //    mOscInHostInput->setDrawOutline(true);
     //    mOscInHostInput->setAutoClear(false);
     //    mOscInHostInput->setColorOutline(outlineColor);
-    //    
-    //    
     //}
 #endif
     
@@ -299,17 +287,12 @@ void UI::setup(const ofRectangle &rect)
     {
         general->addSpacer(genHw, 1.0f);
         
-        general->addLabel("", OFX_UI_FONT_SMALL);
-        
         general->addLabel("DEVICE DATA IN", OFX_UI_FONT_MEDIUM);
         
-        general->addLabel("", OFX_UI_FONT_SMALL);
-        
-        //general->addLabel("DEVICE UDP PACKETS INCOMING SETTINGS", OFX_UI_FONT_SMALL);
         general->addLabel("PORT    :", OFX_UI_FONT_SMALL);
         widget = general->addWidgetRight(new ofxUITextInput("DEVICE_INCOMING_UDP_PORT",
-                                                           "9750",
-                                                           hw,
+                                                            "9750",
+                                                            hw,
                                                             0,
                                                             0,
                                                             0,
@@ -319,18 +302,12 @@ void UI::setup(const ofRectangle &rect)
         mDeviceIncomingPortInput->setColorOutline(outlineColor);
         general->setWidgetPosition(OFX_UI_WIDGET_POSITION_DOWN);
         
-        general->addLabel("", OFX_UI_FONT_SMALL);
-        
-        //general->addLabel("AVILABLE DEVICES:", OFX_UI_FONT_SMALL);
-        //mAvilableDeviceList = general->addDropDownList("SELECT AN AVILABLE DEVICE", vector<string>());
-        //mAvilableDeviceList->setDrawOutline(true);
-        //mAvilableDeviceList->setColorOutline(outlineColor);
-        //mAvilableDeviceList->setAllowMultiple(false);
-        //widget = general->addButton("CREATE NEW SKELETON", false, buttonSize, buttonSize);
-        //widget->setDrawOutline(true);
-        //widget->setColorOutline(outlineColor);
-        
-        
+        general->addLabel("AVILABLE SKELETONS:", OFX_UI_FONT_SMALL);
+        mAvilableDeviceList = general->addDropDownList("CHOOSE A SKELETON", vector<string>());
+        mAvilableDeviceList->setDrawOutline(true);
+        mAvilableDeviceList->setColorOutline(outlineColor);
+        mAvilableDeviceList->setAllowMultiple(false);
+        mAvilableDeviceList->setColorBack(COLOR_L);
     }
     //--------------------------------------------------
     /// GENERAL - OSC IN
@@ -342,45 +319,23 @@ void UI::setup(const ofRectangle &rect)
     //}
     //-------------------------------------------r-------
     
-    /// GENERAL - ORIENTATION
+    /// SKELETON
     {
         general->addSpacer(genHw, 1.0f);
         
-        general->addLabel("", OFX_UI_FONT_SMALL);
-        
-        general->addLabel("SKELETON ORIENTATION", OFX_UI_FONT_MEDIUM);
-        
-        general->addLabel("", OFX_UI_FONT_SMALL);
+        general->addLabel("SKELETON", OFX_UI_FONT_MEDIUM);
         
         mOrientation = general->addSlider("ORIENTATION-Y", 0.0f, 360.0f, 0.0f, genHw, hh);
         mOrientation->setColorOutline(outlineColor);
         mOrientation->setDrawOutline(true);
         
-        general->addLabel("", OFX_UI_FONT_SMALL);
-    }
-    //--------------------------------------------------
-    
-    /// GENERAL - AUTO RESET POSITION
-    {
-        general->addSpacer(genHw, 1.0f);
-        
-        general->addLabel("", OFX_UI_FONT_SMALL);
-        
-        general->addLabel("POSITION", OFX_UI_FONT_MEDIUM);
-        
-        general->addLabel("", OFX_UI_FONT_SMALL);
-        
         mAutoResetDimenstion = general->addSlider("AUTO RESET", 0.0f, 10000.0f, 0.0f, genHw, hh);
         mAutoResetDimenstion->setColorOutline(outlineColor);
         mAutoResetDimenstion->setDrawOutline(true);
         
-        general->addLabel("", OFX_UI_FONT_SMALL);
-        
         mFixPosition = general->addToggle("FIX POSITION", false);
         mFixPosition->setColorOutline(outlineColor);
         mFixPosition->setDrawOutline(true);
-        
-        general->addLabel("", OFX_UI_FONT_SMALL);
     }
     //--------------------------------------------------
     
@@ -389,35 +344,25 @@ void UI::setup(const ofRectangle &rect)
     {
         general->addSpacer(genHw, 1.0f);
         
-        general->addLabel("", OFX_UI_FONT_SMALL);
-        
         general->addLabel("RECORDER", OFX_UI_FONT_MEDIUM);
         //general->addLabel("ELAPSED: 00:00:12", OFX_UI_FONT_SMALL);
         //general->addLabel("NUM FRAMES: 12345", OFX_UI_FONT_SMALL);
         //widget = addImageButton(general, buttonSize, "images/open.png", "OPEN REC FILES", true);
         
-        general->addLabel("", OFX_UI_FONT_SMALL);
-        
         widget = addImageButton(general, buttonSize, "images/record.png", "START REC", true);
         general->addWidgetRight(new ofxUILabel("", OFX_UI_FONT_SMALL));
         widget = addImageButton(general, buttonSize, "images/stop.png", "FINISH REC", false);
-        
-        general->addLabel("", OFX_UI_FONT_SMALL);
     }
     //--------------------------------------------------
     /// GENERAL - PLAYER
     {
         general->addSpacer(genHw, 1.0f);
         
-        general->addLabel("", OFX_UI_FONT_SMALL);
-        
         general->addLabel("PLAYER", OFX_UI_FONT_MEDIUM);
         //widget = general->addSlider("CURR TIME", 0.0f, 100.0f, 30.0f, genHw, hh);
         //widget->setDrawOutline(true);
         //widget->setColorOutline(outlineColor);
         //general->addLabel("CURR FRAMES: 12345", OFX_UI_FONT_SMALL);
-        
-        general->addLabel("", OFX_UI_FONT_SMALL);
         
         widget = addImageButton(general,
                                 buttonSize,
@@ -438,19 +383,12 @@ void UI::setup(const ofRectangle &rect)
                                               false);
         it->setValue(true);
         
-        general->addLabel("", OFX_UI_FONT_SMALL);
-        
         mPlayerTimeLabel = general->addLabel("", OFX_UI_FONT_LARGE);
-        
-        general->addLabel("", OFX_UI_FONT_SMALL);
     }
     //--------------------------------------------------
     /// GENERAL - APP SETTINGS
     {
         general->addSpacer(genHw, 1.0f);
-        
-        //general->addLabel("INFO", OFX_UI_FONT_LARGE);
-        general->addLabel("", OFX_UI_FONT_SMALL);
         
         ofxUIImageToggle *it = addImageToggle(general,
                                               buttonSize,
@@ -463,13 +401,9 @@ void UI::setup(const ofRectangle &rect)
         
         addImageButton(general, buttonSize, "images/save.png", "SAVE SETTINGS", false);
         
-        general->addLabel("", OFX_UI_FONT_SMALL);
-        
         widget = general->addFPSSlider("FPS", genHw, 8.0f, 120.0f);
         widget->setColorOutline(outlineColor);
         widget->setDrawOutline(true);
-        
-        general->addLabel("", OFX_UI_FONT_SMALL);
     }
     
 #ifdef DEBUG
@@ -478,17 +412,11 @@ void UI::setup(const ofRectangle &rect)
     {
         general->addSpacer(genHw, 1.0f);
         
-        general->addLabel("", OFX_UI_FONT_SMALL);
-        
         general->addLabel("EXPERIMENT", OFX_UI_FONT_MEDIUM);
-        
-        general->addLabel("", OFX_UI_FONT_SMALL);
         
         mLowpass = general->addSlider("LOW-PASS", 0.0f, 1.0f, 0.2f, genHw, hh);
         mLowpass->setColorOutline(outlineColor);
         mLowpass->setDrawOutline(true);
-        
-        general->addLabel("", OFX_UI_FONT_SMALL);
     }
 #endif
     //--------------------------------------------------//
@@ -514,10 +442,10 @@ void UI::setup(const ofRectangle &rect)
     
     if (mEnableOscToggle->getValue())
         enableOsc();
-        
-//#ifdef DEBUG
-//    notifyLowpassValue();
-//#endif
+    
+    //#ifdef DEBUG
+    //    notifyLowpassValue();
+    //#endif
     
     //setupDeviceCorrespondent();
     
@@ -626,9 +554,9 @@ void UI::exit()
 //----------------------------------------------------------------------------------------
 float UI::getLogHeight() const
 {
-	const float leading = 1.7f;
+    const float leading = 1.7f;
     vector<string> lines = ofSplitString(mLoggerStr, "\n");
-	return lines.size() * kBitmapStringFontSize * leading - 1;
+    return lines.size() * kBitmapStringFontSize * leading - 1;
 }
 #endif
 
@@ -669,10 +597,10 @@ void UI::update()
 void UI::draw()
 {
 #ifdef DEBUG
-	const int height = getLogHeight();
+    const int height = getLogHeight();
     const float viewH = ofGetHeight()-mView.height-5.0f;
     const float out = height-viewH;
-
+    
     const float y = mView.height+kBitmapStringPadding+kBitmapStringFontSize+mLoggerY+1.0f;
     
     /// draw logger
@@ -725,7 +653,7 @@ void UI::keyPressed(int key)
 {
 #ifdef DEBUG
     vector<string> lines = ofSplitString(mLoggerStr, "\n");
-	const int height = getLogHeight();
+    const int height = getLogHeight();
     const float step =  (height/(float)lines.size()) * 1.0f;
 #endif
     
@@ -752,7 +680,7 @@ void UI::resize()
 #ifdef DEBUG
     if (!general || !mLogger) return;
 #else
-   if (!general) return; 
+    if (!general) return;
 #endif
     /// create gui objects
     const float genW = mWidth;
@@ -771,9 +699,12 @@ void UI::resize()
     mLogger->getRect()->set(logx, logy, logw, logh);
 #endif
     
-    ofxUITabbedCanvas &inspector = mInspector.getTabbedCanvas();
-    inspector.setPosition(ofGetWidth()-inspector.getRect()->width-20.0f,
-                          inspector.getPosition().y);
+    ofxUITabbedCanvas* inspector = mInspector.getTabbedCanvas();
+    if (inspector) {
+        float y;
+        mDetailedRendering ? y = 10.f : y = 520.f;
+        inspector->setPosition(ofGetWidth()-inspector->getRect()->width-10.0f, y);
+    }
     
 #ifdef DEBUG
     mView.x = genW;
@@ -809,18 +740,17 @@ void UI::guiEvent(ofxUIEventArgs &e)
     
     if (name == "TOGGLE DETAILED RENDERING") {
         ofxUIToggle *toggle = static_cast<ofxUIToggle *>(e.widget);
-        const bool render = toggle->getValue();
+        mDetailedRendering = toggle->getValue();
         
         ofxEventMessage m;
         m.setAddress(event::ADDRESS_TOGGLE_DRAW);
-        m.addIntArg(static_cast<int>(render));
+        m.addIntArg(static_cast<int>(mDetailedRendering));
         ofxNotifyEvent(m);
-        //mTabbedInspector->setVisible(render);
 #ifdef DEBUG
-        mLogger->setVisible(render);
+        mLogger->setVisible(mDetailedRendering);
 #endif
         
-        if (!render) {
+        if (!mDetailedRendering) {
             mStoredWindowRect = ofGetWindowRect();
             ofSetWindowShape(mWidth, 768.0f);
         }
@@ -941,7 +871,7 @@ void UI::guiEvent(ofxUIEventArgs &e)
     }
     else if (name == "PLAY ALL") {
         if (static_cast<ofxUIButton *>(e.widget)->getValue()) {
-            startPlayback(); 
+            startPlayback();
             mPlaying= true;
             if (mWillreset) {
                 mPlayerStartTime = ofGetElapsedTimef();
@@ -984,18 +914,17 @@ void UI::addLog(const string &log)
 #endif
 
 //----------------------------------------------------------------------------------------
-void UI::updateDeviceList()
+void UI::updateDeviceList(SkeletonMap *skeletonMap)
 {
-    //checkError();
-    //
-    //SkeletonMap *skeletonMap = &Shared::getInstance().skeletonMap;
-    //mAvilableDeviceList->clearToggles();
-    //
-    //for (SkeletonMap::iterator it = skeletonMap->begin(); it!=skeletonMap->end(); ++it) {
-    //    ofSetLogLevel(OF_LOG_ERROR); /// shut ofxUI waring up...
-    //    mAvilableDeviceList->addToggle(it->second->getHostName());
-    //    ofSetLogLevel(DEFAULT_LOG_LEVEL);
-    //}
+    checkError();
+    
+    mAvilableDeviceList->clearToggles();
+    
+    for (SkeletonMap::iterator it = skeletonMap->begin(); it!=skeletonMap->end(); ++it) {
+        ofSetLogLevel(OF_LOG_ERROR); /// shut ofxUI waring up...
+        mAvilableDeviceList->addToggle(it->second->getHostName());
+        ofSetLogLevel(DEFAULT_LOG_LEVEL);
+    }
 }
 
 //----------------------------------------------------------------------------------------

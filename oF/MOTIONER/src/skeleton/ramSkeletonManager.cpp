@@ -36,7 +36,7 @@ void SkeletonManager::addSkeleton(const string &hostName)
         skl->setup(hostName, DEFAULT_SKELETON_SETTINGS);
         
         mSkeletonMap[hostName] = skl; /// insert
-        UI::getInstance().updateDeviceList();/// update ui drop down menu
+        UI::getInstance().updateDeviceList(&mSkeletonMap);/// update ui drop down menu
         UI::getInstance().getInspector().setDevice(skl->getHostName()); /// set ui current skeleton
         
         UI::getInstance().getInspector().setSettingsFilePath(DEFAULT_SKELETON_SETTINGS);

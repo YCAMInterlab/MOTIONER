@@ -71,6 +71,8 @@ void MotionerApp::setup()
     
     windowResized(ofGetWidth(), ofGetHeight());
     
+    ofSetEscapeQuitsApp(false);
+    
     ofLogNotice() << "Setup finished!";
     
     OFX_END_EXCEPTION_HANDLING

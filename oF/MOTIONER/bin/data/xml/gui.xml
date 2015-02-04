@@ -1,7 +1,7 @@
 <Widget>
     <Kind>12</Kind>
     <Name>OSC_OUT_HOST</Name>
-    <Value>192.168.20.172</Value>
+    <Value>127.0.0.1</Value>
 </Widget>
 <Widget>
     <Kind>12</Kind>
@@ -31,7 +31,7 @@
 <Widget>
     <Kind>2</Kind>
     <Name>FIX POSITION</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>20</Kind>
@@ -45,11 +45,16 @@
 </Widget>
 <Widget>
     <Kind>4</Kind>
-    <Name>FPS</Name>
-    <Value>21.845924377</Value>
-</Widget>
-<Widget>
-    <Kind>4</Kind>
     <Name>LOW-PASS</Name>
     <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>192.168.2.103</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>rec_2014-12-27_17-11-16_TekubiKaiten_Shita.mot</Name>
+    <Value>0</Value>
 </Widget>

@@ -158,14 +158,15 @@ void Renderer::drawHUD(Skeleton *skeleton) const
     ofPopMatrix();
     
     for (int i=0; i<joints.size(); i++) {
+        ofPushMatrix();
+        ofTranslate(mJointScreenCoords.at(i));
         if (i==mActiveJoint && mState==Skeleton::STATE_SELECTED) {
-            ofPushMatrix();
             float t = ::fmodf(ofGetElapsedTimef() * 1.f, 1.f);
             ofSetColor(255, 50, 50, 80 - t * 50.f);
-            ofTranslate(mJointScreenCoords.at(i));
             ofCircle(ofVec3f::zero(), 13.0f + t * 20.f);
-            ofPopMatrix();
         }
+        //ofDrawBitmapString(ofToString(skeleton->mJointNoResponceTime.at(i), 2), ofVec3f::zero());
+        ofPopMatrix();
     }
     
     ofPopStyle();

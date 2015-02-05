@@ -13,7 +13,13 @@ using namespace ram;
 using namespace ram::skeleton;
 
 Node::Node() :
-size(20.0f)
+size(20.0f),
+enable(true)
+{
+    
+}
+
+void Node::update()
 {
     
 }

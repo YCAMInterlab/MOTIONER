@@ -201,8 +201,6 @@ namespace ram { namespace skeleton {
         
         ofPtr<Modules>  mModules; /// pimpl
         
-        vector<bool>    mDisableJoints;
-        
         coder::Frame    mBaseFrame;
         coder::Frame    mCurrentFrame;
         coder::Frame    mPreviousFrame;
@@ -234,7 +232,7 @@ namespace ram { namespace skeleton {
     {
         if (joint<0 || joint>=NUM_JOINTS)
             ofxThrowException(ofxException, "joint out of index");
-        return mDisableJoints.at(joint);
+        return !mJoints.at(joint).enable;
     }
         
     //------------------------------------------------------------------------------------

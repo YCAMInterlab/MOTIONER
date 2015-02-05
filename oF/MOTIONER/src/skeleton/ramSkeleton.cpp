@@ -53,9 +53,6 @@ mFixPosition(false)
     mJoints.clear();
     mJoints.assign(NUM_JOINTS, Node());
     
-    mDisableJoints.clear();
-    mDisableJoints.assign(NUM_JOINTS, false);
-    
     createTree();
     
     //reportFlags();
@@ -153,14 +150,12 @@ void Skeleton::updateRotation()
     /// apply current orientaion from MOTIONER device
     for (size_t i=0; i<mJoints.size(); i++) {
         /// calibration
-        const ofVec3f euler = mCurrentFrame.rotation.at(i).getEuler();
         const ofQuaternion &baseQuat = mBaseFrame.rotation.at(i) * ofQuaternion(90.0f, ofVec3f(0.0f, 0.0f, 1.0f));
-        //if (i ==0 ) cout << euler << endl;
 
         const ofQuaternion &currQuat = mCurrentFrame.rotation.at(i) * ofQuaternion(90.0f, ofVec3f(0.0f, 0.0f, 1.0f));
         const ofQuaternion calibratedQuat = baseQuat.inverse() * currQuat;
         
-        if (!mDisableJoints.at(i)) {
+        if (mJoints.at(i).enable) {
             mJoints.at(i).setGlobalOrientation(calibratedQuat);
             mJoints.at(i).velocity = mCurrentFrame.velocity.at(i);
         }
@@ -465,9 +460,6 @@ void Skeleton::onMessageReceived(ofxEventMessage &m)
 void Skeleton::createTree()
 {
     OFX_BEGIN_EXCEPTION_HANDLING
-    mJoints.clear();
-    mJoints.assign(NUM_JOINTS, Node());
-    
     mJoints.at(JOINT_ABDOMEN).setParent(mJoints.at(JOINT_HIPS));
 	{
 		mJoints.at(JOINT_CHEST).setParent(mJoints.at(JOINT_ABDOMEN));
@@ -603,7 +595,7 @@ void Skeleton::setDisableJoint(int joint, bool bDisable)
 {
     if (joint<0 || joint>=NUM_JOINTS)
         ofxThrowException(ofxException, "joint out of index");
-    mDisableJoints.at(joint) = bDisable;
+    mJoints.at(joint).enable = !bDisable;
     if (bDisable) {
         if (mModules->settings.hasTree()) {
             mModules->settings.loadTree(this);

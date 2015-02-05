@@ -18,6 +18,7 @@ namespace ram { namespace skeleton {
         
         Node();
         
+        void update();
         //--------------------
         void customDraw();
         
@@ -26,8 +27,11 @@ namespace ram { namespace skeleton {
         int id;
         float velocity;
         ofVec3f prevPosition;
+        ofQuaternion prevOrientation;
         
         float size;
+        
+        bool enable;
     };
     
     //------------------------------------------------------------------------------------

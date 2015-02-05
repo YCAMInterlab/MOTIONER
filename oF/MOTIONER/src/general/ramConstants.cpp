@@ -87,6 +87,10 @@ namespace ram {
     const string OSC_ADDR_CIRCLE_TRACKING_FILTERD = "/CircleTracking/filterd";
     
     //------------------------------------------------------------------------------------
+    
+    const float kJointErrorEpsilon = 0.01f;
+    const float kJointErrorThreshould = 3.f;
+    
 //#ifdef DEBUG
     const ofLogLevel DEFAULT_LOG_LEVEL = OF_LOG_NOTICE;
 //#else

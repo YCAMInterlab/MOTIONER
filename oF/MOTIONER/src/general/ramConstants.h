@@ -137,6 +137,9 @@ namespace ram {
     extern const string OSC_ADDR_CIRCLE_TRACKING_COMBINED;
     extern const string OSC_ADDR_CIRCLE_TRACKING_FILTERD;
     
+    extern const float kJointErrorEpsilon;
+    extern const float kJointErrorThreshould;
+    
 }
 
 //----------------------------------------------------------------------------------------

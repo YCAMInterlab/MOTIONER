@@ -174,6 +174,10 @@ void Skeleton::updateRotation()
     if (mJoints.empty() == false) {
         mJoints.at(0).rotate(ofQuaternion(mOrientationY, ofVec3f(0.0, 1.0, 0.0)));
     }
+    
+    for (size_t i=0; i<mJoints.size(); i++) {
+        mJoints.at(i).update();
+    }
 }
 
 //----------------------------------------------------------------------------------------

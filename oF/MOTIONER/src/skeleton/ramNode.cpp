@@ -8,27 +8,43 @@
 
 #include "ramNode.h"
 #include "ramMesh.h"
+#include "ramCommon.h"
 
 using namespace ram;
 using namespace ram::skeleton;
 
 Node::Node() :
 size(20.0f),
-enable(true)
+enable(true),
+noResponceDuration(0.f),
+error(false)
 {
     
 }
 
 void Node::update()
 {
-    
+    const ofVec3f& orientation = getOrientationEuler();
+        
+    if (enable &&
+        orientation.distance(prevOrientationEuler) < kJointErrorEpsilon) {
+        noResponceDuration += ofGetLastFrameTime();
+        if (noResponceDuration >= kJointErrorThreshould) {
+            error = true;
+        }
+    }
+    else {
+        noResponceDuration = 0.f;
+        error = false;
+    }
+    prevOrientationEuler = orientation;
 }
 
 //----------------------------------------------------------------------------------------
 void Node::customDraw()
 {
     ofBox(size);
-    Mesh::drawAxis(size);
+    Mesh::drawAxis(size * 0.8f);
 }
 
 //----------------------------------------------------------------------------------------

@@ -27,11 +27,14 @@ namespace ram { namespace skeleton {
         int id;
         float velocity;
         ofVec3f prevPosition;
-        ofQuaternion prevOrientation;
+        ofVec3f prevOrientationEuler;
+        float noResponceDuration;
         
         float size;
         
         bool enable;
+        
+        bool error;
     };
     
     //------------------------------------------------------------------------------------

@@ -66,21 +66,17 @@ void Renderer::draw(Skeleton *skeleton) const
     ofNoFill();
     
     ofColor color;
-    (mState==Skeleton::STATE_SELECTED) ? color.set(255, 150, 150) : color.set(255);
-    
-    ofSetSphereResolution(2);
+    (mState==Skeleton::STATE_SELECTED) ? color.set(150, 150, 255) : color.set(255);
     
     for (size_t i=0; i<joints.size(); i++) {
         ofPushStyle();
         ofFill();
         
-        ofSetColor(color);
-        
         ofSetLineWidth(1.f);
         Node &n = joints.at(i);
         isEndSite(i) || i == 0 ? n.size = 110.f : n.size = 80.f;
         
-        ofSetColor(color);
+        n.error ? ofSetColor(255, 100, 100) : ofSetColor(color);
         n.draw();
         
         const ofVec3f& pos = n.getGlobalPosition();
@@ -150,22 +146,42 @@ void Renderer::drawHUD(Skeleton *skeleton) const
     
     ofSetDrawBitmapMode(OF_BITMAPMODE_SIMPLE);
     
+    ofSetHexColor(0x000000);
     ofPushMatrix();
-    ofSetHexColor(COLOR_ML);
     ofTranslate(mJointScreenCoords.at(JOINT_HEAD));
     ofDrawBitmapString(skeleton->getHostName()+"\n"+skeleton->getName(),
                        ofPoint(0.0f, -32.0f));
     ofPopMatrix();
     
+    ofPushMatrix();
+    ofTranslate(mJointScreenCoords.at(JOINT_RIGHT_HAND));
+    ofDrawBitmapString("R", ofPoint(0.0f, 0.0f));
+    ofPopMatrix();
+    
+    ofPushMatrix();
+    ofTranslate(mJointScreenCoords.at(JOINT_RIGHT_TOE));
+    ofDrawBitmapString("R", ofPoint(0.0f, 0.0f));
+    ofPopMatrix();
+    
+    ofPushMatrix();
+    ofTranslate(mJointScreenCoords.at(JOINT_LEFT_HAND));
+    ofDrawBitmapString("L", ofPoint(0.0f, 0.0f));
+    ofPopMatrix();
+    
+    ofPushMatrix();
+    ofTranslate(mJointScreenCoords.at(JOINT_LEFT_TOE));
+    ofDrawBitmapString("L", ofPoint(0.0f, 0.0f));
+    ofPopMatrix();
+    
+    float t = ::fmodf(ofGetElapsedTimef() * 1.f, 1.f);
+    
     for (int i=0; i<joints.size(); i++) {
         ofPushMatrix();
         ofTranslate(mJointScreenCoords.at(i));
         if (i==mActiveJoint && mState==Skeleton::STATE_SELECTED) {
-            float t = ::fmodf(ofGetElapsedTimef() * 1.f, 1.f);
             ofSetColor(255, 50, 50, 80 - t * 50.f);
             ofCircle(ofVec3f::zero(), 13.0f + t * 20.f);
         }
-        //ofDrawBitmapString(ofToString(skeleton->mJointNoResponceTime.at(i), 2), ofVec3f::zero());
         ofPopMatrix();
     }
     

@@ -51,11 +51,6 @@ else
 	git checkout
 	cd ../
 
-	git clone https://github.com/YoshitoONISHI/ofxGLUtils.git
-	cd ofxGLUtils
-	git checkout
-	cd ../
-
 	echo "end clone addons"
 	cd ../../../../
 fi

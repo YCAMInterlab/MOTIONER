@@ -11,7 +11,6 @@
 #include "ramCameraManager.h"
 #include "ramEvent.h"
 #include "ramDeviceCorrespondent.h"
-#include "ofxSimpleKalmanFilter.h"
 #include "ramSimpleShadow.h"
 
 //----------------------------------------------------------------------------------------

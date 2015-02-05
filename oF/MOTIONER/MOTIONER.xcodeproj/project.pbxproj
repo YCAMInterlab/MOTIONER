@@ -205,9 +205,6 @@
 		D24F007C16F65CAD00F044C8 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		D24F007D16F65CAD00F044C8 /* ofxNonCopyable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxNonCopyable.h; sourceTree = "<group>"; };
 		D24F007E16F65CAD00F044C8 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
-		D24F008016F65CAD00F044C8 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		D24F008116F65CAD00F044C8 /* ofxSimpleKalmanFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSimpleKalmanFilter.h; sourceTree = "<group>"; };
-		D24F008216F65CAD00F044C8 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		D24F008416F65CAD00F044C8 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		D24F008516F65CAD00F044C8 /* ofxUITabbedCanvas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxUITabbedCanvas.cpp; sourceTree = "<group>"; };
 		D24F008616F65CAD00F044C8 /* ofxUITabbedCanvas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxUITabbedCanvas.h; sourceTree = "<group>"; };
@@ -535,7 +532,6 @@
 				D24F008C16F660CC00F044C8 /* ofxEvent */,
 				D24F007116F65CAD00F044C8 /* ofxException */,
 				D24F007B16F65CAD00F044C8 /* ofxNonCopyable */,
-				D24F007F16F65CAD00F044C8 /* ofxSimpleKalmanFilter */,
 				D24F008316F65CAD00F044C8 /* ofxUITabbedCanvas */,
 			);
 			path = addons;
@@ -560,16 +556,6 @@
 				D24F007E16F65CAD00F044C8 /* README.md */,
 			);
 			path = ofxNonCopyable;
-			sourceTree = "<group>";
-		};
-		D24F007F16F65CAD00F044C8 /* ofxSimpleKalmanFilter */ = {
-			isa = PBXGroup;
-			children = (
-				D24F008016F65CAD00F044C8 /* .gitignore */,
-				D24F008116F65CAD00F044C8 /* ofxSimpleKalmanFilter.h */,
-				D24F008216F65CAD00F044C8 /* README.md */,
-			);
-			path = ofxSimpleKalmanFilter;
 			sourceTree = "<group>";
 		};
 		D24F008316F65CAD00F044C8 /* ofxUITabbedCanvas */ = {

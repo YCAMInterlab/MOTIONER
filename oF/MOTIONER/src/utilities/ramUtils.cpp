@@ -184,11 +184,17 @@ namespace ram {
             return;
         }
 
+        ofDirectory dir(MOTION_DATA_DIR);
+        if (!dir.exists()) {
+            dir.create(true);
+            ofLogNotice("Recorder") << "Created new directory " << MOTION_DATA_DIR;
+        }
+        
         for (SkeletonMap::iterator it = map.begin(); it!=map.end(); ++it) {
             SkeletonPtr skeleton = it->second;
             const string name = skeleton->getName();
             //string filePath = ret.getPath();
-            string filePath = ofToDataPath("motion/mot/"+ram::getDefaultRecordingDataFileName());
+            string filePath = ofToDataPath(MOTION_DATA_DIR+ram::getDefaultRecordingDataFileName());
             const string escape = "__WILDCARD_ESCAPE__";
             ofStringReplace(filePath, "\\*", escape);
             ofStringReplace(filePath, "*", name);

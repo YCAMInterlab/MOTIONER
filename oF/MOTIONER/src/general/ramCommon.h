@@ -12,5 +12,8 @@
 #include "ramConstants.h"
 #include "ramTypes.h"
 
+void ofxPushAll();
+void ofxPopAll();
+
 
 #endif

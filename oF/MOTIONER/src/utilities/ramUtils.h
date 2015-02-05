@@ -13,7 +13,6 @@
 #include "ramCommon.h"
 #include "ofxException.h"
 #include "ofxOscMessage.h"
-#include "ofxGLUtils.h"
 
 /// Macros
 //----------------------------------------------------------------------------------------

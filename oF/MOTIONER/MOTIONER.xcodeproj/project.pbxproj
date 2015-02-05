@@ -24,8 +24,8 @@
 		D21703BD16BFB78D00407B20 /* ramCameraManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D21703BB16BFB78D00407B20 /* ramCameraManager.cpp */; };
 		D21703C016BFF71500407B20 /* ramPicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D21703BE16BFF71400407B20 /* ramPicker.cpp */; };
 		D21703CF16C0EDF700407B20 /* ramEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D21703CD16C0EDF600407B20 /* ramEvent.cpp */; };
+		D23EB9A21A8369C600C19B99 /* ramCommon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D23EB9A11A8369C600C19B99 /* ramCommon.cpp */; };
 		D24F008916F65CAD00F044C8 /* ofxException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D24F007316F65CAD00F044C8 /* ofxException.cpp */; };
-		D24F008A16F65CAD00F044C8 /* ofxGLUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D24F007816F65CAD00F044C8 /* ofxGLUtils.cpp */; };
 		D24F008B16F65CAD00F044C8 /* ofxUITabbedCanvas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D24F008516F65CAD00F044C8 /* ofxUITabbedCanvas.cpp */; };
 		D24F009116F660CC00F044C8 /* ofxEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D24F008E16F660CC00F044C8 /* ofxEvent.cpp */; };
 		D28686C716C9660700CDE7A5 /* ofBufferExtended.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D28686C516C9660700CDE7A5 /* ofBufferExtended.cpp */; };
@@ -197,14 +197,11 @@
 		D21E62A416FB72EA00069716 /* ofxUIWaveform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxUIWaveform.h; sourceTree = "<group>"; };
 		D21E62A516FB72EA00069716 /* ofxUIWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxUIWidget.h; sourceTree = "<group>"; };
 		D21E62A616FB72EA00069716 /* ofxUIWidgetWithLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxUIWidgetWithLabel.h; sourceTree = "<group>"; };
+		D23EB9A11A8369C600C19B99 /* ramCommon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ramCommon.cpp; sourceTree = "<group>"; };
 		D24F007216F65CAD00F044C8 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		D24F007316F65CAD00F044C8 /* ofxException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxException.cpp; sourceTree = "<group>"; };
 		D24F007416F65CAD00F044C8 /* ofxException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxException.h; sourceTree = "<group>"; };
 		D24F007516F65CAD00F044C8 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
-		D24F007716F65CAD00F044C8 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		D24F007816F65CAD00F044C8 /* ofxGLUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxGLUtils.cpp; sourceTree = "<group>"; };
-		D24F007916F65CAD00F044C8 /* ofxGLUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxGLUtils.h; sourceTree = "<group>"; };
-		D24F007A16F65CAD00F044C8 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		D24F007C16F65CAD00F044C8 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		D24F007D16F65CAD00F044C8 /* ofxNonCopyable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxNonCopyable.h; sourceTree = "<group>"; };
 		D24F007E16F65CAD00F044C8 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
@@ -537,7 +534,6 @@
 				D21E603516FB72E500069716 /* ofxUI */,
 				D24F008C16F660CC00F044C8 /* ofxEvent */,
 				D24F007116F65CAD00F044C8 /* ofxException */,
-				D24F007616F65CAD00F044C8 /* ofxGLUtils */,
 				D24F007B16F65CAD00F044C8 /* ofxNonCopyable */,
 				D24F007F16F65CAD00F044C8 /* ofxSimpleKalmanFilter */,
 				D24F008316F65CAD00F044C8 /* ofxUITabbedCanvas */,
@@ -554,17 +550,6 @@
 				D24F007516F65CAD00F044C8 /* README.md */,
 			);
 			path = ofxException;
-			sourceTree = "<group>";
-		};
-		D24F007616F65CAD00F044C8 /* ofxGLUtils */ = {
-			isa = PBXGroup;
-			children = (
-				D24F007716F65CAD00F044C8 /* .gitignore */,
-				D24F007816F65CAD00F044C8 /* ofxGLUtils.cpp */,
-				D24F007916F65CAD00F044C8 /* ofxGLUtils.h */,
-				D24F007A16F65CAD00F044C8 /* README.md */,
-			);
-			path = ofxGLUtils;
 			sourceTree = "<group>";
 		};
 		D24F007B16F65CAD00F044C8 /* ofxNonCopyable */ = {
@@ -617,6 +602,7 @@
 				D299692E16B67DDE00E8E3B0 /* ramTypes.cpp */,
 				D299692F16B67DDE00E8E3B0 /* ramTypes.h */,
 				D208AAB216E0C7F90014356B /* ramCommon.h */,
+				D23EB9A11A8369C600C19B99 /* ramCommon.cpp */,
 			);
 			path = general;
 			sourceTree = "<group>";
@@ -1064,6 +1050,7 @@
 				D299698816B67DDE00E8E3B0 /* ramLogger.cpp in Sources */,
 				D299698916B67DDE00E8E3B0 /* ramMesh.cpp in Sources */,
 				D299698C16B67DDE00E8E3B0 /* ramUtils.cpp in Sources */,
+				D23EB9A21A8369C600C19B99 /* ramCommon.cpp in Sources */,
 				D2BD883216BE4584002C54B5 /* ramUI.cpp in Sources */,
 				D2BD883516BE45AB002C54B5 /* ramSideBarUI.cpp in Sources */,
 				D2BD883816BE45B3002C54B5 /* ramLoggerUI.cpp in Sources */,
@@ -1075,7 +1062,6 @@
 				D28686C716C9660700CDE7A5 /* ofBufferExtended.cpp in Sources */,
 				D2B3B7CD16CA5E4800AD3422 /* ramCircleTrackerIK.cpp in Sources */,
 				D24F008916F65CAD00F044C8 /* ofxException.cpp in Sources */,
-				D24F008A16F65CAD00F044C8 /* ofxGLUtils.cpp in Sources */,
 				D24F008B16F65CAD00F044C8 /* ofxUITabbedCanvas.cpp in Sources */,
 				D24F009116F660CC00F044C8 /* ofxEvent.cpp in Sources */,
 			);

@@ -7,8 +7,7 @@
 //
 
 #include "ramMesh.h"
-#include "ramConstants.h"
-#include "ofxGLUtils.h"
+#include "ramCommon.h"
 
 namespace ram {
     

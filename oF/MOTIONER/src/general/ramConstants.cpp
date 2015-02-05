@@ -89,7 +89,7 @@ namespace ram {
     //------------------------------------------------------------------------------------
     
     const float kJointErrorEpsilon = 0.01f;
-    const float kJointErrorThreshould = 3.f;
+    const float kJointErrorThreshould = 1.f;
     
 //#ifdef DEBUG
     const ofLogLevel DEFAULT_LOG_LEVEL = OF_LOG_NOTICE;

@@ -57,7 +57,10 @@ namespace ram { namespace skeleton {
         
         // properties
         //--------------------
-        void loadProperties(Skeleton *skeleton);
+        void loadFlags(Skeleton *skeleton);
+        
+        void loadColor(Skeleton *skeleton);
+        void saveColor(Skeleton *skeleton);
         
         /// setters (also write into the xml file)
         //--------------------

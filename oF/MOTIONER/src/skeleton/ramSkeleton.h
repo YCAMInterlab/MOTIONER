@@ -142,6 +142,12 @@ namespace ram { namespace skeleton {
         
         void setDisableJoint(int joint, bool bDisable);
         
+        void setColorR(int c);
+        void setColorG(int c);
+        void setColorB(int c);
+        const ofColor& getColor() const { return mColor; }
+        
+        
         /// getters
         //--------------------
         //const string &getXmlFileName() const;
@@ -198,6 +204,8 @@ namespace ram { namespace skeleton {
         
         //--------------------
         NodeVec    mJoints; /// current
+        
+        ofColor     mColor;
         
         ofPtr<Modules>  mModules; /// pimpl
         

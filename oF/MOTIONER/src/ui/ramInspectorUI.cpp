@@ -277,6 +277,47 @@ void InspectorUI::setup()
     
     canvas->autoSizeToFitWidgets();
     canvas->setWidth(w);
+
+    //--------------------------------------------------//
+    //----------------- TAB_COLOR ----------------------//
+    //--------------------------------------------------//
+    canvas = mTabs.at(TAB_COLOR_EDITOR);
+    canvas->setDrawOutline(true);
+    canvas->setWidgetFontSize(OFX_UI_FONT_SMALL);
+    
+    {
+        /// colors
+        ofColor b, f, o;
+        b.setHex(COLOR_L, 200);
+        f.setHex(COLOR_M);
+        o.setHex(COLOR_HILIGHT);
+        canvas->setColorBack(b);
+        canvas->setColorFill(f);
+        canvas->setColorOutline(o);
+        
+        /// TAB_OPTIONS - options
+        //--------------------------------------------------
+        {
+            
+            mColorRSlider = canvas->addSlider("COLOR R", 0, 255, 255);
+            mColorRSlider->setDrawOutline(true);
+            mColorRSlider->setColorOutline(outlineColor);
+            mColorRSlider->setColorFill(ofColor(255, 100, 100));
+            
+            mColorGSlider = canvas->addSlider("COLOR G", 0, 255, 255);
+            mColorGSlider->setDrawOutline(true);
+            mColorGSlider->setColorOutline(outlineColor);
+            mColorGSlider->setColorFill(ofColor(100, 255, 100));
+            
+            mColorBSlider = canvas->addSlider("COLOR B", 0, 255, 255);
+            mColorBSlider->setDrawOutline(true);
+            mColorBSlider->setColorOutline(outlineColor);
+            mColorBSlider->setColorFill(ofColor(100, 100, 255));
+        }
+    }
+    
+    canvas->autoSizeToFitWidgets();
+    canvas->setWidth(w);
     
     //--------------------------------------------------//
     //----------------- TAB_OPTIONS --------------------//
@@ -472,6 +513,24 @@ void InspectorUI::guiEvent(ofxUIEventArgs &e)
             ofxThrowException(ofxException, "Skeleton not found!");
         }
     }
+    else if (name == "COLOR R") {
+        shared_ptr<skeleton::Skeleton> skl = mSkeleton.lock();
+        if (skl) {
+            skl->setColorR(static_cast<ofxUISlider*>(e.widget)->getScaledValue());
+        }
+    }
+    else if (name == "COLOR G") {
+        shared_ptr<skeleton::Skeleton> skl = mSkeleton.lock();
+        if (skl) {
+            skl->setColorG(static_cast<ofxUISlider*>(e.widget)->getScaledValue());
+        }
+    }
+    else if (name == "COLOR B") {
+        shared_ptr<skeleton::Skeleton> skl = mSkeleton.lock();
+        if (skl) {
+            skl->setColorB(static_cast<ofxUISlider*>(e.widget)->getScaledValue());
+        }
+    }
     else if (name == "DELETE") {
         shared_ptr<skeleton::Skeleton> skl = mSkeleton.lock();
         if (skl) {
@@ -548,6 +607,10 @@ void InspectorUI::setDevice(const string &hostName)
         
         skl->setActilveJoint(0);
         mDisableJointToggle->setValue(skl->getDisableJoint(0));
+        
+        mColorRSlider->setValue(skl->getColor().r);
+        mColorGSlider->setValue(skl->getColor().g);
+        mColorBSlider->setValue(skl->getColor().b);
         
         /// mark as selected
         skl->setState(skeleton::Skeleton::STATE_SELECTED);

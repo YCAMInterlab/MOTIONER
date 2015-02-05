@@ -27,6 +27,7 @@ namespace ram {
             TAB_GENERAL_SETTINGS    = 0,
             TAB_JOINT_EDITOR,
             TAB_POSITION_EDITOR,
+            TAB_COLOR_EDITOR,
             TAB_OPTIONS,
             N_TABS,
         };
@@ -134,6 +135,9 @@ namespace ram {
         
         ofxUILabelToggle    *mDisableJointToggle;
         
+        ofxUISlider         *mColorRSlider;
+        ofxUISlider         *mColorGSlider;
+        ofxUISlider         *mColorBSlider;
     };
     
 }

@@ -65,8 +65,7 @@ void Renderer::draw(Skeleton *skeleton) const
     
     ofNoFill();
     
-    ofColor color;
-    (mState==Skeleton::STATE_SELECTED) ? color.set(150, 150, 255) : color.set(255);
+    ofColor color = skeleton->mColor;
     
     for (size_t i=0; i<joints.size(); i++) {
         ofPushStyle();
@@ -76,7 +75,25 @@ void Renderer::draw(Skeleton *skeleton) const
         Node &n = joints.at(i);
         isEndSite(i) || i == 0 ? n.size = 110.f : n.size = 80.f;
         
-        n.error ? ofSetColor(255, 100, 100) : ofSetColor(color);
+        bool error = false;
+        
+        for (size_t j=0; j<joints.size(); j++) {
+            if (joints.at(j).error) {
+                if (joints.at(j).getParent() && joints.at(j).getParent() == &n) {
+                    error = true;
+                }
+            }
+        }
+        
+        if (n.enable == false)
+            ofSetColor(150);
+        else if (error && ofGetFrameNum() % 40 < 20)
+            ofSetColor(255, 100, 100);
+        else if (error && ofGetFrameNum() % 40 >= 20)
+            ofSetColor(100);
+        else
+            ofSetColor(color);
+        
         n.draw();
         
         const ofVec3f& pos = n.getGlobalPosition();
@@ -146,30 +163,35 @@ void Renderer::drawHUD(Skeleton *skeleton) const
     
     ofSetDrawBitmapMode(OF_BITMAPMODE_SIMPLE);
     
-    ofSetHexColor(0x000000);
     ofPushMatrix();
     ofTranslate(mJointScreenCoords.at(JOINT_HEAD));
+    
+     (mState==Skeleton::STATE_SELECTED) ? ofSetHexColor(0xFF0000) : ofSetHexColor(0x000000);
     ofDrawBitmapString(skeleton->getHostName()+"\n"+skeleton->getName(),
                        ofPoint(0.0f, -32.0f));
     ofPopMatrix();
     
     ofPushMatrix();
     ofTranslate(mJointScreenCoords.at(JOINT_RIGHT_HAND));
+     (mState==Skeleton::STATE_SELECTED) ? ofSetHexColor(0xFF0000) : ofSetHexColor(0x000000);
     ofDrawBitmapString("R", ofPoint(0.0f, 0.0f));
     ofPopMatrix();
     
     ofPushMatrix();
     ofTranslate(mJointScreenCoords.at(JOINT_RIGHT_TOE));
+     (mState==Skeleton::STATE_SELECTED) ? ofSetHexColor(0xFF0000) : ofSetHexColor(0x000000);
     ofDrawBitmapString("R", ofPoint(0.0f, 0.0f));
     ofPopMatrix();
     
     ofPushMatrix();
     ofTranslate(mJointScreenCoords.at(JOINT_LEFT_HAND));
+     (mState==Skeleton::STATE_SELECTED) ? ofSetHexColor(0xFF0000) : ofSetHexColor(0x000000);
     ofDrawBitmapString("L", ofPoint(0.0f, 0.0f));
     ofPopMatrix();
     
     ofPushMatrix();
     ofTranslate(mJointScreenCoords.at(JOINT_LEFT_TOE));
+     (mState==Skeleton::STATE_SELECTED) ? ofSetHexColor(0xFF0000) : ofSetHexColor(0x000000);
     ofDrawBitmapString("L", ofPoint(0.0f, 0.0f));
     ofPopMatrix();
     

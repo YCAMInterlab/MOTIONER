@@ -305,12 +305,39 @@ void Settings::loadUnuseJoints(Skeleton *skeleton)
 }
 
 //----------------------------------------------------------------------------------------
-void Settings::loadProperties(Skeleton *skeleton)
+void Settings::loadFlags(Skeleton *skeleton)
 {
     if (mXml.tagExists("USE_IK")) {
         bool useIK = (bool)mXml.getValue("USE_IK", 1);
         useIK ? skeleton->enable(Skeleton::EASY_IK) : skeleton->disable(Skeleton::EASY_IK);
     }
+
+}
+
+void Settings::loadColor(Skeleton *skeleton)
+{
+    if (mXml.tagExists("COLOR")) {
+        mXml.pushTag("COLOR");
+        const int r = mXml.getValue("R", 255);
+        const int g = mXml.getValue("G", 255);
+        const int b = mXml.getValue("B", 255);
+        skeleton->setColorR(r);
+        skeleton->setColorG(g);
+        skeleton->setColorB(b);
+        mXml.popTag();
+    }
+}
+
+void Settings::saveColor(Skeleton *skeleton)
+{
+    if (mXml.tagExists("COLOR") == false)
+        mXml.addTag("COLOR");
+    
+    mXml.pushTag("COLOR");
+    mXml.setValue("R", skeleton->getColor().r);
+    mXml.setValue("G", skeleton->getColor().g);
+    mXml.setValue("B", skeleton->getColor().b);
+    mXml.popTag();
 }
 
 //----------------------------------------------------------------------------------------

@@ -248,7 +248,9 @@ void Skeleton::loadSettings(const string &fileName)
     
     mModules->settings.loadUnuseJoints(this);
     
-    mModules->settings.loadProperties(this);
+    mModules->settings.loadFlags(this);
+    
+    mModules->settings.loadColor(this);
     
     OFX_END_EXCEPTION_HANDLING
 }
@@ -274,7 +276,6 @@ void Skeleton::editHierarchy(int nodeId, const ofVec3f &offset)
     OFX_BEGIN_EXCEPTION_HANDLING
     Node &n = mJoints.at(nodeId);
     n.setPosition(offset);
-    cout << offset << endl;
     mModules->settings.saveHierarchy(nodeId, offset);
     OFX_END_EXCEPTION_HANDLING
 }
@@ -609,8 +610,28 @@ void Skeleton::setDisableJoint(int joint, bool bDisable)
         }
         mModules->settings.loadHierarchy(this);
         
-        mModules->settings.loadProperties(this);
+        mModules->settings.loadFlags(this);
+        
+        mModules->settings.loadColor(this);
     }
+}
+
+void Skeleton::setColorR(int c)
+{
+    mColor.r = c;
+    mModules->settings.saveColor(this);
+}
+
+void Skeleton::setColorG(int c)
+{
+    mColor.g = c;
+    mModules->settings.saveColor(this);
+}
+
+void Skeleton::setColorB(int c)
+{
+    mColor.b = c;
+    mModules->settings.saveColor(this);
 }
 
 //----------------------------------------------------------------------------------------

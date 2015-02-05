@@ -582,8 +582,6 @@ void InspectorUI::setJoint(int index)
         name = skl->getJoint(index).name;
     }
     
-    ofLogNotice() << index;
-    
     setJoint(name);
 }
 

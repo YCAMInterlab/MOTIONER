@@ -62,8 +62,8 @@ void MotionerApp::setup()
     
     /// add test skeleton (DEBUG
     //--------------------
-    ram::skeleton::SkeletonManager::getInstance().addSkeleton("192.168.2.5");
-    ram::skeleton::SkeletonManager::getInstance().addSkeleton("192.168.2.6");
+    //ram::skeleton::SkeletonManager::getInstance().addSkeleton("192.168.2.5");
+    //ram::skeleton::SkeletonManager::getInstance().addSkeleton("192.168.2.6");
     
 #endif
     

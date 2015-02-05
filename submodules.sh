@@ -28,27 +28,22 @@ else
 
 	git clone https://github.com/YoshitoONISHI/ofxException.git
 	cd ofxException
-	git checkout
+	git checkout de4507b
 	cd ../
 
 	git clone https://github.com/YoshitoONISHI/ofxNonCopyable.git
 	cd ofxNonCopyable
-	git checkout
+	git checkout ffa3e53
 	cd ../
 
 	git clone https://github.com/YoshitoONISHI/ofxEvent.git
 	cd ofxEvent
-	git checkout
-	cd ../
-
-	git clone https://github.com/YoshitoONISHI/ofxSimpleKalmanFilter.git
-	cd ofxSimpleKalmanFilter
-	git checkout
+	git checkout 3cacf82
 	cd ../
 
 	git clone https://github.com/YoshitoONISHI/ofxUITabbedCanvas.git
 	cd ofxUITabbedCanvas
-	git checkout
+	git checkout 89ec49e
 	cd ../
 
 	echo "end clone addons"

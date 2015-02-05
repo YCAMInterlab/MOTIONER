@@ -1,6 +1,3 @@
-[submodule "oF/MOTIONER/src/addons/ofxSimpleKalmanFilter"]
-	path = oF/MOTIONER/src/addons/ofxSimpleKalmanFilter
-	url = https://YoshitoONISHI@github.com/YoshitoONISHI/ofxSimpleKalmanFilter.git
 [submodule "oF/MOTIONER/src/addons/ofxNonCopyable"]
 	path = oF/MOTIONER/src/addons/ofxNonCopyable
 	url = https://YoshitoONISHI@github.com/YoshitoONISHI/ofxNonCopyable.git

@@ -83,6 +83,14 @@ void SkeletonManager::drawSkeletonsHUD()
 }
 
 //------------------------------------------------------------------------------------
+void SkeletonManager::drawSkeletonsPicker()
+{
+    SkeletonMap &skl = mSkeletonMap;
+    for (SkeletonMap::iterator it = skl.begin(); it!=skl.end(); ++it)
+        it->second->drawPicker();
+}
+
+//------------------------------------------------------------------------------------
 ram::skeleton::SkeletonPtr SkeletonManager::getSkeleton(int index)
 {
     SkeletonMap::iterator it = mSkeletonMap.begin();

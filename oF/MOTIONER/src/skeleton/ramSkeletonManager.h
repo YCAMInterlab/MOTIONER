@@ -30,6 +30,7 @@ namespace ram { namespace skeleton {
         void updateSkeletons();
         void drawSkeletons();
         void drawSkeletonsHUD();
+        void drawSkeletonsPicker();
         
         //--------------------
         SkeletonPtr getSkeleton(int index);

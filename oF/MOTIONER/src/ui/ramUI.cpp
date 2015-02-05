@@ -131,11 +131,11 @@ void UI::setup(const ofRectangle &rect)
                             (btnDim+btnMgn)*nButtons + static_cast<float>(btnMgn),
                             (btnDim+btnMgn)*1.0f + btnMgn);
     mTools->setDrawOutline(false);
-    mTools->setDrawBack(false);
+    mTools->setDrawBack(true);
     /// colors
     {
         ofColor b, f, o, oh;
-        b.setHex(COLOR_L, 200);
+        b.setHex(COLOR_L, 255);
         f.setHex(COLOR_HILIGHT);
         o.setHex(COLOR_HILIGHT);
         oh.setHex(COLOR_M);

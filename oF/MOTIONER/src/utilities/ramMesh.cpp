@@ -18,15 +18,15 @@ namespace ram {
         {
             ofPushStyle();
             // draw x axis
-            ofSetColor(ofColor::red);
+            ofSetColor(200, 100, 100);
             ofLine(0, 0, 0, size, 0, 0);
             
             // draw y axis
-            ofSetColor(ofColor::green);
+            ofSetColor(100, 200, 100);
             ofLine(0, 0, 0, 0, size, 0);
             
             // draw z axis
-            ofSetColor(ofColor::blue);
+            ofSetColor(100, 100, 200);
             ofLine(0, 0, 0, 0, 0, size);
             ofPopStyle();
 
@@ -59,14 +59,18 @@ namespace ram {
                     mesh.addVertex(ofVec3f(x0, 0, y1));
                     mesh.addVertex(ofVec3f(x0, 0, y0));
                     
+                    ofFloatColor c;
+                    if (j%2 == 0) {
+                        i%2 == 0 ?  c.setHsb(ofRandom(1.f), 0.05f, 0.3f) :  c.setHsb(ofRandom(1.f), 0.05f, 0.6f);
+                    }
+                    else {
+                        i%2 == 1 ?  c.setHsb(ofRandom(1.f), 0.05f, 0.3f) :  c.setHsb(ofRandom(1.f), 0.05f, 0.6f);
+                    }
+                    
                     for (int k=0; k<6; k++) {
                         mesh.addNormal(ofVec3f(0.f, 1.f, 0.f));
-                        if (j%2 == 0) {
-                            i%2 == 0 ? mesh.addColor(c0) : mesh.addColor(c1);
-                        }
-                        else {
-                            i%2 == 1 ? mesh.addColor(c0) : mesh.addColor(c1);
-                        }
+                        mesh.addColor(c);
+
                     }
 
                 }

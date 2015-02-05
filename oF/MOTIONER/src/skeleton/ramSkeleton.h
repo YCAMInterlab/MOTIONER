@@ -62,6 +62,8 @@ namespace ram { namespace skeleton {
         //--------------------
         virtual void draw();
         virtual void drawHUD();
+        virtual void drawPicker();
+        
         
         ///// conect to a MOTIONER Suit(device)
         //bool connect();

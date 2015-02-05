@@ -21,6 +21,7 @@ mCurrCameraId(CAMERA_EASY_CAM)
         ofEasyCam *easyCam = new ofEasyCam();
         easyCam->setDistance(2300.0f);
         easyCam->setFarClip(1000000.0f);
+        easyCam->setFov(80.f);
         CameraPtr ptr = CameraPtr(easyCam);
         mCameras.push_back(ptr);
     }

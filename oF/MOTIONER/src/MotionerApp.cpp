@@ -19,7 +19,7 @@ MotionerApp::MotionerApp() :
 mEnableDraw(true),
 mEnableUpdateSkeletons(true)
 {
-    mOffset.set(0.0f, -800.0f, 0.0f);
+    mOffset.set(0.0f, -1000.0f, 0.0f);
 }
 
 //----------------------------------------------------------------------------------------
@@ -47,7 +47,7 @@ void MotionerApp::setup()
     ram::initialize();
     ram::UI::getInstance().setup();
     ram::DeviceCorrespondent::getInstance().setup();
-        
+    
     ofLogNotice() << "Initializing 3D graphics...";
     
     /// display settings
@@ -63,8 +63,8 @@ void MotionerApp::setup()
     
     /// add test skeleton (DEBUG
     //--------------------
-//    ram::skeleton::SkeletonManager::getInstance().addSkeleton("192.168.2.5");
-//    ram::skeleton::SkeletonManager::getInstance().addSkeleton("192.168.2.6");
+    ram::skeleton::SkeletonManager::getInstance().addSkeleton("192.168.2.5");
+    ram::skeleton::SkeletonManager::getInstance().addSkeleton("192.168.2.6");
     
 #endif
     
@@ -154,8 +154,8 @@ void MotionerApp::draw()
     {
         ofViewport(viewRect);
         
-        ofColor c2(255);
-        ofColor c3(50);
+        ofColor c2(230, 230, 250);
+        ofColor c3(100, 100, 150);
         
         ofBackgroundGradient(c3, c2);
     }
@@ -173,34 +173,43 @@ void MotionerApp::draw()
         
         const float time = ofGetElapsedTimef();
         
-        mLightW.setPosition(-2500.f, 4000.f, 6000.f);
-        mLightW.setDiffuseColor(ofFloatColor(0.3f, 0.3f, 0.3f));
-        mLightW.setAmbientColor(ofFloatColor(0.1f, 0.1f, 0.1f));
-        
-        mLightG.setPosition(-5000.f * ::cosf(time * 3.11f),
-                            3000.f * ::fabsf(::sinf(time * 0.85f)),
-                            7000.f * ::cosf(time * 1.2f));
-        mLightG.setAttenuation();
-        mLightG.setDiffuseColor(ofFloatColor(0.15f, 0.3f, 0.15f));
-        mLightG.setAmbientColor(ofFloatColor(0.05f, 0.2f, 0.05f));
-        
-        mLightR.setPosition(-4000.f * ::cosf(time * 2.31f),
-                            1500.f * ::sinf(time * 0.48f) + 1500.f,
-                            6000.f * ::cosf(time));
-        mLightR.setAttenuation();
-        mLightR.setDiffuseColor(ofFloatColor(0.3f, 0.15f, 0.15f));
-        mLightR.setAmbientColor(ofFloatColor(0.2f, 0.05f, 0.05f));
-        
-        mLightB.setPosition(3500.f * ::cosf(time * 1.75f),
-                            2000.f * ::sinf(time * 0.32f) + 2000.f,
-                            -5000.f * ::cosf(time));
-        mLightB.setDiffuseColor(ofFloatColor(0.15f, 0.15f, 0.3f));
-        mLightB.setAmbientColor(ofFloatColor(0.05f, 0.05f, 0.2f));
+        { // update lights
+            ofSetSmoothLighting(true);
+            
+            mLightW.setPosition(-2500.f, 8000.f, 4000.f);
+            mLightW.setDiffuseColor(ofFloatColor(0.3f, 0.3f, 0.3f));
+            mLightW.setAmbientColor(ofFloatColor(0.1f, 0.1f, 0.1f));
+            
+            mLightR.setPosition(-3000.f * ::cosf(time * 1.15f),
+                                4000.f * ::sinf(time * 0.24f) + 4000.f,
+                                5000.f * ::cosf(time * 0.5f));
+            mLightR.setPointLight();
+            mLightR.setAttenuation(0.f, 0.00015f);
+            mLightR.setDiffuseColor(ofFloatColor(0.3f, 0.15f, 0.15f));
+            mLightR.setAmbientColor(ofFloatColor(0.05f, 0.025f, 0.025f));
+            
+            mLightG.setPosition( 6000.f * ::cosf(time * 1.51f),
+                                3000.f * ::sinf(time * 0.42f) + 3000.f,
+                                -4000.f * ::cosf(time * 0.6f));
+            mLightG.setPointLight();
+            mLightG.setAttenuation(0.f, 0.00015f);
+            mLightG.setDiffuseColor(ofFloatColor(0.15f, 0.3f, 0.15f));
+            mLightG.setAmbientColor(ofFloatColor(0.025f, 0.05f, 0.025f));
+            
+            mLightB.setPosition( 3500.f * ::cosf(time * 0.81f),
+                                2500.f * ::sinf(time * 0.16f) + 2500.f,
+                                -2000.f * ::cosf(time * 0.5f));
+            mLightB.setPointLight();
+            mLightB.setAttenuation(0.f, 0.00015f);
+            
+            mLightB.setDiffuseColor(ofFloatColor(0.15f, 0.15f, 0.3f));
+            mLightB.setAmbientColor(ofFloatColor(0.025f, 0.025f, 0.05f));
+        }
         
         ofEnableLighting();
         mLightW.enable();
-        mLightG.enable();
         mLightR.enable();
+        mLightG.enable();
         mLightB.enable();
         
         glEnable(GL_DEPTH_TEST);
@@ -237,6 +246,7 @@ void MotionerApp::draw()
     ofxPushAll();
     {
         ram::skeleton::SkeletonManager::getInstance().drawSkeletonsHUD();
+        ram::skeleton::SkeletonManager::getInstance().drawSkeletonsPicker();
         ram::UI::getInstance().drawHUD();
     }
     ofxPopAll();

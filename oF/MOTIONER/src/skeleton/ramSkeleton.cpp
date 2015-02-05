@@ -198,6 +198,15 @@ void Skeleton::drawHUD()
     OFX_BEGIN_EXCEPTION_HANDLING
     if (isEnable(RENDER)) {
         mModules->renderer.drawHUD(this);
+    }
+    OFX_END_EXCEPTION_HANDLING
+}
+
+//----------------------------------------------------------------------------------------
+void Skeleton::drawPicker()
+{
+    OFX_BEGIN_EXCEPTION_HANDLING
+    if (isEnable(RENDER)) {
         mModules->picker.debugDraw(this);
     }
     OFX_END_EXCEPTION_HANDLING

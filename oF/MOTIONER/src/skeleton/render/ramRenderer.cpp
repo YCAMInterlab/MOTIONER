@@ -39,7 +39,8 @@ static void billboard()
 //----------------------------------------------------------------------------------------
 Renderer::Renderer() :
 mState(0),
-mActiveJoint(JOINT_HIPS)
+mActiveJoint(JOINT_HIPS),
+mJointScreenCoords(NUM_JOINTS)
 {
 }
 
@@ -65,9 +66,9 @@ void Renderer::draw(Skeleton *skeleton) const
     ofNoFill();
     
     ofColor color;
+    (mState==Skeleton::STATE_SELECTED) ? color.set(255, 150, 150) : color.set(255);
     
-    (mState==Skeleton::STATE_SELECTED) ? color.setHex(COLOR_H) : color.setHex(COLOR_M);    
-    
+    ofSetSphereResolution(2);
     
     for (size_t i=0; i<joints.size(); i++) {
         ofPushStyle();
@@ -79,19 +80,34 @@ void Renderer::draw(Skeleton *skeleton) const
         Node &n = joints.at(i);
         isEndSite(i) || i == 0 ? n.size = 110.f : n.size = 80.f;
         
+        ofSetColor(color);
         n.draw();
-
-        //if (i==mActiveJoint && mState==Skeleton::STATE_SELECTED) {
-        //ofxPushAll();
-        //ofMultMatrix(n.getGlobalTransformMatrix());
-        //float t = ::fmodf(ofGetElapsedTimef() * 1.f, 1.f);
-        //
-        //ofSetColor(255, 50, 50, 90 + t * 50.f);
-        //ofFill();
-        //billboard();
-        //ofCircle(ofVec3f::zero(), 50.0f + t * 80.f);
-        //ofxPopAll();
-        //}
+        
+        const ofVec3f& pos = n.getGlobalPosition();
+        
+        GLdouble modelview[16];
+        GLdouble projection[16];
+        GLint viewport[4];
+        
+        /// use current modelview/projection matrix and viewport
+        glGetIntegerv(GL_VIEWPORT, viewport);
+        glGetDoublev(GL_MODELVIEW_MATRIX, modelview);
+        glGetDoublev(GL_PROJECTION_MATRIX, projection);
+        
+        GLdouble winX, winY, winZ;
+        
+        gluProject(static_cast<GLdouble>(pos.x),
+                   static_cast<GLdouble>(pos.y),
+                   static_cast<GLdouble>(pos.z),
+                   modelview,
+                   projection,
+                   viewport,
+                   &winX,
+                   &winY,
+                   &winZ);
+        
+        const ofVec3f screen(winX, ofGetHeight()-winY, 0.f);
+        mJointScreenCoords.at(i) = screen;
         
         ofSetColor(color);
         if (!n.getParent()) continue;
@@ -101,35 +117,58 @@ void Renderer::draw(Skeleton *skeleton) const
         
         ofPushStyle();
         ofSetLineWidth(2.f);
-        ofSetColor(255, 255, 255, 255);
+        ofSetColor(255);
         ofLine(v0, v1);
         ofPopStyle();
         
         int d = v0.distance(v1);
-        const int s = 60;
+        const int s = 60.f;
         if (d%s < s /10 || d%s > s - s / 10)
             d += s / 5;
         const int repeat = d/s;
         for (int j=0; j<repeat; j++) {
             const float t = j/(float)repeat;
-            ofSetColor(140, 140, 140);
+            ofSetColor(220);
             ofPushMatrix();
             ofTranslate(v0.interpolated(v1, t));
+            ofRotateY(45.f);
             ofDrawBox(ofVec3f::zero(), s*0.8f);
             ofPopMatrix();
         }
-        
          ofPopStyle();
     }
     
+    ofxPopAll();
+}
+
+void Renderer::drawHUD(Skeleton *skeleton) const
+{
+    vector<Node> &joints = skeleton->mJoints;
+    
+    ofPushStyle();
+    ofFill();
+    
+    ofSetDrawBitmapMode(OF_BITMAPMODE_SIMPLE);
+    
     ofPushMatrix();
-    ofSetHexColor(COLOR_HILIGHT);
-    ofMultMatrix(joints.at(JOINT_HEAD).getGlobalTransformMatrix());
+    ofSetHexColor(COLOR_ML);
+    ofTranslate(mJointScreenCoords.at(JOINT_HEAD));
     ofDrawBitmapString(skeleton->getHostName()+"\n"+skeleton->getName(),
-                       ofPoint(0.0f, 100.0f));
+                       ofPoint(0.0f, -32.0f));
     ofPopMatrix();
     
-    ofxPopAll();
+    for (int i=0; i<joints.size(); i++) {
+        if (i==mActiveJoint && mState==Skeleton::STATE_SELECTED) {
+            ofPushMatrix();
+            float t = ::fmodf(ofGetElapsedTimef() * 1.f, 1.f);
+            ofSetColor(255, 50, 50, 80 - t * 50.f);
+            ofTranslate(mJointScreenCoords.at(i));
+            ofCircle(ofVec3f::zero(), 13.0f + t * 20.f);
+            ofPopMatrix();
+        }
+    }
+    
+    ofPopStyle();
 }
 
 //----------------------------------------------------------------------------------------

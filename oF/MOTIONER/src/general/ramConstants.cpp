@@ -69,8 +69,8 @@ namespace ram {
     const int COLOR_MH = 0xAAAAAA;
     const int COLOR_M  = 0x999999;
     const int COLOR_ML = 0x555555;
-    const int COLOR_L  = 0x222222;
-    const int COLOR_BG = 0x222222;
+    const int COLOR_L  = 0x222233;
+    const int COLOR_BG = 0x332222;
     //const int COLOR_HILIGHT = 0x887766;
     //const int COLOR_HILIGHT = 0x998877;
     const int COLOR_HILIGHT = 0xAA9480;

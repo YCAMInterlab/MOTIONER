@@ -108,11 +108,10 @@ namespace ram {
         ofEnableAlphaBlending();
         
         if (mSkeletonMouseState==MOUSE_IDLE) {
-            ofSetColor(50, 50, 100);
-            ofSetLineWidth(1.0f);
+            ofSetColor(0, 0);
         }
         else {
-            ofSetColor(100, 100, 200);
+            ofSetColor(100, 100, 200, 100);
             ofSetLineWidth(2.0f);
         }
         ofNoFill();
@@ -123,7 +122,7 @@ namespace ram {
         
         if (mSkeletonMouseState==MOUSE_DOWN) {
             ofFill();
-            ofSetColor(100, 100, 200, 50);
+            ofSetColor(100, 100, 200, 100);
             ofRect(mMinCoord.x,
                    mMinCoord.y,
                    mMaxCoord.x-mMinCoord.x,
@@ -132,11 +131,10 @@ namespace ram {
         
         for (int i=0; i<mScreenJointLoc.size(); i++) {
             if (mJointMouseState.at(i)==MOUSE_IDLE) {
-                ofSetColor(150, 50, 50, 150);
-                ofSetLineWidth(1.0f);
+                ofSetColor(0, 0);
             }
             else {
-                ofSetColor(250, 50, 50);
+                ofSetColor(250, 50, 50, 100);
                 ofSetLineWidth(2.0f);
             }
             ofNoFill();

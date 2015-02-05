@@ -27,7 +27,7 @@ namespace ram { namespace skeleton {
         //--------------------
         virtual void update(Skeleton *skleton);
         virtual void draw(Skeleton *skeleton) const;
-        virtual void drawHUD(Skeleton *skeleton) const {}
+        virtual void drawHUD(Skeleton *skeleton) const;
                 
         void setState(int state);
         int getState() const;
@@ -36,6 +36,7 @@ namespace ram { namespace skeleton {
         int getActiveJoint() const;
         
     private:
+        mutable vector<ofVec3f> mJointScreenCoords;
         int mState;
         int mActiveJoint;
     

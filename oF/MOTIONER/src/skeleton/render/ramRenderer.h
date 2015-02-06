@@ -21,6 +21,8 @@ namespace ram { namespace skeleton {
     class Renderer {
         friend class Skeleton;
     public:
+        static void initialize();
+        
         //--------------------
         Renderer();
         virtual ~Renderer();

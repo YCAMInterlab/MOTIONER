@@ -16,6 +16,7 @@
 #include "ramBinaryCoder.h"
 #include "ramOscSender.h"
 #include "ramEvent.h"
+#include "ramRenderer.h"
 
 #include "ofxEvent.h"
 
@@ -32,6 +33,8 @@ namespace ram {
     {
         sCoderType = CODER_BINARY;
         sCoderExt = MOTION_DATA_EXT;
+        
+        skeleton::Renderer::initialize();
     }
     
     //------------------------------------------------------------------------------------

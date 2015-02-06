@@ -40,11 +40,7 @@ static void billboard()
 	glLoadMatrixf(m.getPtr());
 }
 
-//----------------------------------------------------------------------------------------
-Renderer::Renderer() :
-mState(0),
-mActiveJoint(JOINT_HIPS),
-mJointScreenCoords(NUM_JOINTS)
+void Renderer::initialize()
 {
     if (!sInited) {
         ofDisableArbTex();
@@ -55,6 +51,14 @@ mJointScreenCoords(NUM_JOINTS)
         ofEnableArbTex();
         sInited = true;
     }
+}
+
+//----------------------------------------------------------------------------------------
+Renderer::Renderer() :
+mState(0),
+mActiveJoint(JOINT_HIPS),
+mJointScreenCoords(NUM_JOINTS)
+{
 }
 
 //----------------------------------------------------------------------------------------

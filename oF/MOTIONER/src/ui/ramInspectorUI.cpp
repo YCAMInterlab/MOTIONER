@@ -104,23 +104,21 @@ void InspectorUI::setup()
         canvas->setColorOutline(o);
     }
     
-    canvas->addLabel("SKELETON ID:", OFX_UI_FONT_SMALL);
+    canvas->addLabel("Skeleton ID:", OFX_UI_FONT_SMALL);
     
     /// TAB_GENERAL_SETTINGS - NAME label
     //--------------------------------------------------
     {
-        //canvas->addSpacer(hw, 1.0f);
-        //mDeviceHostNameLabel = canvas->addLabel("DEVICE IP:", OFX_UI_FONT_SMALL);
-        mDeviceHostNameLabel = canvas->addLabel("NO DEVICEC FOUND", OFX_UI_FONT_SMALL);
+        mDeviceHostNameLabel = canvas->addLabel("No Device Found", OFX_UI_FONT_SMALL);
         canvas->addSpacer(hw, 1.0f);
     }
     
     /// TAB_GENERAL_SETTINGS - Basic settings
     //--------------------------------------------------
     {
-        canvas->addLabel("NAME:", OFX_UI_FONT_SMALL);
-        mSkeletonNameInput = canvas->addTextInput("ACTOR_NAME",
-                                                  "ENTER NAME",
+        canvas->addLabel("Name:", OFX_UI_FONT_SMALL);
+        mSkeletonNameInput = canvas->addTextInput("Actor Name",
+                                                  "Enter Name",
                                                   hw,
                                                   0,
                                                   0,
@@ -130,13 +128,14 @@ void InspectorUI::setup()
         mSkeletonNameInput->setDrawOutline(true);
         mSkeletonNameInput->setColorOutline(outlineColor);
         
-        widget = canvas->addLabelButton("CALIBRATE", false, hw);
+        widget = canvas->addLabelButton("Calibration", false, hw);
         widget->setDrawOutline(true);
         widget->setColorOutline(outlineColor);
         canvas->addSpacer(hw, 1.0f);
         
-        mEnableOscOutToggle = canvas->addLabelToggle("OSC OUT", true, hw);
+        mEnableOscOutToggle = canvas->addLabelToggle("OSC Out", true, hw);
         mEnableOscOutToggle->setDrawOutline(true);
+        mEnableOscOutToggle->setColorFill(COLOR_ML);
         mEnableOscOutToggle->setColorOutline(outlineColor);
         
         canvas->addSpacer(hw, 1.0f);
@@ -145,12 +144,12 @@ void InspectorUI::setup()
     /// TAB_GENERAL_SETTINGS - Skeleton managment
     //--------------------------------------------------
     {
-        canvas->addLabel("LOADED SETTINGS:", OFX_UI_FONT_SMALL);
+        canvas->addLabel("Loaded Setting:", OFX_UI_FONT_SMALL);
         mSettingFileNameLabel = canvas->addLabel("", OFX_UI_FONT_SMALL);
         //canvas->addLabel(" ");
-        addImageButton(canvas, buttonSize, "images/open.png", "LOAD", true);
-        addImageButton(canvas, buttonSize, "images/save.png", "SAVE", false);
-        addImageButton(canvas, buttonSize, "images/saveas.png", "SAVE AS...", false);
+        addImageButton(canvas, buttonSize, "images/open.png", "Load", true);
+        addImageButton(canvas, buttonSize, "images/save.png", "Save", false);
+        addImageButton(canvas, buttonSize, "images/saveas.png", "Save As...", false);
         //canvas->addSpacer(hw, 1.0f);
     }
     
@@ -178,8 +177,8 @@ void InspectorUI::setup()
     /// JOINT EDITOR - JOINT NAME label
     //--------------------------------------------------
     {
-        canvas->addLabel("JOINT:", OFX_UI_FONT_SMALL);
-        mJointNameLabel =new ofxUILabel("NO JOINT SELECTED", OFX_UI_FONT_SMALL);
+        canvas->addLabel("Joint:", OFX_UI_FONT_SMALL);
+        mJointNameLabel =new ofxUILabel("No Joint Selected", OFX_UI_FONT_SMALL);
         canvas->addWidgetDown(mJointNameLabel);
     }
     
@@ -188,7 +187,7 @@ void InspectorUI::setup()
     {
         canvas->addLabel("X:", OFX_UI_FONT_SMALL);
         
-        mDialerX = new ofxUINumberDialer(-999.0f, 999.0f, 0.0f, 2.0f, "OFFSET X", OFX_UI_FONT_SMALL);
+        mDialerX = new ofxUINumberDialer(-999.0f, 999.0f, 0.0f, 2.0f, "Offset X", OFX_UI_FONT_SMALL);
         widget = canvas->addWidgetRight(mDialerX);
         widget->setDrawOutline(true);
         widget->setColorOutline(outlineColor);
@@ -198,7 +197,7 @@ void InspectorUI::setup()
     //--------------------------------------------------
     {
         canvas->addLabel("Y:");
-        mDialerY = new ofxUINumberDialer(-999.0f, 999.0f, 0.0f, 2.0f, "OFFSET Y", OFX_UI_FONT_SMALL);
+        mDialerY = new ofxUINumberDialer(-999.0f, 999.0f, 0.0f, 2.0f, "Offset Y", OFX_UI_FONT_SMALL);
         widget = canvas->addWidgetRight(mDialerY);
         widget->setDrawOutline(true);
         widget->setColorOutline(outlineColor);
@@ -208,15 +207,16 @@ void InspectorUI::setup()
     //--------------------------------------------------
     {
         canvas->addLabel("Z:");
-        mDialerZ = new ofxUINumberDialer(-999.0f, 999.0f, 0.0f, 2.0f, "OFFSET Z", OFX_UI_FONT_SMALL);
+        mDialerZ = new ofxUINumberDialer(-999.0f, 999.0f, 0.0f, 2.0f, "Offset Z", OFX_UI_FONT_SMALL);
         widget = canvas->addWidgetRight(mDialerZ);
         widget->setDrawOutline(true);
         widget->setColorOutline(outlineColor);
     }
     
     {
-        mDisableJointToggle = canvas->addLabelToggle("DISABLE JOINT", false);
+        mDisableJointToggle = canvas->addLabelToggle("Disable Joint", false);
         mDisableJointToggle->setDrawOutline(true);
+        mDisableJointToggle->setColorFill(COLOR_ML);
         mDisableJointToggle->setColorOutline(outlineColor);
     }
     
@@ -245,9 +245,9 @@ void InspectorUI::setup()
     /// POSITION EDITOR - SLIDES
     //--------------------------------------------------
     {
-        canvas->addLabel("POSITION OFFSET:", OFX_UI_FONT_SMALL);
+        canvas->addLabel("Position Offset:", OFX_UI_FONT_SMALL);
         
-        mResetPositionXSlider = canvas->addSlider("CENTTER X",
+        mResetPositionXSlider = canvas->addSlider("Centter X",
                                                   -1500.0f,
                                                   1500.0f,
                                                   0.0f,
@@ -256,7 +256,7 @@ void InspectorUI::setup()
         mResetPositionXSlider->setDrawOutline(true);
         mResetPositionXSlider->setColorOutline(outlineColor);
         
-        mResetPositionZSlider = canvas->addSlider("CENTTER Z",
+        mResetPositionZSlider = canvas->addSlider("Centter Z",
                                                   -1500.0f,
                                                   1500.0f,
                                                   0.0f,
@@ -265,7 +265,7 @@ void InspectorUI::setup()
         mResetPositionZSlider->setDrawOutline(true);
         mResetPositionZSlider->setColorOutline(outlineColor);
         
-        widget = canvas->addLabelButton("RESET", false, hw);
+        widget = canvas->addLabelButton("Reset", false, hw);
         widget->setDrawOutline(true);
         widget->setColorOutline(outlineColor);
     }
@@ -299,17 +299,17 @@ void InspectorUI::setup()
         //--------------------------------------------------
         {
             
-            mColorRSlider = canvas->addSlider("COLOR R", 0, 255, 255);
+            mColorRSlider = canvas->addSlider("Color R", 0, 255, 255);
             mColorRSlider->setDrawOutline(true);
             mColorRSlider->setColorOutline(outlineColor);
             mColorRSlider->setColorFill(ofColor(255, 100, 100));
             
-            mColorGSlider = canvas->addSlider("COLOR G", 0, 255, 255);
+            mColorGSlider = canvas->addSlider("Color G", 0, 255, 255);
             mColorGSlider->setDrawOutline(true);
             mColorGSlider->setColorOutline(outlineColor);
             mColorGSlider->setColorFill(ofColor(100, 255, 100));
             
-            mColorBSlider = canvas->addSlider("COLOR B", 0, 255, 255);
+            mColorBSlider = canvas->addSlider("Color B", 0, 255, 255);
             mColorBSlider->setDrawOutline(true);
             mColorBSlider->setColorOutline(outlineColor);
             mColorBSlider->setColorFill(ofColor(100, 100, 255));
@@ -339,7 +339,7 @@ void InspectorUI::setup()
         /// TAB_OPTIONS - options
         //--------------------------------------------------
         {
-            widget = canvas->addLabelButton("DELETE", false, hw);
+            widget = canvas->addLabelButton("Delete", false, hw);
             widget->setDrawOutline(true);
             widget->setColorOutline(outlineColor);
         }
@@ -409,7 +409,7 @@ void InspectorUI::guiEvent(ofxUIEventArgs &e)
     const string name = e.widget->getName();
     //ofLogNotice("Inspector") << name;
     //--------------------
-    if(name == "ACTOR_NAME") {
+    if(name == "Actor Name") {
         ofxUITextInput *ti = static_cast<ofxUITextInput *>(e.widget);
         
         shared_ptr<skeleton::Skeleton> skl = mSkeleton.lock();
@@ -418,7 +418,7 @@ void InspectorUI::guiEvent(ofxUIEventArgs &e)
         else
             ofxThrowException(ofxException, "Skeleton not found!");
     }
-    else if(name == "CALIBRATE") {
+    else if(name == "Calibration") {
         ofxUIButton *button = static_cast<ofxUIButton *>(e.widget);
         if (button->getValue()) {
             shared_ptr<skeleton::Skeleton> skl = mSkeleton.lock();
@@ -428,7 +428,7 @@ void InspectorUI::guiEvent(ofxUIEventArgs &e)
                 ofxThrowException(ofxException, "Skeleton not found!");
         }
     }
-    else if(name == "RESET") {
+    else if(name == "Reset") {
         ofxUIButton *button = static_cast<ofxUIButton *>(e.widget);
         if (button->getValue()) {
             ofVec3f pos(mResetPositionXSlider->getScaledValue(),
@@ -442,7 +442,7 @@ void InspectorUI::guiEvent(ofxUIEventArgs &e)
                 ofxThrowException(ofxException, "Skeleton not found!");
         }
     }
-    else if(name == "LOAD") {
+    else if(name == "Load") {
         ofxUIButton *button = static_cast<ofxUIButton *>(e.widget);
         if (button->getValue()) {
             shared_ptr<skeleton::Skeleton> skl = mSkeleton.lock();
@@ -460,7 +460,7 @@ void InspectorUI::guiEvent(ofxUIEventArgs &e)
             }
         }
     }
-    else if(name == "SAVE") {
+    else if(name == "Save") {
         ofxUIButton *button = static_cast<ofxUIButton *>(e.widget);
         if (button->getValue()) {
             shared_ptr<skeleton::Skeleton> skl = mSkeleton.lock();
@@ -470,7 +470,7 @@ void InspectorUI::guiEvent(ofxUIEventArgs &e)
                 ofxThrowException(ofxException, "Skeleton not found!");
         }
     }
-    else if(name == "SAVE AS...") {
+    else if(name == "Save As...") {
         ofxUIButton *button = static_cast<ofxUIButton *>(e.widget);
         if (button->getValue()) {
             shared_ptr<skeleton::Skeleton> skl = mSkeleton.lock();
@@ -487,16 +487,16 @@ void InspectorUI::guiEvent(ofxUIEventArgs &e)
             }
         }
     }
-    else if (name == "OFFSET X") {
+    else if (name == "Offset X") {
         editOffset(static_cast<ofxUINumberDialer *>(e.widget), 0);
     }
-    else if (name == "OFFSET Y") {
+    else if (name == "Offset Y") {
         editOffset(static_cast<ofxUINumberDialer *>(e.widget), 1);
     }
-    else if (name == "OFFSET Z") {
+    else if (name == "Offset Z") {
         editOffset(static_cast<ofxUINumberDialer *>(e.widget), 2);
     }
-    else if (name == "DISABLE JOINT") {
+    else if (name == "Disable Joint") {
         shared_ptr<skeleton::Skeleton> skl = mSkeleton.lock();
         
         if (skl) {
@@ -513,32 +513,32 @@ void InspectorUI::guiEvent(ofxUIEventArgs &e)
             ofxThrowException(ofxException, "Skeleton not found!");
         }
     }
-    else if (name == "COLOR R") {
+    else if (name == "Color R") {
         shared_ptr<skeleton::Skeleton> skl = mSkeleton.lock();
         if (skl) {
             skl->setColorR(static_cast<ofxUISlider*>(e.widget)->getScaledValue());
         }
     }
-    else if (name == "COLOR G") {
+    else if (name == "Color G") {
         shared_ptr<skeleton::Skeleton> skl = mSkeleton.lock();
         if (skl) {
             skl->setColorG(static_cast<ofxUISlider*>(e.widget)->getScaledValue());
         }
     }
-    else if (name == "COLOR B") {
+    else if (name == "Color B") {
         shared_ptr<skeleton::Skeleton> skl = mSkeleton.lock();
         if (skl) {
             skl->setColorB(static_cast<ofxUISlider*>(e.widget)->getScaledValue());
         }
     }
-    else if (name == "DELETE") {
+    else if (name == "Delete") {
         shared_ptr<skeleton::Skeleton> skl = mSkeleton.lock();
         if (skl) {
             const string host = skl->getHostName();
             skeleton::SkeletonManager::getInstance().removeSkeleton(host);
         }
     }
-    else if (name == "OSC OUT") {
+    else if (name == "OSC Out") {
         shared_ptr<skeleton::Skeleton> skl = mSkeleton.lock();
         if (skl)
             skl->setEnableOscOut(static_cast<ofxUILabelToggle *>(e.widget)->getValue());

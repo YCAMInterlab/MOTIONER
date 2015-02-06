@@ -44,7 +44,7 @@ void Node::update()
 void Node::customDraw()
 {
     ofBox(size);
-    Mesh::drawAxis(size * 0.8f);
+    //Mesh::drawAxis(size * 0.8f);
 }
 
 //----------------------------------------------------------------------------------------

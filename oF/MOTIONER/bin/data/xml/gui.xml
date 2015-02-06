@@ -1,52 +1,57 @@
 <Widget>
     <Kind>12</Kind>
-    <Name>OSC_OUT_HOST</Name>
+    <Name>OSC Out Host</Name>
     <Value>127.0.0.1</Value>
 </Widget>
 <Widget>
     <Kind>12</Kind>
-    <Name>OSC_OUT_PORT</Name>
+    <Name>OSC Out Port</Name>
     <Value>10000</Value>
 </Widget>
 <Widget>
     <Kind>20</Kind>
-    <Name>ENABLE OSC OUT</Name>
+    <Name>Enable OSC Out</Name>
     <Value>1</Value>
 </Widget>
 <Widget>
     <Kind>12</Kind>
-    <Name>DEVICE_INCOMING_UDP_PORT</Name>
+    <Name>Device Incoming UDP Port</Name>
     <Value>9750</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
-    <Name>ORIENTATION-Y</Name>
+    <Name>Orientation-Y</Name>
     <Value>0.000000000</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
-    <Name>AUTO RESET</Name>
+    <Name>Auto Reset</Name>
     <Value>0.000000000</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
-    <Name>FIX POSITION</Name>
+    <Name>Fix Position</Name>
     <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>20</Kind>
-    <Name>TOGGLE LOOP ALL</Name>
+    <Name>Toggle Loop All</Name>
     <Value>1</Value>
 </Widget>
 <Widget>
     <Kind>20</Kind>
-    <Name>TOGGLE DETAILED RENDERING</Name>
+    <Name>Toggle Detailed Rendering</Name>
     <Value>1</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
-    <Name>LOW-PASS</Name>
+    <Name>Lowpass</Name>
     <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>Move Lights</Name>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>17</Kind>
@@ -55,6 +60,6 @@
 </Widget>
 <Widget>
     <Kind>17</Kind>
-    <Name>rec_2014-12-27_17-11-16_TekubiKaiten_Shita.mot</Name>
-    <Value>0</Value>
+    <Name>rec_2014-12-27_18-24-02_Yotsunbai.mot</Name>
+    <Value>1</Value>
 </Widget>

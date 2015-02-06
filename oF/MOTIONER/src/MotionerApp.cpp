@@ -16,7 +16,9 @@
 //----------------------------------------------------------------------------------------
 MotionerApp::MotionerApp() :
 mEnableDraw(true),
-mEnableUpdateSkeletons(true)
+mEnableUpdateSkeletons(true),
+mMoveLight(false),
+mLightTime(0.f)
 {
     mOffset.set(0.0f, -1000.0f, 0.0f);
 }
@@ -170,9 +172,10 @@ void MotionerApp::draw()
         
         ofTranslate(mOffset);
         
-        const float time = ofGetElapsedTimef();
-        
         { // update lights
+            if (mMoveLight) mLightTime += ofGetLastFrameTime();
+            const float time = mLightTime;
+            
             ofSetSmoothLighting(true);
             
             mLightW.setPosition(-2500.f, 8000.f, 4000.f);
@@ -304,6 +307,9 @@ void MotionerApp::onMessageReceived(ofxEventMessage &m)
     }
     else if (addr==ram::event::ADDRESS_PLAY_MOTION) {
         mEnableUpdateSkeletons = static_cast<bool>(m.getArgAsInt32(0));
+    }
+    else if (addr==ram::event::ADDRESS_MOVING_LIGHT) {
+        mMoveLight = static_cast<bool>(m.getArgAsInt32(0));
     }
 }
 

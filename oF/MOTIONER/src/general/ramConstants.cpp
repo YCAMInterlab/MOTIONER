@@ -53,6 +53,7 @@ namespace ram {
     
     //------------------------------------------------------------------------------------
     const int LOGGER_INDENT = 30;
+    const int LOGGER_DEFAULT_BUFFER_SIZE = 1000;
     
     //------------------------------------------------------------------------------------
     const string MOTION_DATA_EXT = "mot";
@@ -89,7 +90,7 @@ namespace ram {
     //------------------------------------------------------------------------------------
     
     const float kJointErrorEpsilon = 0.01f;
-    const float kJointErrorThreshould = 1.f;
+    const float kJointErrorThreshould = 0.2f;
     
 //#ifdef DEBUG
     const ofLogLevel DEFAULT_LOG_LEVEL = OF_LOG_NOTICE;

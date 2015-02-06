@@ -36,6 +36,8 @@ private:
     
     bool mEnableDraw;
     bool mEnableUpdateSkeletons;
+    bool mMoveLight;
+    float mLightTime;
     
     /// network
     //--------------------

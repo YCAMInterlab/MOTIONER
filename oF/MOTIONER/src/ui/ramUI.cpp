@@ -27,9 +27,7 @@ UI::UI() :
 mIsInited(false),
 mWidth(200.0f),
 mHeight(ofGetHeight()),
-#ifdef DEBUG
 mLogger(NULL),
-#endif
 mDeviceIncomingPortInput(NULL),
 mOscOutHostInput(NULL),
 mOscOutPortInput(NULL),
@@ -37,10 +35,11 @@ mEnableOscToggle(NULL),
 mPlayToggle(NULL),
 mRecording(false),
 mDetailedRendering(true),
-mWillOpenMotionFile(false)
-//mSkeletonMap(NULL),
+mWillOpenMotionFile(false),
+mLogOffset(0),
+mNumLines(0),
+mLogBufferSize(LOGGER_DEFAULT_BUFFER_SIZE)
 {
-    //mGui.clear();
 }
 
 //----------------------------------------------------------------------------------------
@@ -83,7 +82,6 @@ void UI::setup(const ofRectangle &rect)
     ofSetLogLevel(DEFAULT_LOG_LEVEL);
     general->setFont(GUI_FONT, false); /// aliased
     
-#ifdef DEBUG
     //--------------------------------------------------//
     //--------------------------------------------------//
     //------------------ LOGGER ------------------------//
@@ -113,7 +111,6 @@ void UI::setup(const ofRectangle &rect)
     //--------------------------------------------------//
     //--------------------------------------------------//
     //--------------------------------------------------//
-#endif
     
     //--------------------------------------------------//
     //--------------------------------------------------//
@@ -239,7 +236,6 @@ void UI::setup(const ofRectangle &rect)
                                           false);
     }
     
-#ifdef DEBUG
     //--------------------------------------------------
     /// GENERAL - OSC IN
     //{
@@ -253,7 +249,6 @@ void UI::setup(const ofRectangle &rect)
     //    mOscInHostInput->setAutoClear(false);
     //    mOscInHostInput->setColorOutline(outlineColor);
     //}
-#endif
     
     //--------------------------------------------------
     /// GENERAL - UDP INCOMING
@@ -377,19 +372,19 @@ void UI::setup(const ofRectangle &rect)
         widget->setDrawOutline(false);
     }
     
-#ifdef DEBUG
     //--------------------------------------------------
     /// EXPERIMENT
     {
         general->addSpacer(genHw, 1.0f);
         
-        general->addLabel("EXPERIMENT", OFX_UI_FONT_MEDIUM);
-        
         mLowpass = general->addSlider("LOW-PASS", 0.0f, 1.0f, 0.2f, genHw, hh);
         mLowpass->setColorOutline(outlineColor);
         mLowpass->setDrawOutline(true);
+        
+        widget = general->addToggle("MOVE LIGHT", false);
+        widget->setColorOutline(outlineColor);
+        widget->setDrawOutline(true);
     }
-#endif
     //--------------------------------------------------//
     //--------------------------------------------------//
     //--------------------------------------------------//
@@ -398,10 +393,8 @@ void UI::setup(const ofRectangle &rect)
     
     general->setDrawWidgetPadding(false);
     ofAddListener(general->newGUIEvent, this, &UI::guiEvent);
-#ifdef DEBUG
     mLogger->setDrawWidgetPadding(false);
     ofAddListener(mLogger->newGUIEvent, this, &UI::guiEvent);
-#endif
     mTools->setDrawPadding(false);
     ofAddListener(mTools->newGUIEvent, this, &UI::guiEvent);
     
@@ -414,9 +407,7 @@ void UI::setup(const ofRectangle &rect)
     if (mEnableOscToggle->getValue())
         enableOsc();
     
-    //#ifdef DEBUG
     //    notifyLowpassValue();
-    //#endif
     
     //setupDeviceCorrespondent();
     
@@ -496,9 +487,7 @@ void UI::exit()
     general->saveSettings(GUI_XML);
     
     ofRemoveListener(general->newGUIEvent, this, &UI::guiEvent);
-#ifdef DEBUG
     ofRemoveListener(mLogger->newGUIEvent, this, &UI::guiEvent);
-#endif
     ofRemoveListener(mTools->newGUIEvent, this, &UI::guiEvent);
     
     if (general) {
@@ -507,26 +496,14 @@ void UI::exit()
         general = NULL;
     }
     
-#ifdef DEBUG
     if (mLogger) {
         mLogger->disable();
         delete mLogger;
         mLogger = NULL;
     }
-#endif
     
     ofRemoveListener(ofxEvent(), this, &UI::onNotifyEvent);
 }
-
-#ifdef DEBUG
-//----------------------------------------------------------------------------------------
-float UI::getLogHeight() const
-{
-    const float leading = 1.7f;
-    vector<string> lines = ofSplitString(mLoggerStr, "\n");
-    return lines.size() * kBitmapStringFontSize * leading - 1;
-}
-#endif
 
 //----------------------------------------------------------------------------------------
 void UI::update()
@@ -555,22 +532,30 @@ void UI::update()
 //----------------------------------------------------------------------------------------
 void UI::draw()
 {
-#ifdef DEBUG
-    const int height = getLogHeight();
-    const float viewH = ofGetHeight()-mView.height-5.0f;
-    const float out = height-viewH;
+    ofPushMatrix();
+    ofPushStyle();
     
-    const float y = mView.height+kBitmapStringPadding+kBitmapStringFontSize+mLoggerY+1.0f;
-    
-    /// draw logger
-    ofxPushAll();
-    ofTranslate(5.0f, 5.0f);
+    ofTranslate(5.0f, 17.f);
+    ofTranslate(mLogger->getRect()->x, mLogger->getRect()->y);
     ofSetHexColor(COLOR_M);
-    if (out>0.0f)
-        ofTranslate(0.0f, -out);
-    ofDrawBitmapString(mLoggerStr, ofPoint(mView.x, y));
-    ofxPopAll();
-#endif
+    
+    const float lineH = kBitmapStringFontSize + kBitmapStringPadding;
+    float y =  -(mNumLines + 1) * lineH + mLogger->getRect()->height;
+    y += mLogOffset * lineH;
+    
+    for (int i=0; i<mLog.size(); i++) {
+        const string& line = mLog.at(i);
+        const int nLines = ofSplitString(line, "\n").size() - 1;
+        ofPushMatrix();
+        ofTranslate(0.f, y);
+        if (y >= -lineH && y < mLogger->getRect()->height)
+            ofDrawBitmapString(line, ofVec3f::zero());
+        y += nLines * lineH;
+        ofPopMatrix();
+    }
+    
+    ofPopStyle();
+    ofPopMatrix();
 }
 
 //----------------------------------------------------------------------------------------
@@ -610,25 +595,18 @@ void UI::drawHUD()
 //----------------------------------------------------------------------------------------
 void UI::keyPressed(int key)
 {
-#ifdef DEBUG
-    vector<string> lines = ofSplitString(mLoggerStr, "\n");
-    const int height = getLogHeight();
-    const float step =  (height/(float)lines.size()) * 1.0f;
-#endif
-    
+    const float lineH = kBitmapStringFontSize + kBitmapStringPadding;
+    const int nLinesDisplay = mLogger->getRect()->getHeight() / lineH;
     switch (key) {
-#ifdef DEBUG
-        case OF_KEY_UP:
-            mLoggerY -= step;
-            //if (mLoggerY < -getLogHeight())
-            //    mLoggerY = -getLogHeight();
-            break;
         case OF_KEY_DOWN:
-            mLoggerY += step;
-            //if (mLoggerY > 0.0f)
-            //    mLoggerY = 0.0f;
+            mLogOffset++;
+            if (mLogOffset > mNumLines - nLinesDisplay)
+                mLogOffset = mNumLines - nLinesDisplay;
             break;
-#endif
+        case OF_KEY_UP:
+            mLogOffset--;
+            if (mLogOffset < 0) mLogOffset = 0;
+            break;
         default: /*do nothing*/ break;
     }
 }
@@ -636,27 +614,20 @@ void UI::keyPressed(int key)
 //----------------------------------------------------------------------------------------
 void UI::resize()
 {
-#ifdef DEBUG
     if (!general || !mLogger) return;
-#else
     if (!general) return;
-#endif
     /// create gui objects
     const float genW = mWidth;
     const float genH = (ofGetHeight()>1250.0f) ? ofGetHeight() : 1250.0f;
     
-#ifdef DEBUG
     const float logx = genW;
     const float logy = ofGetHeight()-200.0f;
     const float logw =ofGetWidth()-logx;
     const float logh = 201.0f;
-#endif
     
     general->getRect()->set(0.5f, 1.0f, genW-0.5f, genH-1.0f);
     
-#ifdef DEBUG
     mLogger->getRect()->set(logx, logy, logw, logh);
-#endif
     
     ofxUITabbedCanvas* inspector = mInspector.getTabbedCanvas();
     if (inspector) {
@@ -665,17 +636,10 @@ void UI::resize()
         inspector->setPosition(ofGetWidth()-inspector->getRect()->width-10.0f, y);
     }
     
-#ifdef DEBUG
     mView.x = genW;
     mView.y = 0.0f;
     mView.width = logw;
     mView.height = ofGetHeight()-logh;
-#else
-    mView.x = genW;
-    mView.y = 0.0f;
-    mView.width = ofGetWidth()-genW;
-    mView.height = ofGetHeight();
-#endif
     
     if (ofGetWidth()<genW)
         ofSetWindowShape(genW, ofGetHeight());
@@ -705,9 +669,7 @@ void UI::guiEvent(ofxUIEventArgs &e)
         m.setAddress(event::ADDRESS_TOGGLE_DRAW);
         m.addIntArg(static_cast<int>(mDetailedRendering));
         ofxNotifyEvent(m);
-#ifdef DEBUG
         mLogger->setVisible(mDetailedRendering);
-#endif
         
         if (!mDetailedRendering) {
             mStoredWindowRect = ofGetWindowRect();
@@ -799,22 +761,36 @@ void UI::guiEvent(ofxUIEventArgs &e)
     else if (name == "TOGGLE LOOP ALL") {
         setLoopPlayback(static_cast<ofxUIToggle *>(e.widget)->getValue());
     }
-#ifdef DEBUG
     else if (name == "LOW-PASS") {
         notifyLowpassValue();
     }
-#endif
+    else if (name == "MOVE LIGHT") {
+        ofxEventMessage m;
+        m.setAddress(event::ADDRESS_MOVING_LIGHT);
+        const int b = (int)((ofxUIToggle *)e.widget)->getValue();
+        m.addIntArg(b);
+        ofxNotifyEvent(m);
+    }
     
     OFX_END_EXCEPTION_HANDLING
 }
 
-#ifdef DEBUG
 //----------------------------------------------------------------------------------------
 void UI::addLog(const string &log)
 {
-    mLoggerStr+=log;
+    const int nLines = ofSplitString(log, "\n").size() - 1;
+    mNumLines += nLines;
+    mLog.push_back(log);
+    
+    if (mLog.empty() == false) {
+        while (mLog.size() >= mLogBufferSize) {
+            const string& s = *mLog.begin();
+            const int nLines = ofSplitString(s, "\n").size() - 1;
+            mNumLines -= nLines;
+            mLog.pop_front();
+        }
+    }
 }
-#endif
 
 //----------------------------------------------------------------------------------------
 void UI::updateDeviceList(SkeletonMap *skeletonMap)
@@ -854,9 +830,7 @@ void UI::onNotifyEvent(ofxEventMessage &m)
 {
     const string addr = m.getAddress();
     if (addr==event::ADDRESS_LOG) {
-#ifdef DEBUG
         addLog(m.getArgAsString(0));
-#endif
     }
     else if (addr==event::ADDRESS_START_RECORDING) {
         if (skeleton::SkeletonManager::getInstance().getSkeletons().empty()==false) {
@@ -884,9 +858,7 @@ void UI::onNotifyEvent(ofxEventMessage &m)
         notifySkeletonOrientation();
         notifyAutoResetDimension();
         notifyFixPosition();
-#ifdef DEBUG
         notifyLowpassValue();
-#endif
     }
 }
 
@@ -958,7 +930,6 @@ void UI::notifyFixPosition()
 }
 
 //----------------------------------------------------------------------------------------
-#ifdef DEBUG
 void UI::notifyLowpassValue() const
 {
     ofxEventMessage m;
@@ -966,5 +937,3 @@ void UI::notifyLowpassValue() const
     m.addFloatArg(mLowpass->getScaledValue());
     ofxNotifyEvent(m);
 }
-#endif
-

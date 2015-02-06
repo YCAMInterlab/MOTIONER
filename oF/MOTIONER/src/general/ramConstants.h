@@ -105,6 +105,7 @@ namespace ram {
     
     //------------------------------------------------------------------------------------
     extern const int LOGGER_INDENT;
+    extern const int LOGGER_DEFAULT_BUFFER_SIZE;
     
     //------------------------------------------------------------------------------------
     extern const string MOTION_DATA_EXT;

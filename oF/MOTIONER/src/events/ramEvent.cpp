@@ -43,6 +43,8 @@ namespace ram { namespace event {
     const std::string ADDRESS_REQUEST_GENERAL_SETTINGS      = "ADDRESS_REQUEST_GENERAL_SETTINGS";
     const std::string ADDRESS_EXTERNAL_POSITION             = "ADDRESS_EXTERNAL_POSITION";
     
+    const std::string ADDRESS_MOVING_LIGHT                  = "ADDRESS_MOVING_LIGHT";
+    
     void requestGeneralSettings()
     {
         ofxEventMessage m;

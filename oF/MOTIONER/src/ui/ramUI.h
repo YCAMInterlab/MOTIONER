@@ -94,15 +94,11 @@ namespace ram {
         void notifyAutoResetDimension();
         void notifyFixPosition();
 
-#ifdef DEBUG
-        /// experiment
         //--------------------
         void notifyLowpassValue() const;
         /// logger
         //--------------------
         void addLog(const string &log);
-        float getLogHeight() const;
-#endif
         
         void enableOsc();
         void disableOsc();
@@ -194,17 +190,17 @@ namespace ram {
         
         ofTrueTypeFont      mFont;
         
-#ifdef DEBUG
         /// log
         //--------------------
         ofxUICanvas         *mLogger;
-        string              mLoggerStr;
-        float               mLoggerY;
+        deque<string>       mLog;
+        int                 mLogOffset;
+        int                 mNumLines;
+        int                 mLogBufferSize;
         
         /// experiment
         //--------------------
         ofxUISlider         *mLowpass;
-#endif
     };
 
 }

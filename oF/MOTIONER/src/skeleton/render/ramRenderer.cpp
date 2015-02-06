@@ -13,6 +13,10 @@
 using namespace ram;
 using namespace ram::skeleton;
 
+bool Renderer::sInited = false;
+ofImage Renderer::sImageL;
+ofImage Renderer::sImageR;
+
 //----------------------------------------------------------------------------------------
 static void billboard()
 {
@@ -42,6 +46,15 @@ mState(0),
 mActiveJoint(JOINT_HIPS),
 mJointScreenCoords(NUM_JOINTS)
 {
+    if (!sInited) {
+        ofDisableArbTex();
+        sImageL.loadImage("images/L.png");
+        sImageR.loadImage("images/R.png");
+        sImageL.mirror(true, false);
+        sImageR.mirror(true, false);
+        ofEnableArbTex();
+        sInited = true;
+    }
 }
 
 //----------------------------------------------------------------------------------------
@@ -95,6 +108,39 @@ void Renderer::draw(Skeleton *skeleton) const
             ofSetColor(color);
         
         n.draw();
+        
+        if (n.id == JOINT_HEAD) {
+            ofPushStyle();
+            ofSetColor(255);
+            ofPushMatrix();
+            n.transformGL();
+            ofTranslate(0.f, 0.f, n.size * 0.75f);
+            ofDrawBox(ofVec3f::zero(), n.size * 0.25f);
+            n.resetTransform();
+            ofPopMatrix();
+            ofPopStyle();
+        }
+        
+        ofPushStyle();
+        ofEnableAlphaBlending();
+        ofSetColor(255, 100);
+        if (n.id == JOINT_LEFT_HAND || n.id == JOINT_LEFT_TOE) {
+            sImageL.bind();
+            const float ps = n.size;
+            n.size = ps * 1.1f;
+            n.draw();
+            n.size = ps;
+            sImageL.unbind();
+        }
+        else if (n.id == JOINT_RIGHT_HAND || n.id == JOINT_RIGHT_TOE) {
+            sImageR.bind();
+            const float ps = n.size;
+            n.size = ps * 1.1f;
+            n.draw();
+            n.size = ps;
+            sImageR.unbind();
+        }
+        ofPopStyle();
         
         const ofVec3f& pos = n.getGlobalPosition();
         
@@ -169,30 +215,6 @@ void Renderer::drawHUD(Skeleton *skeleton) const
      (mState==Skeleton::STATE_SELECTED) ? ofSetHexColor(0xFF0000) : ofSetHexColor(0x000000);
     ofDrawBitmapString(skeleton->getHostName()+"\n"+skeleton->getName(),
                        ofPoint(0.0f, -32.0f));
-    ofPopMatrix();
-    
-    ofPushMatrix();
-    ofTranslate(mJointScreenCoords.at(JOINT_RIGHT_HAND));
-     (mState==Skeleton::STATE_SELECTED) ? ofSetHexColor(0xFF0000) : ofSetHexColor(0x000000);
-    ofDrawBitmapString("R", ofPoint(0.0f, 0.0f));
-    ofPopMatrix();
-    
-    ofPushMatrix();
-    ofTranslate(mJointScreenCoords.at(JOINT_RIGHT_TOE));
-     (mState==Skeleton::STATE_SELECTED) ? ofSetHexColor(0xFF0000) : ofSetHexColor(0x000000);
-    ofDrawBitmapString("R", ofPoint(0.0f, 0.0f));
-    ofPopMatrix();
-    
-    ofPushMatrix();
-    ofTranslate(mJointScreenCoords.at(JOINT_LEFT_HAND));
-     (mState==Skeleton::STATE_SELECTED) ? ofSetHexColor(0xFF0000) : ofSetHexColor(0x000000);
-    ofDrawBitmapString("L", ofPoint(0.0f, 0.0f));
-    ofPopMatrix();
-    
-    ofPushMatrix();
-    ofTranslate(mJointScreenCoords.at(JOINT_LEFT_TOE));
-     (mState==Skeleton::STATE_SELECTED) ? ofSetHexColor(0xFF0000) : ofSetHexColor(0x000000);
-    ofDrawBitmapString("L", ofPoint(0.0f, 0.0f));
     ofPopMatrix();
     
     float t = ::fmodf(ofGetElapsedTimef() * 1.f, 1.f);

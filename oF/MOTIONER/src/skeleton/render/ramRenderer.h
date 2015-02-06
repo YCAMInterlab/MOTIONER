@@ -39,6 +39,9 @@ namespace ram { namespace skeleton {
         mutable vector<ofVec3f> mJointScreenCoords;
         int mState;
         int mActiveJoint;
+        
+        static ofImage sImageL, sImageR;
+        static bool sInited;
     
     };
     

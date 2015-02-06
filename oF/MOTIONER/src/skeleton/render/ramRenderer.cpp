@@ -90,23 +90,13 @@ void Renderer::draw(Skeleton *skeleton) const
         
         ofSetLineWidth(1.f);
         Node &n = joints.at(i);
-        isEndSite(i) || i == 0 ? n.size = 110.f : n.size = 80.f;
-        
-        bool error = false;
-        
-        for (size_t j=0; j<joints.size(); j++) {
-            if (joints.at(j).error) {
-                if (joints.at(j).getParent() && joints.at(j).getParent() == &n) {
-                    error = true;
-                }
-            }
-        }
+        isEndSite(n.id) || n.id == JOINT_HIPS ? n.size = 120.f : n.size = 80.f;
         
         if (n.enable == false)
             ofSetColor(150);
-        else if (error && ofGetFrameNum() % 40 < 20)
+        else if (n.error && ofGetFrameNum() % 40 < 20)
             ofSetColor(255, 100, 100);
-        else if (error && ofGetFrameNum() % 40 >= 20)
+        else if (n.error && ofGetFrameNum() % 40 >= 20)
             ofSetColor(100);
         else
             ofSetColor(color);
@@ -117,10 +107,9 @@ void Renderer::draw(Skeleton *skeleton) const
             ofPushStyle();
             ofSetColor(255);
             ofPushMatrix();
-            n.transformGL();
+            ofMultMatrix(n.getGlobalTransformMatrix());
             ofTranslate(0.f, 0.f, n.size * 0.75f);
             ofDrawBox(ofVec3f::zero(), n.size * 0.25f);
-            n.resetTransform();
             ofPopMatrix();
             ofPopStyle();
         }
@@ -229,6 +218,9 @@ void Renderer::drawHUD(Skeleton *skeleton) const
         if (i==mActiveJoint && mState==Skeleton::STATE_SELECTED) {
             ofSetColor(255, 50, 50, 80 - t * 50.f);
             ofCircle(ofVec3f::zero(), 13.0f + t * 20.f);
+            
+            (mState==Skeleton::STATE_SELECTED) ? ofSetHexColor(0xFF0000) : ofSetHexColor(0x000000);
+            ofDrawBitmapString(joints.at(i).name, ofPoint::zero());
         }
         ofPopMatrix();
     }

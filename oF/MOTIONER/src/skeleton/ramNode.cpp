@@ -24,10 +24,9 @@ error(false)
 
 void Node::update()
 {
-    const ofVec3f& orientation = getOrientationEuler();
+    const ofVec3f& orientation = getGlobalOrientation().getEuler();
         
-    if (enable &&
-        orientation.distance(prevOrientationEuler) < kJointErrorEpsilon) {
+    if (orientation.distance(prevOrientationEuler) < kJointErrorEpsilon) {
         noResponceDuration += ofGetLastFrameTime();
         if (noResponceDuration >= kJointErrorThreshould) {
             error = true;

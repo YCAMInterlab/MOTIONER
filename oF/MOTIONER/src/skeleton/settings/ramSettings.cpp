@@ -286,11 +286,6 @@ void Settings::loadUnuseJoints(Skeleton *skeleton)
             unuseJoints.at(i) = id;
         }
         
-        
-        for (int i=0; i<skeleton->mJoints.size(); i++) {
-            skeleton->mJoints.at(i).enable = true;
-        }
-        
         for (int i=0; i<skeleton->mJoints.size(); i++) {
             for (int j=0; j<unuseJoints.size(); j++) {
                 if (i == unuseJoints.at(j)) {

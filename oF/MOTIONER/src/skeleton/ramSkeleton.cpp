@@ -246,6 +246,12 @@ void Skeleton::loadSettings(const string &fileName)
     /// default caribrated values
     mModules->settings.loadCalibration(this);
     
+    for (int i=0; i<mJoints.size(); i++) {
+        if (isEndSite(mJoints.at(i).id)) {
+            mJoints.at(i).enable = false;
+        }
+    }
+    
     mModules->settings.loadUnuseJoints(this);
     
     mModules->settings.loadFlags(this);
@@ -529,6 +535,7 @@ void Skeleton::createTree()
 			}
 		}
 	}
+    
     OFX_END_EXCEPTION_HANDLING
 }
 

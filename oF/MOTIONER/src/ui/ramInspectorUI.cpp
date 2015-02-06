@@ -133,9 +133,11 @@ void InspectorUI::setup()
         widget->setColorOutline(outlineColor);
         canvas->addSpacer(hw, 1.0f);
         
-        mEnableOscOutToggle = canvas->addLabelToggle("OSC Out", true, hw);
+        mEnableOscOutToggle = canvas->addToggle("OSC Out",
+                                                true,
+                                                buttonSize,
+                                                buttonSize);
         mEnableOscOutToggle->setDrawOutline(true);
-        mEnableOscOutToggle->setColorFill(COLOR_ML);
         mEnableOscOutToggle->setColorOutline(outlineColor);
         
         canvas->addSpacer(hw, 1.0f);
@@ -541,7 +543,7 @@ void InspectorUI::guiEvent(ofxUIEventArgs &e)
     else if (name == "OSC Out") {
         shared_ptr<skeleton::Skeleton> skl = mSkeleton.lock();
         if (skl)
-            skl->setEnableOscOut(static_cast<ofxUILabelToggle *>(e.widget)->getValue());
+            skl->setEnableOscOut(static_cast<ofxUIToggle *>(e.widget)->getValue());
     }
     
     OFX_END_EXCEPTION_HANDLING

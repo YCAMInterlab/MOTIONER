@@ -131,7 +131,7 @@ namespace ram {
         ofxUISlider         *mResetPositionXSlider;
         ofxUISlider         *mResetPositionZSlider;
         
-        ofxUILabelToggle    *mEnableOscOutToggle;
+        ofxUIToggle         *mEnableOscOutToggle;
         
         ofxUILabelToggle    *mDisableJointToggle;
         

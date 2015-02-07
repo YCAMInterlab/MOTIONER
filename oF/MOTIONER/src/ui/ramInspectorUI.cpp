@@ -216,9 +216,11 @@ void InspectorUI::setup()
     }
     
     {
-        mEnableJointToggle = canvas->addLabelToggle("Enable Joint", false);
+        mEnableJointToggle = canvas->addToggle("Enable Joint",
+                                               false,
+                                               buttonSize,
+                                               buttonSize);
         mEnableJointToggle->setDrawOutline(true);
-        mEnableJointToggle->setColorFill(COLOR_ML);
         mEnableJointToggle->setColorOutline(outlineColor);
     }
     
@@ -382,6 +384,15 @@ void InspectorUI::setup()
     ofSetLogLevel(DEFAULT_LOG_LEVEL);
     
     ofAddListener(ofxEvent(), this, &InspectorUI::onMessageReceived);
+}
+
+void InspectorUI::update()
+{
+//    shared_ptr<skeleton::Skeleton> skl = mSkeleton.lock();
+//    bool visible;
+//    skl ? visible = true : visible = false;
+//    if (mTabbedCanvas)
+//        mTabbedCanvas->setVisible(visible);
 }
 
 //----------------------------------------------------------------------------------------

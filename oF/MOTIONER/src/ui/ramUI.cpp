@@ -529,6 +529,8 @@ void UI::update()
         else if (y < -h+ofGetHeight())
             general->getRect()->setY(-h+ofGetHeight());
     }
+    
+    mInspector.update();
 }
 
 //----------------------------------------------------------------------------------------

@@ -40,6 +40,8 @@ namespace ram {
         void setup();
         void exit();
         
+        void update();
+        
         /// NOT IMPLEMENTED YET
         /// when target skeleton was changed,
         /// just call this method for refresh inspector contents
@@ -133,7 +135,7 @@ namespace ram {
         
         ofxUIToggle         *mEnableOscOutToggle;
         
-        ofxUILabelToggle    *mEnableJointToggle;
+        ofxUIToggle         *mEnableJointToggle;
         
         ofxUISlider         *mColorRSlider;
         ofxUISlider         *mColorGSlider;

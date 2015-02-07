@@ -60,10 +60,10 @@ namespace ram {
                     
                     ofFloatColor c;
                     if (j%2 == 0) {
-                        i%2 == 0 ?  c.setHsb(ofRandom(1.f), 0.05f, 0.3f) :  c.setHsb(ofRandom(1.f), 0.05f, 0.6f);
+                        i%2 == 0 ?  c.set(0.3f) :  c.set(0.6f);
                     }
                     else {
-                        i%2 == 1 ?  c.setHsb(ofRandom(1.f), 0.05f, 0.3f) :  c.setHsb(ofRandom(1.f), 0.05f, 0.6f);
+                        i%2 == 1 ?  c.set(0.3f) :  c.set(0.6f);
                     }
                     
                     for (int k=0; k<6; k++) {

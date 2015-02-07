@@ -40,7 +40,7 @@ mDialerZ(NULL),
 
 mResetPositionXSlider(NULL),
 mResetPositionZSlider(NULL),
-mDisableJointToggle(NULL)
+mEnableJointToggle(NULL)
 {
 }
 
@@ -216,10 +216,10 @@ void InspectorUI::setup()
     }
     
     {
-        mDisableJointToggle = canvas->addLabelToggle("Disable Joint", false);
-        mDisableJointToggle->setDrawOutline(true);
-        mDisableJointToggle->setColorFill(COLOR_ML);
-        mDisableJointToggle->setColorOutline(outlineColor);
+        mEnableJointToggle = canvas->addLabelToggle("Enable Joint", false);
+        mEnableJointToggle->setDrawOutline(true);
+        mEnableJointToggle->setColorFill(COLOR_ML);
+        mEnableJointToggle->setColorOutline(outlineColor);
     }
     
     canvas->autoSizeToFitWidgets();
@@ -498,14 +498,14 @@ void InspectorUI::guiEvent(ofxUIEventArgs &e)
     else if (name == "Offset Z") {
         editOffset(static_cast<ofxUINumberDialer *>(e.widget), 2);
     }
-    else if (name == "Disable Joint") {
+    else if (name == "Enable Joint") {
         shared_ptr<skeleton::Skeleton> skl = mSkeleton.lock();
         
         if (skl) {
             const skeleton::Node &n = skl->getJoint(mJointName);
             if (!n.name.empty()) {
                 ofxUILabelToggle *lt = static_cast<ofxUILabelToggle *>(e.widget);
-                skl->setDisableJoint(skl->getJointIndexFromName(mJointName), lt->getValue());
+                skl->setEnableJoint(skl->getJointIndexFromName(mJointName), lt->getValue());
             }
             else {
                 ofxThrowException(ofxException, "Node not found!");
@@ -607,8 +607,8 @@ void InspectorUI::setDevice(const string &hostName)
         
         mEnableOscOutToggle->setValue(skl->getEnableOscOut());
         
-        skl->setActilveJoint(0);
-        mDisableJointToggle->setValue(skl->getDisableJoint(0));
+        skl->setActilveJoint(JOINT_HIPS);
+        mEnableJointToggle->setValue(skl->getEnableJoint(JOINT_HIPS));
         
         mColorRSlider->setValue(skl->getColor().r);
         mColorGSlider->setValue(skl->getColor().g);
@@ -662,7 +662,7 @@ void InspectorUI::setJoint(const string &name)
     if (skl) {
         const skeleton::Node &n = skl->getJoint(name);
         skl->setActilveJoint(skl->getJointIndexFromName(name));
-        mDisableJointToggle->setValue(skl->getDisableJoint(skl->getJointIndexFromName(name)));
+        mEnableJointToggle->setValue(skl->getEnableJoint(skl->getJointIndexFromName(name)));
         
         if (!n.name.empty()) {
             ofLogNotice() << n.name << ": " << n.getPosition();//debug

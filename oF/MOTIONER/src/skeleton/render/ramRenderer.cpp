@@ -105,11 +105,14 @@ void Renderer::draw(Skeleton *skeleton) const
         
         if (n.id == JOINT_HEAD) {
             ofPushStyle();
-            ofSetColor(255);
+            ofSetColor(200);
             ofPushMatrix();
             ofMultMatrix(n.getGlobalTransformMatrix());
             ofTranslate(0.f, 0.f, n.size * 0.75f);
-            ofDrawBox(ofVec3f::zero(), n.size * 0.25f);
+            ofDrawBox(ofVec3f::zero(),
+                      n.size * 0.25f,
+                      n.size * 0.25f,
+                      n.size * 0.5f);
             ofPopMatrix();
             ofPopStyle();
         }

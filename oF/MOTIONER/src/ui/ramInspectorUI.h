@@ -133,7 +133,7 @@ namespace ram {
         
         ofxUIToggle         *mEnableOscOutToggle;
         
-        ofxUILabelToggle    *mDisableJointToggle;
+        ofxUILabelToggle    *mEnableJointToggle;
         
         ofxUISlider         *mColorRSlider;
         ofxUISlider         *mColorGSlider;

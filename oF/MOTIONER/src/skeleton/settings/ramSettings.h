@@ -11,11 +11,12 @@
 
 #include "ofMain.h"
 #include "ofxXmlSettings.h"
-#include "ramUtils.h"
+
 
 namespace ram { namespace skeleton {
     
     class Skeleton;
+    class Node;
     
     /// settings for each skeletons
     //------------------------------------------------------------------------------------
@@ -35,25 +36,16 @@ namespace ram { namespace skeleton {
         void load(const string &filePath);
         void save(const string &filePath);
         
-        /// load global positions for all joints in bind pose
+        /// load joint attributes
         //--------------------
-        void loadHierarchy(Skeleton *skeleton);
-        void saveHierarchy(int nodeId, const ofVec3f &offset);
-        
-        /// default caribrated values
-        //--------------------
-        void loadCalibration(Skeleton *skeleton);
-        void saveCalibration(Skeleton *skeleton);
+        void loadJoints(Skeleton *skeleton);
+        void saveJoints(Skeleton *skeleton);
+        void saveJoint(Skeleton *skeleton, int jointId);
         
         // tree structure
         //--------------------
         void loadTree(Skeleton *skeleton);
-        
         void loadTreeJointTag(Skeleton *skeleton, int parent);
-        
-        // unuse
-        //--------------------
-        void loadUnuseJoints(Skeleton *skeleton);
         
         // properties
         //--------------------
@@ -78,7 +70,9 @@ namespace ram { namespace skeleton {
         void _checkError(const string &name, int i);
         void _checkError(const string &name, float f);
         void _checkError(const string &name, const string &s);
-        void _checkOffertAtrribExist(int tagId);
+        void _checkAtrribExist(int tagId);
+        
+        void saveJointAttributes(Skeleton *skeleton, int jointId);
         
         //--------------------
         ofxXmlSettings  mXml;

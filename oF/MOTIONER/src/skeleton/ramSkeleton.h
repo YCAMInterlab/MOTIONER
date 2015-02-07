@@ -140,7 +140,7 @@ namespace ram { namespace skeleton {
         
         void setEnableOscOut(bool bEnable);
         
-        void setDisableJoint(int joint, bool bDisable);
+        void setEnableJoint(int joint, bool bEnable);
         
         void setColorR(int c);
         void setColorG(int c);
@@ -166,7 +166,7 @@ namespace ram { namespace skeleton {
         
         inline const coder::Frame &getInitialPose() const;
         
-        bool getDisableJoint(int joint) const;
+        bool getEnableJoint(int joint) const;
         
         bool getEnableOscOut() const;
         
@@ -236,11 +236,10 @@ namespace ram { namespace skeleton {
     };
         
     //------------------------------------------------------------------------------------
-    inline bool Skeleton::getDisableJoint(int joint) const
+    inline bool Skeleton::getEnableJoint(int jointId) const
     {
-        if (joint<0 || joint>=NUM_JOINTS)
-            ofxThrowException(ofxException, "joint out of index");
-        return !mJoints.at(joint).enable;
+        // FIXME: add error handle
+        return mJoints.at(jointId).enable;
     }
         
     //------------------------------------------------------------------------------------

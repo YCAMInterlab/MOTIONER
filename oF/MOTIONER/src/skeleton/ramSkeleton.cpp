@@ -220,7 +220,7 @@ void Skeleton::calibrate()
         ofLogNotice("Skeleton") << "Caribrated node at " << i << ": " << mBaseFrame.rotation.at(i).getEuler();
     }
     
-    mModules->settings.saveCalibration(this);
+    mModules->settings.saveJoints(this);
     
     updateRotation();
     
@@ -241,22 +241,11 @@ void Skeleton::loadSettings(const string &fileName)
         createTree();
     }
     
-    /// hierarchy settings for this skeleton
-    mModules->settings.loadHierarchy(this);
-    /// default caribrated values
-    mModules->settings.loadCalibration(this);
-    
-    for (int i=0; i<mJoints.size(); i++) {
-        if (isEndSite(mJoints.at(i).id)) {
-            mJoints.at(i).enable = false;
-        }
-    }
-    
-    mModules->settings.loadUnuseJoints(this);
-    
     mModules->settings.loadFlags(this);
     
     mModules->settings.loadColor(this);
+    
+    mModules->settings.loadJoints(this);
     
     OFX_END_EXCEPTION_HANDLING
 }
@@ -282,7 +271,7 @@ void Skeleton::editHierarchy(int nodeId, const ofVec3f &offset)
     OFX_BEGIN_EXCEPTION_HANDLING
     Node &n = mJoints.at(nodeId);
     n.setPosition(offset);
-    mModules->settings.saveHierarchy(nodeId, offset);
+    mModules->settings.saveJoint(this, nodeId);
     OFX_END_EXCEPTION_HANDLING
 }
 
@@ -603,23 +592,26 @@ void Skeleton::setEnableOscOut(bool bEnable)
 }
 
 //----------------------------------------------------------------------------------------------
-void Skeleton::setDisableJoint(int joint, bool bDisable)
+void Skeleton::setEnableJoint(int joint, bool bEnable)
 {
-    if (joint<0 || joint>=NUM_JOINTS)
+    if (joint<0 || joint>=mJoints.size())
         ofxThrowException(ofxException, "joint out of index");
-    mJoints.at(joint).enable = !bDisable;
-    if (bDisable) {
+    mJoints.at(joint).enable = bEnable;
+    
+    mModules->settings.saveJoint(this, joint);
+    
+    if (bEnable == false) {
         if (mModules->settings.hasTree()) {
             mModules->settings.loadTree(this);
         }
         else {
             createTree();
         }
-        mModules->settings.loadHierarchy(this);
-        
         mModules->settings.loadFlags(this);
         
         mModules->settings.loadColor(this);
+        
+        mModules->settings.loadJoints(this);
     }
 }
 

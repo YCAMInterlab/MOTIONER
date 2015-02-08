@@ -461,8 +461,7 @@ void InspectorUI::guiEvent(ofxUIEventArgs &e)
             shared_ptr<skeleton::Skeleton> skl = mSkeleton.lock();
             if (skl) {
                 ofFileDialogResult openFileResult = ofSystemLoadDialog("Select a xml file",
-                                                                       false,
-                                                                       "xml/skeleton/");
+                                                                       false);
                 if (openFileResult.bSuccess) {
                     skl->loadSettings(openFileResult.filePath);
                     setSettingsFilePath(openFileResult.filePath);
@@ -682,7 +681,8 @@ void InspectorUI::setJoint(const string &name)
             mDialerZ->setValue(n.getPosition().z);
         }
         else {
-            ofxThrowException(ofxException, "Node not found!");
+            //ofxThrowException(ofxException, "Node not found!");
+            ofLogWarning("InspectorUI") << "Node not found!";
         }
     }
     else {

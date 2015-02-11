@@ -23,8 +23,10 @@ obj
 *.exe
 *.pdb
 *.*sdf
+*.opensdf
 *.suo
 *.ilk
+*.vcxproj.user
 
 #eagle
 *.b#*

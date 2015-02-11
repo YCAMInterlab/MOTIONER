@@ -28,7 +28,7 @@ else
 
 	git clone https://github.com/YoshitoONISHI/ofxException.git
 	cd ofxException
-	git checkout de4507b
+	git checkout 2e8fd0b
 	cd ../
 
 	git clone https://github.com/YoshitoONISHI/ofxNonCopyable.git

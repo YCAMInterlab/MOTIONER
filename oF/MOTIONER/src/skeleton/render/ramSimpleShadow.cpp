@@ -9,6 +9,7 @@
 #include "ramSimpleShadow.h"
 
 #include <numeric>
+#include <assert.h>
 
 void ramSimpleShadow::setup()
 {

@@ -47,9 +47,12 @@ private:
     ram::OscReceiver mOscReceiver;
 
     ofLight mLightW;
-    ofLight mLightR;
+    
+#ifndef _WIN32
+	ofLight mLightR;
     ofLight mLightG;
     ofLight mLightB;
-    
+
     ofPtr<class ramSimpleShadow> mShadow;
+#endif
 };

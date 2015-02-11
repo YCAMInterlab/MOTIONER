@@ -81,6 +81,22 @@ void Skeleton::setup(const string &hostName, const string &settingFilePath)
     OFX_END_EXCEPTION_HANDLING
 }
 
+void Skeleton::exit()
+{
+	OFX_BEGIN_EXCEPTION_HANDLING
+   
+	if (isEnable(CAPTURE)) {
+		disable(CAPTURE);
+	}
+
+    if (isEnable(PLAY)) {
+		stopPlayback();
+		mModules->player.stopThread();
+	}
+
+    OFX_END_EXCEPTION_HANDLING
+}
+
 //----------------------------------------------------------------------------------------
 void Skeleton::update()
 {

@@ -11,7 +11,10 @@
 #include "ramCameraManager.h"
 #include "ramEvent.h"
 #include "ramDeviceCorrespondent.h"
+
+#ifndef _WIN32
 #include "ramSimpleShadow.h"
+#endif
 
 //----------------------------------------------------------------------------------------
 MotionerApp::MotionerApp() :
@@ -69,9 +72,11 @@ void MotionerApp::setup()
     
 #endif
     
+#ifndef _WIN32
     mShadow = ofPtr<ramSimpleShadow>(new ramSimpleShadow());
     mShadow->setup();
-    
+#endif
+
     windowResized(ofGetWidth(), ofGetHeight());
     
     ofSetEscapeQuitsApp(false);
@@ -90,8 +95,10 @@ void MotionerApp::exit()
     
     ofLogNotice() << "Closing app...";
     //ram::UI::getInstance().exit();
+#ifndef _WIN32
     ram::DeviceCorrespondent::getInstance().exit();
     ram::determinate();
+#endif
 }
 
 //----------------------------------------------------------------------------------------
@@ -182,6 +189,7 @@ void MotionerApp::draw()
             mLightW.setDiffuseColor(ofFloatColor(0.3f, 0.3f, 0.3f));
             mLightW.setAmbientColor(ofFloatColor(0.1f, 0.1f, 0.1f));
             
+#ifndef _WIN32
             mLightR.setPosition(-3000.f * ::cosf(time * 1.15f),
                                 4000.f * ::sinf(time * 0.24f) + 4000.f,
                                 5000.f * ::cosf(time * 0.5f));
@@ -206,14 +214,17 @@ void MotionerApp::draw()
             
             mLightB.setDiffuseColor(ofFloatColor(0.15f, 0.15f, 0.3f));
             mLightB.setAmbientColor(ofFloatColor(0.025f, 0.025f, 0.05f));
+#endif
         }
         
         ofEnableLighting();
         mLightW.enable();
+#ifndef _WIN32
         mLightR.enable();
         mLightG.enable();
         mLightB.enable();
-        
+#endif
+
         glEnable(GL_DEPTH_TEST);
         ofPushMatrix();
         ofTranslate(0.f, -2.f); // bias
@@ -223,12 +234,16 @@ void MotionerApp::draw()
         ram::skeleton::SkeletonManager::getInstance().drawSkeletons();
         ofPopStyle();
         
+#ifndef _WIN32
         mLightB.disable();
         mLightR.disable();
         mLightG.disable();
+#endif
+
         mLightW.disable();
         ofDisableLighting();
         
+#ifndef _WIN32
         ofPushMatrix();
         ofEnableAlphaBlending();
         glEnable(GL_DEPTH_TEST);
@@ -240,7 +255,7 @@ void MotionerApp::draw()
         ram::skeleton::SkeletonManager::getInstance().drawSkeletons();
         mShadow->end();
         ofPopMatrix();
-        
+#endif
         cam->end();
     }
     ofxPopAll();

@@ -54,8 +54,11 @@ void SkeletonManager::removeSkeleton(const string &hostName)
     SkeletonMap &skl = mSkeletonMap;
     SkeletonMap::iterator it = find_if(skl.begin(), skl.end(), skeleton::SkeletonFinder(hostName)); /// slow
     
-    if (it!=skl.end())
+    if (it!=skl.end()) {
+		it->second->exit();
+		ofSleepMillis(100); // wait for until thread stop
         skl.erase(it);
+	}
 }
 
 //------------------------------------------------------------------------------------
@@ -121,5 +124,9 @@ SkeletonManager::SkeletonManager()
 //----------------------------------------------------------------------------------------
 SkeletonManager::~SkeletonManager()
 {
+	SkeletonMap &skl = mSkeletonMap;
+	for (SkeletonMap::iterator it = skl.begin(); it!=skl.end(); ++it)
+        it->second->exit();
+	ofSleepMillis(100);
     mSkeletonMap.clear();
 }

@@ -83,7 +83,11 @@ void DeviceCorrespondent::threadedFunction()
         
         uint8_t *udpMessage = new uint8_t[UDP_PACKET_BUFFER];
         
-        const ssize_t size =  mUdpReceiver.ReceiveBytes(udpMessage, UDP_PACKET_BUFFER);
+#ifndef TARGET_WIN32
+	    const ssize_t size =  mUdpReceiver.ReceiveBytes(udpMessage, UDP_PACKET_BUFFER);
+#else
+		const int size =  mUdpReceiver.ReceiveBytes(udpMessage, UDP_PACKET_BUFFER);
+#endif
         
         if (size == SOCKET_ERROR) {
             /// no host found

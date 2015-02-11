@@ -335,13 +335,21 @@ void UI::setup(const ofRectangle &rect)
         //widget->setColorOutline(outlineColor);
         //general->addLabel("CURR FRAMES: 12345", OFX_UI_FONT_SMALL);
         
+#ifndef _WIN32
         widget = addImageButton(general,
                                 buttonSize,
                                 "images/open.png",
                                 "Open a Motion File",
                                 true);
-        general->addWidgetRight(new ofxUILabel("", OFX_UI_FONT_SMALL));
+		general->addWidgetRight(new ofxUILabel("", OFX_UI_FONT_SMALL));
         widget = addImageButton(general, buttonSize, "images/play.png", "Play All", false);
+#else
+		widget = addImageButton(general,
+                                buttonSize,
+                                "images/play.png",
+                                "Play All",
+                                true);
+#endif
         general->addWidgetRight(new ofxUILabel("", OFX_UI_FONT_SMALL));
         widget = addImageButton(general, buttonSize, "images/pause.png", "Pause All", false);
         general->addWidgetRight(new ofxUILabel("", OFX_UI_FONT_SMALL));
@@ -383,9 +391,11 @@ void UI::setup(const ofRectangle &rect)
         mLowpass->setColorOutline(outlineColor);
         mLowpass->setDrawOutline(true);
         
+#ifndef _WIN32
         widget = general->addToggle("Move Lights", false);
         widget->setColorOutline(outlineColor);
         widget->setDrawOutline(true);
+#endif
     }
     //--------------------------------------------------//
     //--------------------------------------------------//

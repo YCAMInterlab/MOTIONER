@@ -51,6 +51,7 @@ namespace ram { namespace skeleton {
         
         //--------------------
         virtual void setup(const string &hostName, const string &settingFilePath);
+		virtual void exit();
         
         /// update modules which a flag is set
         //--------------------

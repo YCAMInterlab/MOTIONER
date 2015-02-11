@@ -1,0 +1,276 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{7FD42DF7-442E-479A-BA76-D0022F99702A}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>MOTIONER</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\libs\openFrameworksCompiled\project\vs\openFrameworksRelease.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\..\libs\openFrameworksCompiled\project\vs\openFrameworksDebug.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>bin\</OutDir>
+    <IntDir>obj\$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)_debug</TargetName>
+    <LinkIncremental>true</LinkIncremental>
+    <GenerateManifest>true</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>bin\</OutDir>
+    <IntDir>obj\$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <AdditionalIncludeDirectories>.\src;.\src\events;.\src\general;.\src\network;.\src\skeleton;.\src\skeleton\coder;.\src\skeleton\motion;.\src\skeleton\render;.\src\skeleton\settings;.\src\skeleton\coder\binary;.\src\skeleton\coder\bvh;.\src\skeleton\coder\general;.\src\ui;.\src\utilities;.\src\addons\ofxEvent;.\src\addons\ofxException;.\src\addons\ofxNonCopyable;.\src\addons\ofxSimpleKalmanFilter;.\src\addons\ofxUI\src;.\src\addons\ofxUITabbedCanvas;..\..\..\addons\ofxXmlSettings\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxOsc\libs\oscpack\src;.\src\skeleton\coder\general\player;.\src\skeleton\coder\general\recorder;..\..\..\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\addons\ofxNetwork\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <AdditionalIncludeDirectories>.\src;.\src\events;.\src\general;.\src\network;.\src\skeleton;.\src\skeleton\coder;.\src\skeleton\motion;.\src\skeleton\render;.\src\skeleton\settings;.\src\skeleton\coder\binary;.\src\skeleton\coder\bvh;.\src\skeleton\coder\general;.\src\ui;.\src\utilities;.\src\addons\ofxEvent;.\src\addons\ofxException;.\src\addons\ofxNonCopyable;.\src\addons\ofxSimpleKalmanFilter;.\src\addons\ofxUI\src;.\src\addons\ofxUITabbedCanvas;..\..\..\addons\ofxXmlSettings\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxOsc\libs\oscpack\src;.\src\skeleton\coder\general\player;.\src\skeleton\coder\general\recorder;..\..\..\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\addons\ofxNetwork\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
+    <Link>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj">
+      <Project>{5837595d-aca9-485c-8e76-729040ce4b0b}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="icon.rc">
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/D_DEBUG %(AdditionalOptions)</AdditionalOptions>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\addons\ofxNetwork\src\ofxTCPClient.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxNetwork\src\ofxTCPManager.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxNetwork\src\ofxTCPServer.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxNetwork\src\ofxUDPManager.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\IpEndpointName.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32\NetworkingUtilsWin.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32\UdpSocketWin.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscOutboundPacketStream.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscPrintReceivedElements.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscReceivedElements.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscTypes.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscBundle.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscMessage.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscParameterSync.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscReceiver.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscSender.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxml.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxmlerror.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxmlparser.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.cpp" />
+    <ClCompile Include="src\addons\ofxEvent\ofxEvent.cpp" />
+    <ClCompile Include="src\addons\ofxException\ofxException.cpp" />
+    <ClCompile Include="src\addons\ofxUITabbedCanvas\ofxUITabbedCanvas.cpp" />
+    <ClCompile Include="src\events\ramEvent.cpp" />
+    <ClCompile Include="src\general\ramCommon.cpp" />
+    <ClCompile Include="src\general\ramConstants.cpp" />
+    <ClCompile Include="src\general\ramTypes.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\MotionerApp.cpp" />
+    <ClCompile Include="src\network\ramDeviceCorrespondent.cpp" />
+    <ClCompile Include="src\network\ramOscReceiver.cpp" />
+    <ClCompile Include="src\network\ramOscSender.cpp" />
+    <ClCompile Include="src\skeleton\coder\binary\ramBinaryCoder.cpp" />
+    <ClCompile Include="src\skeleton\coder\bvh\ramBVHCoder.cpp" />
+    <ClCompile Include="src\skeleton\coder\general\player\ramPlayer.cpp" />
+    <ClCompile Include="src\skeleton\coder\general\ramBaseCoder.cpp" />
+    <ClCompile Include="src\skeleton\coder\general\ramFrame.cpp" />
+    <ClCompile Include="src\skeleton\coder\general\recorder\ofBufferExtended.cpp" />
+    <ClCompile Include="src\skeleton\coder\general\recorder\ramRecorder.cpp" />
+    <ClCompile Include="src\skeleton\motion\ramCircleTrackerIK.cpp" />
+    <ClCompile Include="src\skeleton\motion\ramEasyIK.cpp" />
+    <ClCompile Include="src\skeleton\motion\ramOrientationLimitter.cpp" />
+    <ClCompile Include="src\skeleton\motion\ramVelocityIK.cpp" />
+    <ClCompile Include="src\skeleton\ramNode.cpp" />
+    <ClCompile Include="src\skeleton\ramPicker.cpp" />
+    <ClCompile Include="src\skeleton\ramSkeleton.cpp" />
+    <ClCompile Include="src\skeleton\ramSkeletonManager.cpp" />
+    <ClCompile Include="src\skeleton\render\ramRenderer.cpp" />
+    <ClCompile Include="src\skeleton\render\ramSimpleShadow.cpp" />
+    <ClCompile Include="src\skeleton\settings\ramSettings.cpp" />
+    <ClCompile Include="src\ui\ramInspectorUI.cpp" />
+    <ClCompile Include="src\ui\ramLoggerUI.cpp" />
+    <ClCompile Include="src\ui\ramSideBarUI.cpp" />
+    <ClCompile Include="src\ui\ramUI.cpp" />
+    <ClCompile Include="src\utilities\ramCameraManager.cpp" />
+    <ClCompile Include="src\utilities\ramLogger.cpp" />
+    <ClCompile Include="src\utilities\ramMesh.cpp" />
+    <ClCompile Include="src\utilities\ramUtils.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\addons\ofxNetwork\src\ofxNetwork.h" />
+    <ClInclude Include="..\..\..\addons\ofxNetwork\src\ofxNetworkUtils.h" />
+    <ClInclude Include="..\..\..\addons\ofxNetwork\src\ofxTCPClient.h" />
+    <ClInclude Include="..\..\..\addons\ofxNetwork\src\ofxTCPManager.h" />
+    <ClInclude Include="..\..\..\addons\ofxNetwork\src\ofxTCPServer.h" />
+    <ClInclude Include="..\..\..\addons\ofxNetwork\src\ofxUDPManager.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\IpEndpointName.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\NetworkingUtils.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\PacketListener.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\TimerListener.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\UdpSocket.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\MessageMappingOscPacketListener.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscException.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscHostEndianness.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscOutboundPacketStream.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscPacketListener.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscPrintReceivedElements.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscReceivedElements.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscTypes.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOsc.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscArg.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscBundle.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscMessage.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscParameterSync.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscReceiver.h" />
+    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscSender.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlSettings\libs\tinyxml.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.h" />
+    <ClInclude Include="src\addons\ofxEvent\ofxEvent.h" />
+    <ClInclude Include="src\addons\ofxException\ofxException.h" />
+    <ClInclude Include="src\addons\ofxNonCopyable\ofxNonCopyable.h" />
+    <ClInclude Include="src\addons\ofxSimpleKalmanFilter\ofxSimpleKalmanFilter.h" />
+    <ClInclude Include="src\addons\ofxUITabbedCanvas\ofxUITabbedCanvas.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUI.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUI2DGraph.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUI2DPad.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUIBaseDraws.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUIBiLabelSlider.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUIButton.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUICanvas.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUICircleSlider.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUICustomImageButton.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUIDropDownList.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUIEventArgs.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUIFPS.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUIFPSSlider.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUIImage.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUIImageButton.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUIImageSampler.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUIImageSlider.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUIImageToggle.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUILabel.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUILabelButton.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUILabelToggle.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUIMinimalSlider.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUIMovingGraph.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUIMultiImageButton.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUIMultiImageSlider.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUIMultiImageToggle.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUINumberDialer.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUIRadio.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUIRangeSlider.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUIRectangle.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUIRotarySlider.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUIScrollableCanvas.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUISlider.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUISpacer.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUISpectrum.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUISuperCanvas.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUITextArea.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUITextInput.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUIToggle.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUIToggleMatrix.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUIValuePlotter.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUIWaveform.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUIWidget.h" />
+    <ClInclude Include="src\addons\ofxUI\src\ofxUIWidgetWithLabel.h" />
+    <ClInclude Include="src\events\ramEvent.h" />
+    <ClInclude Include="src\general\ramCommon.h" />
+    <ClInclude Include="src\general\ramConstants.h" />
+    <ClInclude Include="src\general\ramTypes.h" />
+    <ClInclude Include="src\MotionerApp.h" />
+    <ClInclude Include="src\network\ramDeviceCorrespondent.h" />
+    <ClInclude Include="src\network\ramOscReceiver.h" />
+    <ClInclude Include="src\network\ramOscSender.h" />
+    <ClInclude Include="src\skeleton\coder\binary\ramBinaryCoder.h" />
+    <ClInclude Include="src\skeleton\coder\bvh\ramBVHCoder.h" />
+    <ClInclude Include="src\skeleton\coder\general\player\ramPlayer.h" />
+    <ClInclude Include="src\skeleton\coder\general\ramBaseCoder.h" />
+    <ClInclude Include="src\skeleton\coder\general\ramFrame.h" />
+    <ClInclude Include="src\skeleton\coder\general\recorder\ofBufferExtended.h" />
+    <ClInclude Include="src\skeleton\coder\general\recorder\ramRecorder.h" />
+    <ClInclude Include="src\skeleton\motion\ramCircleTrackerIK.h" />
+    <ClInclude Include="src\skeleton\motion\ramEasyIK.h" />
+    <ClInclude Include="src\skeleton\motion\ramOrientationLimitter.h" />
+    <ClInclude Include="src\skeleton\motion\ramVelocityIK.h" />
+    <ClInclude Include="src\skeleton\ramNode.h" />
+    <ClInclude Include="src\skeleton\ramPicker.h" />
+    <ClInclude Include="src\skeleton\ramSkeleton.h" />
+    <ClInclude Include="src\skeleton\ramSkeletonManager.h" />
+    <ClInclude Include="src\skeleton\render\ramRenderer.h" />
+    <ClInclude Include="src\skeleton\render\ramSimpleShadow.h" />
+    <ClInclude Include="src\skeleton\settings\ramSettings.h" />
+    <ClInclude Include="src\ui\ramInspectorUI.h" />
+    <ClInclude Include="src\ui\ramLoggerUI.h" />
+    <ClInclude Include="src\ui\ramSideBarUI.h" />
+    <ClInclude Include="src\ui\ramUI.h" />
+    <ClInclude Include="src\utilities\ramCameraManager.h" />
+    <ClInclude Include="src\utilities\ramLogger.h" />
+    <ClInclude Include="src\utilities\ramMesh.h" />
+    <ClInclude Include="src\utilities\ramUtils.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+</Project>

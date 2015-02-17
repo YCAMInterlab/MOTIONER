@@ -229,13 +229,13 @@ void BinaryCoder::readHeader(Skeleton *skeleton)
     mName = string(name);
     mHeaderLength += size;
     
-    /// name
+    /// date
     memcpy(&size, &buf[mHeaderLength], sizeof(int32_t));
     mHeaderLength += sizeof(int32_t);
     
     char* date = new char[size+1];
     memcpy(date, &buf[mHeaderLength], size);
-    mDate[size] = NULL; /// c style str
+    date[size] = NULL; /// c style str
     mDate = string(date);
     mHeaderLength += size;
     
@@ -261,7 +261,7 @@ void BinaryCoder::readHeader(Skeleton *skeleton)
     "Date/Time: " << mDate << endl <<
     "Total frames: " << mNumFrames << endl <<
     "Frame time: " << mRecordingFrameTime << endl <<
-    "Duration: " << hou << ":" << min << ":" << sec << "\"" << msec;
+    "Duration: " << hou << ":" << min << ":" << sec << "\"" << msec << endl;
 
     ofLogNotice("BinaryCoder") << oss.str();
     

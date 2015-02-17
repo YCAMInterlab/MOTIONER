@@ -335,7 +335,6 @@ void UI::setup(const ofRectangle &rect)
         //widget->setColorOutline(outlineColor);
         //general->addLabel("CURR FRAMES: 12345", OFX_UI_FONT_SMALL);
         
-#ifndef _WIN32
         widget = addImageButton(general,
                                 buttonSize,
                                 "images/open.png",
@@ -343,14 +342,7 @@ void UI::setup(const ofRectangle &rect)
                                 true);
 		general->addWidgetRight(new ofxUILabel("", OFX_UI_FONT_SMALL));
         widget = addImageButton(general, buttonSize, "images/play.png", "Play All", false);
-#else
-		widget = addImageButton(general,
-                                buttonSize,
-                                "images/play.png",
-                                "Play All",
-                                true);
-#endif
-        general->addWidgetRight(new ofxUILabel("", OFX_UI_FONT_SMALL));
+		general->addWidgetRight(new ofxUILabel("", OFX_UI_FONT_SMALL));
         widget = addImageButton(general, buttonSize, "images/pause.png", "Pause All", false);
         general->addWidgetRight(new ofxUILabel("", OFX_UI_FONT_SMALL));
         widget = addImageButton(general, buttonSize, "images/stop.png", "Stop All", false);
@@ -753,7 +745,7 @@ void UI::guiEvent(ofxUIEventArgs &e)
     }
     else if (name == "Open a Motion File") {
         if (static_cast<ofxUIButton *>(e.widget)->getValue()) {
-            mFileDialogResult = openPlaybackDialog();
+            mFileDialogResult = ofSystemLoadDialog("Select a motion file", false);
             mWillOpenMotionFile = true;
         }
     }

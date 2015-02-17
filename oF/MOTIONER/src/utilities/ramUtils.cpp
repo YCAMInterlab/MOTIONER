@@ -229,16 +229,6 @@ namespace ram {
     }
     
     //------------------------------------------------------------------------------------
-    ofFileDialogResult openPlaybackDialog()
-    {
-        ///add directory select
-        const string defPath = ram::MOTION_DATA_DIR;
-        const string info = "Open motions for a skeleton.";
-        return ofSystemLoadDialog(info, false, defPath);
-        
-    }
-    
-    //------------------------------------------------------------------------------------
     void openPlaybackFile(const string&path, const string &name)
     {
         const string hostName = name;
@@ -306,19 +296,13 @@ namespace ram {
     //------------------------------------------------------------------------------------
     string getFileExt(const string &path)
     {
-        string::size_type pos(path.rfind("."));
-        if (pos != string::npos)
-            return path.substr(pos+1, path.length());
-        return "";
+        return ofFilePath::getFileExt(path);
     }
     
     //------------------------------------------------------------------------------------
     string getFileName(const string &path)
     {
-        string::size_type pos(path.rfind("/"));
-        if (pos != string::npos)
-            return path.substr(pos+1, path.length());
-        return "";
+		return ofFilePath::getBaseName(path);
     }
     
     /// shadow matrix

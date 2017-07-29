@@ -1,6 +1,6 @@
-#MOTIONER
+# MOTIONER
 
-##Open source low cost inertial motion capture system.
+## Open source low cost inertial motion capture system.
 
 ![](https://github.com/YCAMInterlab/MOTIONER/wiki/res/Home/MOTIONER.jpg)
 
@@ -10,9 +10,9 @@ For more details, please see [MOTIONER wiki](https://github.com/YCAMInterlab/MOT
 
 詳しい情報は[MOTIONER wiki](https://github.com/YCAMInterlab/MOTIONER/wiki/)を参照してください。
 
-##Licenses
+## Licenses
 
-###Application
+### Application
 MOTIONER software by YCAM InterLab and Yoshito Onishi is licensed under the 
 [Apache License, Version2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
 
@@ -30,14 +30,14 @@ MOTIONER software by YCAM InterLab and Yoshito Onishi is licensed under the
     See the License for the specific language governing permissions and
     limitations under the License.
 
-###Arduino, Processing sketch and mbed code
+### Arduino, Processing sketch and mbed code
 
 Copyright 2012-2013 YCAMInterLab and Yoshito Onishi
 
 MOTIONER Arduino, Processing sketch and mbed code by YCAM InterLab and Yoshito Onishi are licensed under the 
 [GNU GPL(General Public License) v3.0](http://www.gnu.org/licenses/gpl.html)
 
-###Hardware
+### Hardware
 
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/4.0/80x15.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">MOTIONER hardware related documents (Schematics, Eagle files, Solder Stencil Mask, Drawing of MOTIONER base, MOTIONER pcb board, vacuum case and strap)</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="http://interlab.ycam.jp/projects/ram" property="cc:attributionName" rel="cc:attributionURL">YCAM InterLab, Yoshito Onishi</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
 
